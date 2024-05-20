@@ -67,5 +67,11 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    // --- Koin ---
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.annotations)
+    implementation(libs.koin.ksp)
+
     implementation(libs.okhttp)
 }
