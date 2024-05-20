@@ -1,4 +1,4 @@
-package com.example.e_cook
+package com.woutervandervelde.e_cook.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -20,7 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.e_cook.ui.theme.EcookTheme
+import com.woutervandervelde.e_cook.ui.theme.EcookTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,7 +29,6 @@ import okhttp3.Callback
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
-import okhttp3.internal.http2.Header
 import org.json.JSONObject
 import java.io.IOException
 

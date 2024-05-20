@@ -23,3 +23,5 @@ rootProject.name = "e-cook"
 include(":app")
 include(":ui")
 include(":presentation")
+include(":domain")
+include(":data")

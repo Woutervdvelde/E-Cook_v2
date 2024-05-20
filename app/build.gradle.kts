@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.e_cook"
+    namespace = "com.woutervandervelde.e_cook"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.e_cook"
+        applicationId = "com.woutervandervelde.e_cook"
         minSdk = 27
         targetSdk = 34
         versionCode = 1
@@ -40,7 +40,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.13"
     }
     packaging {
         resources {
@@ -59,6 +59,10 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(project(":data"))
+    implementation(project(":domain"))
+    implementation(project(":ui"))
+    implementation(project(":presentation"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

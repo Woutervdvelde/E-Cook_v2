@@ -1,4 +1,4 @@
-package com.example.e_cook.ui.theme
+package com.woutervandervelde.e_cook.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

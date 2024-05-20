@@ -1,0 +1,3 @@
+package com.woutervandervelde.e_cook.presentation
+
+interface BaseNavEvent

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.ui"
+    namespace = "com.example.domain"
     compileSdk = 34
 
     defaultConfig {
@@ -37,11 +37,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(project(":presentation"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    implementation(libs.koin.core)
-    implementation(libs.koin.annotations)
 }

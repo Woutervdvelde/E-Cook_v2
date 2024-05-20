@@ -1,4 +1,4 @@
-package com.example.e_cook.ui.theme
+package com.woutervandervelde.e_cook.ui.theme
 
 import android.app.Activity
 import android.os.Build

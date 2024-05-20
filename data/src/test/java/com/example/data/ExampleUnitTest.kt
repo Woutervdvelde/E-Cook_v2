@@ -1,4 +1,4 @@
-package com.woutervandervelde.e_cook
+package com.example.data
 
 import org.junit.Test
 
