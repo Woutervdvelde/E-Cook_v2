@@ -15,6 +15,8 @@ okhttp = "4.11.0"
 koinCore = '3.4.2'
 koinAndroid = '3.4.3'
 koinAnnotations = '1.2.2'
+appcompat = "1.6.1"
+material = "1.12.0"
 
 [libraries]
 kotlinx-serialization-json = { group = "org.jetbrains.kotlin", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson"}
@@ -40,9 +42,12 @@ koin-ksp = { group = "io.insert-koin", name = "koin-ksp-compiler", version.ref =
 koin-annotations = { group = "io.insert-koin", name = "koin-annotations", version.ref = "koinAnnotations"}
 
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp"}
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrainsKotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
 
