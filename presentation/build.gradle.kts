@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.presentation"
+    namespace = "com.woutervandervelde.presentation"
     compileSdk = 34
 
     defaultConfig {
@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.material)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

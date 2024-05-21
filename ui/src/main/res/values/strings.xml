@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">e-cook</string>
+    <string name="app_locale">en</string>
 </resources>

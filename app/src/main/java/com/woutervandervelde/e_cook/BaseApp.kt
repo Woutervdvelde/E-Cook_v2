@@ -1,14 +1,18 @@
 package com.woutervandervelde.e_cook
 
 import android.app.Application
-import androidx.compose.runtime.Stable
 import com.woutervandervelde.e_cook.di.KoinAppModule
+import com.woutervandervelde.e_cook.presentation.di.KoinPresentationModule
+import com.woutervandervelde.e_cook.ui.di.KoinUiModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
+import org.koin.core.component.KoinComponent
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
+import org.koin.ksp.generated.module
+//import org.koin.ksp
 
-class BaseApp : Application() {
+abstract class BaseApp : Application(), KoinComponent {
     override fun onCreate() {
         super.onCreate()
         startKoin()
@@ -24,7 +28,12 @@ class BaseApp : Application() {
             androidLogger()
             androidContext(this@BaseApp)
             modules(
-                KoinAppModule.customModule
+//                KoinAppModule().module,
+                KoinAppModule.customModule,
+                KoinUiModule().module,
+                KoinUiModule.customModule,
+//                KoinPresentationModule().module,
+                KoinPresentationModule.customModule
             )
         }
     }

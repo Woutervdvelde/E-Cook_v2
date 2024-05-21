@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.data"
+    namespace = "com.woutervandervelde.data"
     compileSdk = 34
 
     defaultConfig {

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+
 import java.util.concurrent.atomic.AtomicBoolean
 
 private const val EVENT_DEBOUNCE = 500L
