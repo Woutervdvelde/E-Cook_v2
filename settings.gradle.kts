@@ -21,4 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "e-cook"
 include(":app")
- 
+include(":domain")
+include(":data")
+include(":ui")

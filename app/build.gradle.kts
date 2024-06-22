@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.e_cook"
+    namespace = "com.woutervandervelde.e_cook"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.e_cook"
+        applicationId = "com.woutervandervelde.e_cook"
         minSdk = 27
         targetSdk = 34
         versionCode = 1
@@ -40,7 +40,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
     packaging {
         resources {
@@ -50,6 +50,9 @@ android {
 }
 
 dependencies {
+    implementation(project(":domain"))
+    implementation(project(":ui"))
+    implementation(project(":data"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -59,6 +62,10 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    implementation(libs.jsoup)
+    implementation(libs.okhttp)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -66,12 +73,4 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-    // --- Koin ---
-    implementation(libs.koin.core)
-    implementation(libs.koin.android)
-    implementation(libs.koin.annotations)
-    implementation(libs.koin.ksp)
-
-    implementation(libs.okhttp)
 }
