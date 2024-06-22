@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.woutervandervelde.e_cook.ui.AppTestNavigation
+import com.woutervandervelde.e_cook.ui.AppNavigation
 import com.woutervandervelde.e_cook.theme.EcookTheme
 
 class MainActivity : ComponentActivity() {
@@ -13,7 +13,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             EcookTheme {
-                AppTestNavigation()
+                AppNavigation()
             }
         }
     }
@@ -23,6 +23,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     EcookTheme {
-        AppTestNavigation()
+        AppNavigation()
     }
 }
