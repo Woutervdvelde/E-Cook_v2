@@ -2,4 +2,5 @@
 <resources>
     <string name="navigation_home">Home</string>
     <string name="navigation_books">Books</string>
+    <string name="navigation_search">Search</string>
 </resources>
