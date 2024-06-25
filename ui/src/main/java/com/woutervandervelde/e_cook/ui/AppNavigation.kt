@@ -1,6 +1,7 @@
 package com.woutervandervelde.e_cook.ui
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.EnterTransition
@@ -19,6 +20,7 @@ import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
@@ -43,7 +45,6 @@ import com.woutervandervelde.e_cook.ui.screen.home.navigation.homeNavigation
 import com.woutervandervelde.e_cook.ui.screen.search.navigation.SearchRoute
 import com.woutervandervelde.e_cook.ui.screen.search.navigation.searchNavigation
 import com.woutervdvelde.e_cook.ui.R
-import kotlin.reflect.typeOf
 
 sealed class Screen<T>(
     val route: T,
@@ -65,6 +66,11 @@ val screenItems = listOf(
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
+    val currentScreen by navController.currentBackStackEntryAsState()
+
+    fun checkIfSelected(screen: Screen<out Any>) =
+        currentScreen?.destination?.route?.substringAfterLast(".") ==
+                screen.route.javaClass.simpleName.toString()
 
     Scaffold(
         bottomBar = {
@@ -73,6 +79,7 @@ fun AppNavigation() {
                     BottomNavigationItem(
                         stringResource(id = screen.nameResourceId),
                         painterResource(id = screen.iconResourceId),
+                        checkIfSelected(screen),
                         onClick = {
                             navController.navigate(screen.route) {
                                 popUpTo(HomeRoute)
@@ -90,7 +97,6 @@ fun AppNavigation() {
             homeNavigation(navController)
             booksNavigation(navController)
             searchNavigation(navController)
-//            editNavigation(navController)
         }
     }
 }
