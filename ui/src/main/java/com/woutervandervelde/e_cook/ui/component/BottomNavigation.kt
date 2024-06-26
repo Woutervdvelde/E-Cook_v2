@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,12 +34,15 @@ fun BottomNavigationItem(
     selected: Boolean,
     onClick: () -> Unit
 ) {
-    Icon(
-        modifier = Modifier
-            .size(28.dp)
-            .clickable { onClick() },
-        painter = icon,
-        tint = if (selected) Color.White else Color.Gray,
-        contentDescription = name
-    )
+    IconButton(
+        onClick = onClick
+    ) {
+        Icon(
+            modifier = Modifier
+                .size(28.dp),
+            painter = icon,
+            tint = if (selected) Color.White else Color.Gray,
+            contentDescription = name
+        )
+    }
 }

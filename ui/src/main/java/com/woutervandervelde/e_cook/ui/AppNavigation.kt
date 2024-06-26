@@ -44,6 +44,8 @@ import com.woutervandervelde.e_cook.ui.screen.home.navigation.HomeRoute
 import com.woutervandervelde.e_cook.ui.screen.home.navigation.homeNavigation
 import com.woutervandervelde.e_cook.ui.screen.search.navigation.SearchRoute
 import com.woutervandervelde.e_cook.ui.screen.search.navigation.searchNavigation
+import com.woutervandervelde.e_cook.ui.screen.source.navigation.SourceRoute
+import com.woutervandervelde.e_cook.ui.screen.source.navigation.sourceNavigation
 import com.woutervdvelde.e_cook.ui.R
 
 sealed class Screen<T>(
@@ -54,12 +56,14 @@ sealed class Screen<T>(
     data object Home : Screen<HomeRoute>(HomeRoute, R.string.navigation_home, R.drawable.cottage)
     data object Books : Screen<BooksRoute>(BooksRoute, R.string.navigation_books, R.drawable.book)
     data object Search : Screen<SearchRoute>(SearchRoute, R.string.navigation_search, R.drawable.search)
+    data object Source : Screen<SourceRoute>(SourceRoute, R.string.navigation_source, R.drawable.bakery_dining)
 }
 
 val screenItems = listOf(
     Screen.Home,
     Screen.Books,
-    Screen.Search
+    Screen.Search,
+    Screen.Source
 )
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -97,6 +101,7 @@ fun AppNavigation() {
             homeNavigation(navController)
             booksNavigation(navController)
             searchNavigation(navController)
+            sourceNavigation(navController)
         }
     }
 }
