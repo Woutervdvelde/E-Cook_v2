@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,10 +17,10 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun BottomNavigationBar(content: @Composable RowScope.() -> Unit) {
+fun BottomNavigationBar(modifier: Modifier = Modifier, content: @Composable RowScope.() -> Unit) {
     Row (
         horizontalArrangement = Arrangement.SpaceAround,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 0.dp, vertical = 8.dp)
     ) {
@@ -41,7 +42,7 @@ fun BottomNavigationItem(
             modifier = Modifier
                 .size(28.dp),
             painter = icon,
-            tint = if (selected) Color.White else Color.Gray,
+            tint = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
             contentDescription = name
         )
     }

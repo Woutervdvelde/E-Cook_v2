@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountBox
@@ -78,7 +80,9 @@ fun AppNavigation() {
 
     Scaffold(
         bottomBar = {
-            BottomNavigationBar {
+            BottomNavigationBar(
+                modifier = Modifier.safeDrawingPadding()
+            ) {
                 screenItems.forEach { screen ->
                     BottomNavigationItem(
                         stringResource(id = screen.nameResourceId),
@@ -96,7 +100,8 @@ fun AppNavigation() {
     ) { _ ->
         NavHost(
             navController,
-            startDestination = HomeRoute
+            startDestination = HomeRoute,
+            modifier = Modifier.safeDrawingPadding()
         ) {
             homeNavigation(navController)
             booksNavigation(navController)
