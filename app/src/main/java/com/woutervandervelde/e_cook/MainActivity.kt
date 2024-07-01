@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.woutervandervelde.e_cook.ui.AppNavigation
-import com.woutervandervelde.e_cook.theme.EcookTheme
+import com.woutervandervelde.e_cook.ui.theme.EcookTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

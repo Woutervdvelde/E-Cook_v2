@@ -12,7 +12,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.unit.dp
+import com.woutervandervelde.e_cook.ui.theme.Size0
+import com.woutervandervelde.e_cook.ui.theme.Size28
+import com.woutervandervelde.e_cook.ui.theme.Size8
 
 @Composable
 fun BottomNavigationBar(modifier: Modifier = Modifier, content: @Composable RowScope.() -> Unit) {
@@ -20,7 +22,7 @@ fun BottomNavigationBar(modifier: Modifier = Modifier, content: @Composable RowS
         horizontalArrangement = Arrangement.SpaceAround,
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 0.dp, vertical = 8.dp)
+            .padding(horizontal = Size0, vertical = Size8)
     ) {
         content()
     }
@@ -38,7 +40,7 @@ fun BottomNavigationItem(
     ) {
         Icon(
             modifier = Modifier
-                .size(28.dp),
+                .size(Size28),
             painter = icon,
             tint = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
             contentDescription = name

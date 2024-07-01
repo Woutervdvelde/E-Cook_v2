@@ -1,4 +1,4 @@
-package com.woutervandervelde.e_cook.theme
+package com.woutervandervelde.e_cook.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

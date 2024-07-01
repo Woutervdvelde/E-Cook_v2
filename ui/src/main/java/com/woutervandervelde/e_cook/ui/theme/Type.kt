@@ -1,4 +1,4 @@
-package com.woutervandervelde.e_cook.theme
+package com.woutervandervelde.e_cook.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
@@ -15,6 +15,7 @@ val interFamily = FontFamily(
     Font(R.font.inter_regular, FontWeight.Normal),
     Font(R.font.inter_medium, FontWeight.Medium),
     Font(R.font.inter_black, FontWeight.Black),
+    Font(R.font.inter_semi_bold, FontWeight.SemiBold),
     Font(R.font.inter_bold, FontWeight.Bold),
     Font(R.font.inter_extra_bold, FontWeight.ExtraBold)
 )
@@ -53,10 +54,17 @@ val Typography = Typography(
         letterSpacing = 0.sp
     ),
     titleMedium = TextStyle(
-        fontFamily = apeMountFamily,
-        fontWeight = FontWeight.Bold,
+        fontFamily = interFamily,
+        fontWeight = FontWeight.SemiBold,
         fontSize = 32.sp,
-        lineHeight = 36.sp,
+        lineHeight = 39.sp,
+        letterSpacing = 0.sp
+    ),
+    titleSmall = TextStyle(
+        fontFamily = interFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 18.sp,
+        lineHeight = 22.sp,
         letterSpacing = 0.sp
     )
 )

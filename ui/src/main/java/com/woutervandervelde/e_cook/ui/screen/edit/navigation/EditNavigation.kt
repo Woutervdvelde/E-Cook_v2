@@ -9,7 +9,7 @@ import com.woutervandervelde.e_cook.ui.screen.edit.EditScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Edit(
+data class EditRoute(
     val id: String? = null
 )
 
@@ -22,7 +22,7 @@ internal fun NavGraphBuilder.editNavigation(navController: NavController) {
         }
     }
 
-    composable<Edit>(
+    composable<EditRoute>(
         transition = NavigationTransition.SLIDE(NavigationDirection.RIGHT),
     ) {
         EditScreen(navEvent)

@@ -23,7 +23,6 @@ import com.woutervandervelde.e_cook.ui.screen.search.navigation.SearchRoute
 import com.woutervandervelde.e_cook.ui.screen.search.navigation.searchNavigation
 import com.woutervandervelde.e_cook.ui.screen.source.navigation.SourceRoute
 import com.woutervandervelde.e_cook.ui.screen.source.navigation.sourceNavigation
-import com.woutervandervelde.e_cook.ui.R
 
 sealed class Screen<T>(
     val route: T,
