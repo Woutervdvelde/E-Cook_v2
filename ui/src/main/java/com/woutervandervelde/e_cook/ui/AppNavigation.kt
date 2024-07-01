@@ -63,8 +63,15 @@ fun AppNavigation() {
                         painterResource(id = screen.iconResourceId),
                         checkIfSelected(screen),
                         onClick = {
+                            if (screen.route == HomeRoute && checkIfSelected(screen)) {
+                                navController.popBackStack()
+                            }
                             navController.navigate(screen.route) {
-                                popUpTo(HomeRoute)
+                                popUpTo(navController.graph.startDestinationId) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
                             }
                         }
                     )
