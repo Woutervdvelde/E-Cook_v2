@@ -16,6 +16,7 @@ import com.woutervandervelde.e_cook.ui.screen.home.viewmodel.HomeViewModel
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 fun HomeScreen(
+    viewModel: HomeViewModel,
     navEvent: (HomeNavEvent) -> Unit
 ) {
     Column(

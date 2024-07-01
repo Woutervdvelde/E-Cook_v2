@@ -1,5 +1,6 @@
 package com.woutervandervelde.e_cook.ui.screen.home.navigation
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import com.woutervandervelde.e_cook.ui.navigation.NavigationDuration
@@ -25,6 +26,6 @@ internal fun NavGraphBuilder.homeNavigation(navController: NavController) {
     composable<HomeRoute>(
         transition = NavigationTransition.FADE(NavigationDuration.FAST),
     ) {
-        HomeScreen(navEvent)
+        HomeScreen(hiltViewModel(), navEvent)
     }
 }
