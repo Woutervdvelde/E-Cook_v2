@@ -11,10 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.woutervandervelde.e_cook.ui.R
 import com.woutervandervelde.e_cook.ui.screen.home.navigation.HomeNavEvent
+import com.woutervandervelde.e_cook.ui.screen.home.viewmodel.HomeViewModel
 
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-fun HomeScreen(navEvent: (HomeNavEvent) -> Unit) {
+fun HomeScreen(
+    navEvent: (HomeNavEvent) -> Unit
+) {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {

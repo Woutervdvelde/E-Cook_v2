@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.woutervandervelde.e_cook.data.dao.RecipeDao
-import com.woutervandervelde.e_cook.data.model.Recipe
+import com.woutervandervelde.e_cook.domain.model.Recipe
 
 @androidx.room.Database(
     entities = [

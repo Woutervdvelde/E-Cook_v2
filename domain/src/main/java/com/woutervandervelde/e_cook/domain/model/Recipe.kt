@@ -1,4 +1,4 @@
-package com.woutervandervelde.e_cook.data.model
+package com.woutervandervelde.e_cook.domain.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.woutervandervelde.e_cook.data.model.Recipe
+import com.woutervandervelde.e_cook.domain.model.Recipe
 
 @Dao
 interface RecipeDao {
