@@ -4,4 +4,6 @@
     <string name="navigation_books">Books</string>
     <string name="navigation_search">Search</string>
     <string name="navigation_source">Sources</string>
+
+    <string name="home_header_slogan">What\'s on the menu?</string>
 </resources>

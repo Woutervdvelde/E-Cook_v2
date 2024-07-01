@@ -1,54 +1,29 @@
 package com.woutervandervelde.e_cook.ui
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AccountBox
-import androidx.compose.material.icons.rounded.FavoriteBorder
-import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.woutervandervelde.e_cook.ui.component.BottomNavigationBar
 import com.woutervandervelde.e_cook.ui.component.BottomNavigationItem
-import com.woutervandervelde.e_cook.ui.navigation.NavigationTransition
 import com.woutervandervelde.e_cook.ui.screen.books.navigation.BooksRoute
 import com.woutervandervelde.e_cook.ui.screen.books.navigation.booksNavigation
-import com.woutervandervelde.e_cook.ui.screen.edit.navigation.editNavigation
 import com.woutervandervelde.e_cook.ui.screen.home.navigation.HomeRoute
 import com.woutervandervelde.e_cook.ui.screen.home.navigation.homeNavigation
 import com.woutervandervelde.e_cook.ui.screen.search.navigation.SearchRoute
 import com.woutervandervelde.e_cook.ui.screen.search.navigation.searchNavigation
 import com.woutervandervelde.e_cook.ui.screen.source.navigation.SourceRoute
 import com.woutervandervelde.e_cook.ui.screen.source.navigation.sourceNavigation
-import com.woutervdvelde.e_cook.ui.R
+import com.woutervandervelde.e_cook.ui.R
 
 sealed class Screen<T>(
     val route: T,

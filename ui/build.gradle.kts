@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.woutervdvelde.e_cook.ui"
+    namespace = "com.woutervandervelde.e_cook.ui"
     compileSdk = 34
 
     defaultConfig {
