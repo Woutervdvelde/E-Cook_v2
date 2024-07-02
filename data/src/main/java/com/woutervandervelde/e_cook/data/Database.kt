@@ -1,6 +1,7 @@
 package com.woutervandervelde.e_cook.data
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.woutervandervelde.e_cook.data.dao.RecipeDao
@@ -10,7 +11,10 @@ import com.woutervandervelde.e_cook.domain.model.Recipe
     entities = [
         Recipe::class
     ],
-    version = 2 //TODO(Increment when changing database)
+    version = 1, //TODO(Increment when changing database)
+//    autoMigrations = [
+//        AutoMigration(from = 1, to = 2)
+//    ]
 )
 
 abstract class Database : RoomDatabase() {

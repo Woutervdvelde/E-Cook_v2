@@ -6,4 +6,5 @@ plugins {
     alias(libs.plugins.androidLibrary) apply false
     id("com.google.devtools.ksp") version libs.versions.ksp apply false
     id("com.google.dagger.hilt.android") version libs.versions.hilt apply false
+    id("androidx.room") version libs.versions.room apply false
 }
