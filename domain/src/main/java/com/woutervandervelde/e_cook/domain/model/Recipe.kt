@@ -1,12 +1,13 @@
 package com.woutervandervelde.e_cook.domain.model
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
 data class Recipe(
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "description") val description: String?
-)
+    val name: String,
+    val description: String?,
+    @PrimaryKey(autoGenerate = true) val id: Int
+) {
+    constructor(name: String, description: String?) : this(name, description, 0)
+}

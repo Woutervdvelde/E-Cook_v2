@@ -10,8 +10,9 @@ import com.woutervandervelde.e_cook.domain.model.Recipe
     entities = [
         Recipe::class
     ],
-    version = 1 //TODO(Increment when changing database)
+    version = 2 //TODO(Increment when changing database)
 )
+
 abstract class Database : RoomDatabase() {
     abstract fun recipeDao(): RecipeDao
 
@@ -21,6 +22,7 @@ abstract class Database : RoomDatabase() {
                 context.applicationContext,
                 Database::class.java,
                 "database.db"
-            ).build()
+            )
+                .build()
     }
 }
