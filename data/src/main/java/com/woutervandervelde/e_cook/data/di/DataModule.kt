@@ -1,7 +1,7 @@
 package com.woutervandervelde.e_cook.data.di
 
 import android.content.Context
-import com.woutervandervelde.e_cook.data.Database
+import com.woutervandervelde.e_cook.data.database.Database
 import com.woutervandervelde.e_cook.data.dao.RecipeDao
 import com.woutervandervelde.e_cook.data.repository.RecipeRepositoryImpl
 import dagger.Module

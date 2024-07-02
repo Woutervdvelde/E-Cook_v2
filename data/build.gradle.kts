@@ -4,11 +4,12 @@ plugins {
     id("androidx.room")
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
 }
 
 room {
-    schemaDirectory("$projectDir/src/main/java/com/woutervandervelde/e_cook/data/schemas")
+    schemaDirectory("$projectDir/src/main/java/com/woutervandervelde/e_cook/data/database/schemas")
 }
 
 android {
@@ -49,6 +50,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.android.hilt)
     implementation(libs.androidx.compose.runtime)
+    implementation(libs.kotlinx.serialization.json)
 
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)

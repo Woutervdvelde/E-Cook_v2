@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.woutervandervelde.e_cook.domain.model.Recipe
+import com.woutervandervelde.e_cook.domain.model.Source
 import com.woutervandervelde.e_cook.domain.repository.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -33,7 +34,7 @@ class HomeViewModel @Inject constructor(
 
     fun saveRecipe(name: String, description: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            recipeRepository.insertRecipe(Recipe(name, description))
+//            recipeRepository.insertRecipe(Recipe(name, description, null, null, null))
         }
     }
 }

@@ -1,13 +1,11 @@
 package com.woutervandervelde.e_cook.domain.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity
 data class Recipe(
+    val id: Int,
     val name: String,
     val description: String?,
-    @PrimaryKey(autoGenerate = true) val id: Int
-) {
-    constructor(name: String, description: String?) : this(name, description, 0)
-}
+    val tags: List<Tag>?,
+    val notes: String?,
+    val image: String?,
+//    val source: Source,
+)
