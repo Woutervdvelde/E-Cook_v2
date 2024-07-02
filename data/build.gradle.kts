@@ -8,7 +8,7 @@ plugins {
 }
 
 room {
-    schemaDirectory("$projectDir/schemas")
+    schemaDirectory("$projectDir/src/main/java/com/woutervandervelde/e_cook/data/schemas")
 }
 
 android {
