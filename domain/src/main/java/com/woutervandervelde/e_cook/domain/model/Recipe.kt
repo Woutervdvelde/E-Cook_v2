@@ -7,5 +7,5 @@ data class Recipe(
     val tags: List<Tag>?,
     val notes: String?,
     val image: String?,
-//    val source: Source,
+    val source: Source,
 )

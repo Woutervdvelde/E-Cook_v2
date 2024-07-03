@@ -1,10 +1,12 @@
 package com.woutervandervelde.e_cook.data.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.woutervandervelde.e_cook.data.database.typeconverter.Converters
 import com.woutervandervelde.e_cook.domain.model.Recipe
+import com.woutervandervelde.e_cook.domain.model.Source
 import com.woutervandervelde.e_cook.domain.model.Tag
 
 @Entity(tableName = "recipe")
@@ -16,6 +18,7 @@ data class RecipeEntity(
     val tags: List<Tag>?,
     val notes: String?,
     val image: String?,
+    @ColumnInfo(defaultValue = "0") val source: Source,
 ) {
     constructor(
         name: String,
@@ -23,7 +26,7 @@ data class RecipeEntity(
         tags: List<Tag>?,
         notes: String?,
         image: String?,
-//        source: Source
+        source: Source
     ) : this(
         0,
         name,
@@ -31,11 +34,11 @@ data class RecipeEntity(
         tags,
         notes,
         image,
-//        source,
+        source,
     )
 
     fun toModel() = Recipe(
-        id, name, description, tags, notes, image
+        id, name, description, tags, notes, image, source
     )
 
     companion object {
@@ -46,6 +49,7 @@ data class RecipeEntity(
                 item.tags,
                 item.notes,
                 item.image,
+                item.source
             )
     }
 }

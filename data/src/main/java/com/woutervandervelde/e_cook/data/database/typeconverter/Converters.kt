@@ -11,8 +11,8 @@ class Converters {
     fun toTag(value: String): Tag = enumValueOf<Tag>(value)
 
     @TypeConverter
-    fun fromTags(value: List<Tag>): String = value.joinToString(",") { it.name }
+    fun fromTags(value: List<Tag>): String = value.joinToString(",") { it.ordinal.toString() }
 
     @TypeConverter
-    fun toTags(value: String): List<Tag> = value.split(",").map { Tag.valueOf(it) }
+    fun toTags(value: String): List<Tag> = value.split(",").map { enumValues<Tag>()[it.toInt()] }
 }
