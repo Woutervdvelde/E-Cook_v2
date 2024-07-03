@@ -8,6 +8,7 @@ internal val Size2 = 2.dp
 internal val Size4 = 4.dp
 internal val Size6 = 6.dp
 internal val Size8 = 8.dp
+internal val Size10 = 10.dp
 internal val Size12 = 12.dp
 internal val Size16 = 16.dp
 internal val Size20 = 20.dp
@@ -22,6 +23,9 @@ internal val Size64 = 64.dp
 internal val Size72 = 72.dp
 internal val Size80 = 80.dp
 internal val Size96 = 96.dp
+internal val Size128 = 128.dp
+internal val Size200 = 200.dp
+internal val Size360 = 360.dp
 
 internal val Text12 = 12.sp
 internal val Text14 = 14.sp

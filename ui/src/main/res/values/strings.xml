@@ -6,4 +6,7 @@
     <string name="navigation_source">Sources</string>
 
     <string name="home_header_slogan">What\'s on the menu?</string>
+    
+    <string name="button_add_recipe">"Add recipe</string>
+    <string name="button_random_recipe">"Random recipe</string>
 </resources>

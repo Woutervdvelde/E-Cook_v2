@@ -81,8 +81,7 @@ fun AppNavigation() {
     ) { _ ->
         NavHost(
             navController,
-            startDestination = HomeRoute,
-            modifier = Modifier.safeDrawingPadding()
+            startDestination = HomeRoute
         ) {
             homeNavigation(navController)
             booksNavigation(navController)
