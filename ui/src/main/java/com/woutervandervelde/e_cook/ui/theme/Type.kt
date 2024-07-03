@@ -49,7 +49,7 @@ val Typography = Typography(
     titleLarge = TextStyle(
         fontFamily = apeMountFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 48.sp,
+        fontSize = 52.sp,
         lineHeight = 54.sp,
         letterSpacing = 0.sp
     ),
