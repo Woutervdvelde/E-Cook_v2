@@ -17,6 +17,7 @@ import com.woutervandervelde.e_cook.ui.component.BottomNavigationBar
 import com.woutervandervelde.e_cook.ui.component.BottomNavigationItem
 import com.woutervandervelde.e_cook.ui.screen.books.navigation.BooksRoute
 import com.woutervandervelde.e_cook.ui.screen.books.navigation.booksNavigation
+import com.woutervandervelde.e_cook.ui.screen.edit.navigation.editNavigation
 import com.woutervandervelde.e_cook.ui.screen.home.navigation.HomeRoute
 import com.woutervandervelde.e_cook.ui.screen.home.navigation.homeNavigation
 import com.woutervandervelde.e_cook.ui.screen.search.navigation.SearchRoute
@@ -54,27 +55,29 @@ fun AppNavigation() {
 
     Scaffold(
         bottomBar = {
-            BottomNavigationBar(
-                modifier = Modifier.safeDrawingPadding()
-            ) {
-                screenItems.forEach { screen ->
-                    BottomNavigationItem(
-                        stringResource(id = screen.nameResourceId),
-                        painterResource(id = screen.iconResourceId),
-                        checkIfSelected(screen),
-                        onClick = {
-                            if (screen.route == HomeRoute && checkIfSelected(screen)) {
-                                navController.popBackStack()
-                            }
-                            navController.navigate(screen.route) {
-                                popUpTo(navController.graph.startDestinationId) {
-                                    saveState = true
+            if (screenItems.any { checkIfSelected(it) }) {
+                BottomNavigationBar(
+                    modifier = Modifier.safeDrawingPadding()
+                ) {
+                    screenItems.forEach { screen ->
+                        BottomNavigationItem(
+                            stringResource(id = screen.nameResourceId),
+                            painterResource(id = screen.iconResourceId),
+                            checkIfSelected(screen),
+                            onClick = {
+                                if (screen.route == HomeRoute && checkIfSelected(screen)) {
+                                    navController.popBackStack()
                                 }
-                                launchSingleTop = true
-                                restoreState = true
+                                navController.navigate(screen.route) {
+                                    popUpTo(navController.graph.startDestinationId) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }
@@ -87,6 +90,7 @@ fun AppNavigation() {
             booksNavigation(navController)
             searchNavigation(navController)
             sourceNavigation(navController)
+            editNavigation(navController)
         }
     }
 }

@@ -37,7 +37,7 @@ class NavigationTransition(
         /**
          * @param direction The direction the new screen will slide in from
          */
-        fun SLIDE(direction: NavigationDirection = NavigationDirection.RIGHT) =
+        fun SLIDE(direction: NavigationDirection = NavigationDirection.RIGHT, transitionDuration: NavigationDuration = NavigationDuration.NORMAL) =
             NavigationTransition(
                 enterTransition = {
                     slideIntoContainer(
@@ -47,7 +47,7 @@ class NavigationTransition(
                             NavigationDirection.LEFT -> AnimatedContentTransitionScope.SlideDirection.Right
                             NavigationDirection.RIGHT -> AnimatedContentTransitionScope.SlideDirection.Left
                         },
-                        animationSpec = tween(300)
+                        animationSpec = tween(transitionDuration.durationMillis)
                     )
                 },
                 exitTransition = {
@@ -58,7 +58,7 @@ class NavigationTransition(
                             NavigationDirection.LEFT -> AnimatedContentTransitionScope.SlideDirection.Left
                             NavigationDirection.RIGHT -> AnimatedContentTransitionScope.SlideDirection.Right
                         },
-                        animationSpec = tween(300)
+                        animationSpec = tween(transitionDuration.durationMillis)
                     )
                 }
             )

@@ -43,12 +43,15 @@ fun HomeScreen(
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        Header()
+        Header(
+            onNewRecipe = { navEvent(HomeNavEvent.ToNewRecipe) },
+            onRandomRecipe = {}
+        )
     }
 }
 
 @Composable
-private fun Header() {
+private fun Header(onNewRecipe: () -> Unit, onRandomRecipe: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -93,14 +96,14 @@ private fun Header() {
                 IconButton(
                     text = stringResource(R.string.button_add_recipe),
                     icon = painterResource(id = R.drawable.add),
-                    onClick = { /*TODO()*/ },
+                    onClick = onNewRecipe,
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(Size16))
                 IconButton(
                     text = stringResource(R.string.button_random_recipe),
                     icon = painterResource(id = R.drawable.dice_5),
-                    onClick = { /*TODO()*/ },
+                    onClick = onRandomRecipe,
                     modifier = Modifier.weight(1f)
                 )
             }
