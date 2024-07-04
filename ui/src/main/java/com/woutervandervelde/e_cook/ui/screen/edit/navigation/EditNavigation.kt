@@ -23,7 +23,7 @@ internal fun NavGraphBuilder.editNavigation(navController: NavController) {
     }
 
     composable<EditRoute>(
-        transition = NavigationTransition.SLIDE(NavigationDirection.RIGHT),
+        transition = NavigationTransition.FADE(),
     ) {
         EditScreen(navEvent)
     }
