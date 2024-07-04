@@ -17,9 +17,10 @@ fun EditScreen(navEvent: (EditNavEvent) -> Unit) {
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .safeDrawingPadding()
     ) { _ ->
-        Column {
+        Column(
+            modifier = Modifier.safeDrawingPadding()
+        ) {
             Text(text = "Edit")
             Button(onClick = { navEvent(EditNavEvent.Back) }) {
                 Text(text = "Back")

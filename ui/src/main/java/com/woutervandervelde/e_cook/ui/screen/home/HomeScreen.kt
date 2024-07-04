@@ -27,6 +27,8 @@ import androidx.compose.ui.unit.dp
 import com.woutervandervelde.e_cook.ui.R
 import com.woutervandervelde.e_cook.ui.component.IconButton
 import com.woutervandervelde.e_cook.ui.screen.home.navigation.HomeNavEvent
+import com.woutervandervelde.e_cook.ui.screen.home.viewmodel.HomeUiEvent
+import com.woutervandervelde.e_cook.ui.screen.home.viewmodel.HomeUiState
 import com.woutervandervelde.e_cook.ui.screen.home.viewmodel.HomeViewModel
 import com.woutervandervelde.e_cook.ui.theme.Size128
 import com.woutervandervelde.e_cook.ui.theme.Size16
@@ -39,12 +41,12 @@ import com.woutervandervelde.e_cook.ui.theme.Size8
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 fun HomeScreen(
-    viewModel: HomeViewModel,
-    navEvent: (HomeNavEvent) -> Unit
+    uiState: HomeUiState,
+    uiEvent: (HomeUiEvent) -> Unit
 ) {
     Column {
         Header(
-            onNewRecipe = { navEvent(HomeNavEvent.ToNewRecipe) },
+            onNewRecipe = { uiEvent(HomeUiEvent.OnAddRecipeClick) },
             onRandomRecipe = {}
         )
     }

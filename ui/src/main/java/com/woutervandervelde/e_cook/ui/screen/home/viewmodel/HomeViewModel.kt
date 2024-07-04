@@ -1,40 +1,49 @@
 package com.woutervandervelde.e_cook.ui.screen.home.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import com.woutervandervelde.e_cook.domain.model.Recipe
-import com.woutervandervelde.e_cook.domain.model.Source
 import com.woutervandervelde.e_cook.domain.repository.RecipeRepository
+import com.woutervandervelde.e_cook.ui.screen.home.navigation.HomeNavEvent
+import com.woutervandervelde.e_cook.ui.viewmodel.BaseViewModel
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val recipeRepository: RecipeRepository
-) : ViewModel() {
-    var recipes: MutableState<List<Recipe>> = mutableStateOf<List<Recipe>>(listOf())
-
+@HiltViewModel(assistedFactory = HomeViewModel.Factory::class)
+class HomeViewModel @AssistedInject constructor(
+    private val recipeRepository: RecipeRepository,
+    @Assisted private val navEvent: (HomeNavEvent) -> Unit
+) : BaseViewModel<HomeUiState, HomeUiEvent>() {
     init {
         loadRecipes()
     }
 
-    fun loadRecipes() {
-        CoroutineScope(Dispatchers.IO).launch {
-             recipes.value = recipeRepository.getAllRecipe()
+    override fun onUiEvent(event: HomeUiEvent) {
+        when (event) {
+            HomeUiEvent.OnAddRecipeClick -> navEvent(HomeNavEvent.ToNewRecipe)
         }
     }
 
-    fun saveRecipe(name: String, description: String) {
+    fun loadRecipes() {
         CoroutineScope(Dispatchers.IO).launch {
-//            recipeRepository.insertRecipe(Recipe(name, description, null, null, null))
+            _uiState.update {
+                it.copy(
+                    recipes = recipeRepository.getAllRecipe()
+                )
+            }
         }
+    }
+
+    override fun defaultUiState(): HomeUiState = HomeUiState()
+
+    @AssistedFactory
+    interface Factory {
+        fun create(navEvent: (HomeNavEvent) -> Unit): HomeViewModel
     }
 }

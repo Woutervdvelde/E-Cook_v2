@@ -1,5 +1,7 @@
 package com.woutervandervelde.e_cook.ui.screen.home.navigation
 
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -25,8 +27,14 @@ internal fun NavGraphBuilder.homeNavigation(navController: NavController) {
     }
 
     composable<HomeRoute>(
-        transition = NavigationTransition.FADE(NavigationDuration.FAST),
+        transition = NavigationTransition.FADE(NavigationDuration.NORMAL),
     ) {
-        HomeScreen(hiltViewModel(), navEvent)
+        val viewModel: HomeViewModel = hiltViewModel<HomeViewModel, HomeViewModel.Factory>(
+            creationCallback = { factory -> factory.create(navEvent) }
+        )
+        val uiState by viewModel.uiState.collectAsState()
+        val uiEvent = viewModel::onUiEvent
+
+        HomeScreen(uiState, uiEvent)
     }
 }
