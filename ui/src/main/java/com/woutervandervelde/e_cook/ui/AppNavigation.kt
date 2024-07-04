@@ -56,9 +56,7 @@ fun AppNavigation() {
     Scaffold(
         bottomBar = {
             if (screenItems.any { checkIfSelected(it) }) {
-                BottomNavigationBar(
-                    modifier = Modifier.safeDrawingPadding()
-                ) {
+                BottomNavigationBar {
                     screenItems.forEach { screen ->
                         BottomNavigationItem(
                             stringResource(id = screen.nameResourceId),
