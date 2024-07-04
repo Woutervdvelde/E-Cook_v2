@@ -1,9 +1,7 @@
 package com.woutervandervelde.e_cook.ui.screen.home.viewmodel
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import com.woutervandervelde.e_cook.domain.model.Recipe
 import com.woutervandervelde.e_cook.domain.repository.RecipeRepository
+import com.woutervandervelde.e_cook.domain.usecase.CreateRecipeUseCase
 import com.woutervandervelde.e_cook.ui.screen.home.navigation.HomeNavEvent
 import com.woutervandervelde.e_cook.ui.viewmodel.BaseViewModel
 import dagger.assisted.Assisted
@@ -18,6 +16,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel(assistedFactory = HomeViewModel.Factory::class)
 class HomeViewModel @AssistedInject constructor(
     private val recipeRepository: RecipeRepository,
+    private val createRecipeUseCase: CreateRecipeUseCase,
     @Assisted private val navEvent: (HomeNavEvent) -> Unit
 ) : BaseViewModel<HomeUiState, HomeUiEvent>() {
     init {
