@@ -1,4 +1,4 @@
-package com.woutervandervelde.e_cook.ui.screen.home.viewmodel
+package com.woutervandervelde.e_cook.ui.screen.home.presentation
 
 import com.woutervandervelde.e_cook.ui.viewmodel.BaseUiEvent
 

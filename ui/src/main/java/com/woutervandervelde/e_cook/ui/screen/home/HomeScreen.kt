@@ -2,7 +2,6 @@ package com.woutervandervelde.e_cook.ui.screen.home
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,30 +12,23 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.woutervandervelde.e_cook.ui.R
 import com.woutervandervelde.e_cook.ui.component.IconButton
-import com.woutervandervelde.e_cook.ui.screen.home.navigation.HomeNavEvent
-import com.woutervandervelde.e_cook.ui.screen.home.viewmodel.HomeUiEvent
-import com.woutervandervelde.e_cook.ui.screen.home.viewmodel.HomeUiState
-import com.woutervandervelde.e_cook.ui.screen.home.viewmodel.HomeViewModel
+import com.woutervandervelde.e_cook.ui.screen.home.presentation.HomeUiEvent
+import com.woutervandervelde.e_cook.ui.screen.home.presentation.HomeUiState
 import com.woutervandervelde.e_cook.ui.theme.Size128
 import com.woutervandervelde.e_cook.ui.theme.Size16
-import com.woutervandervelde.e_cook.ui.theme.Size200
 import com.woutervandervelde.e_cook.ui.theme.Size32
 import com.woutervandervelde.e_cook.ui.theme.Size360
 import com.woutervandervelde.e_cook.ui.theme.Size56
-import com.woutervandervelde.e_cook.ui.theme.Size8
 
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

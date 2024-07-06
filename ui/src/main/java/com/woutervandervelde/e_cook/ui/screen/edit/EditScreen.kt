@@ -4,16 +4,21 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.woutervandervelde.e_cook.ui.screen.edit.navigation.EditNavEvent
+import com.woutervandervelde.e_cook.ui.screen.edit.presentation.EditUiEvent
+import com.woutervandervelde.e_cook.ui.screen.edit.presentation.EditUiState
+import com.woutervandervelde.e_cook.ui.screen.home.presentation.HomeUiEvent
+import com.woutervandervelde.e_cook.ui.screen.home.presentation.HomeUiState
 
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-fun EditScreen(navEvent: (EditNavEvent) -> Unit) {
+fun EditScreen(
+    uiState: EditUiState,
+    uiEvent: (EditUiEvent) -> Unit
+) {
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -22,9 +27,6 @@ fun EditScreen(navEvent: (EditNavEvent) -> Unit) {
             modifier = Modifier.safeDrawingPadding()
         ) {
             Text(text = "Edit")
-            Button(onClick = { navEvent(EditNavEvent.Back) }) {
-                Text(text = "Back")
-            }
         }
     }
 }
