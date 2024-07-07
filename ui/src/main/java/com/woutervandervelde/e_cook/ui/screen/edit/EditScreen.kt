@@ -82,7 +82,7 @@ fun EditScreen(
         ) {
             ImageSection(modifier = Modifier.padding(top = Size16))
             NameSection()
-            NameSection()
+            DescriptionSection()
             NameSection()
             NameSection()
             NameSection()
@@ -141,6 +141,22 @@ fun NameSection() {
         verticalArrangement = Arrangement.spacedBy(Size8)
     ) {
         SectionTitle(title = stringResource(R.string.edit_section_name_title))
-        TextInput(placeholder = stringResource(R.string.edit_section_name_placeholder))
+        TextInput(
+            placeholder = stringResource(R.string.edit_section_name_placeholder),
+            singleLine = true
+        )
+    }
+}
+
+@Composable
+fun DescriptionSection() {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(Size8)
+    ) {
+        SectionTitle(title = stringResource(R.string.edit_section_description_title))
+        TextInput(
+            placeholder = stringResource(R.string.edit_section_description_placeholder),
+            minLines = 2
+        )
     }
 }

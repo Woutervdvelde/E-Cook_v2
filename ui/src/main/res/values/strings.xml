@@ -15,6 +15,7 @@
     <string name="edit_section_name_title">Name</string>
     <string name="edit_section_name_placeholder">Chocolate Raspberry Truffle Tart</string>
     <string name="edit_section_description_title">Description</string>
+    <string name="edit_section_description_placeholder">Decadent tart with rich chocolate and tangy raspberry filling.</string>
     <string name="edit_section_tags_title">Tags</string>
     <string name="edit_section_ingredients_title">Ingredients</string>
     <string name="edit_section_steps_title">Steps</string>

@@ -18,7 +18,11 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.woutervandervelde.e_cook.ui.theme.Size10
 
 @Composable
-fun TextInput(placeholder: String) {
+fun TextInput(
+    placeholder: String = "",
+    singleLine: Boolean = false,
+    minLines: Int = 1,
+) {
     var textState by remember { mutableStateOf(TextFieldValue("")) }
 
     OutlinedTextField(
@@ -38,6 +42,8 @@ fun TextInput(placeholder: String) {
             focusedBorderColor = MaterialTheme.colorScheme.tertiary,
             focusedTextColor = MaterialTheme.colorScheme.onPrimary
         ),
-        shape = RoundedCornerShape(Size10)
+        shape = RoundedCornerShape(Size10),
+        singleLine = singleLine,
+        minLines = minLines
     )
 }
