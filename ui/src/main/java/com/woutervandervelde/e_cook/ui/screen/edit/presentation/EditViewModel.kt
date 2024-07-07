@@ -25,7 +25,9 @@ class EditViewModel @AssistedInject constructor(
     }
 
     override fun onUiEvent(event: EditUiEvent) {
-        //TODO("Not yet implemented")
+        when (event) {
+            is EditUiEvent.OnBack -> navEvent(EditNavEvent.Back)
+        }
     }
 
     override fun defaultUiState(): EditUiState = EditUiState(

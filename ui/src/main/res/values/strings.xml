@@ -6,10 +6,19 @@
     <string name="navigation_source">Sources</string>
 
     <string name="home_header_slogan">What\'s on\nthe menu?</string>
-    <string name="button_add_recipe">"Add recipe</string>
+    <string name="button_back">Back</string>
+    <string name="button_add_recipe">Add recipe</string>
     <string name="button_random_recipe">"Random recipe</string>
 
+    <string name="edit_header_title">Edit recipe</string>
     <string name="edit_section_image_title">Image</string>
+    <string name="edit_section_name_title">Name</string>
+    <string name="edit_section_name_placeholder">Chocolate Raspberry Truffle Tart</string>
+    <string name="edit_section_description_title">Description</string>
+    <string name="edit_section_tags_title">Tags</string>
+    <string name="edit_section_ingredients_title">Ingredients</string>
+    <string name="edit_section_steps_title">Steps</string>
+
     <string name="edit_button_upload">Upload</string>
     <string name="edit_button_url">URL</string>
 </resources>

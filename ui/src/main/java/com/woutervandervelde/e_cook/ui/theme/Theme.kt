@@ -12,6 +12,7 @@ private val DarkColorScheme = darkColorScheme(
     secondary = Grey,
     primaryContainer = White,
     onPrimaryContainer = Black,
+    tertiary = Yellow
 )
 
 @Composable
