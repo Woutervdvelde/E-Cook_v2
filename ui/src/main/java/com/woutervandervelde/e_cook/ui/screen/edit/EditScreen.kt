@@ -3,6 +3,8 @@ package com.woutervandervelde.e_cook.ui.screen.edit
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,14 +28,18 @@ import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
 import androidx.compose.material3.IconButton as DefaultIconButton
 import com.woutervandervelde.e_cook.domain.model.Recipe
+import com.woutervandervelde.e_cook.domain.model.Tag
 import com.woutervandervelde.e_cook.ui.R
 import com.woutervandervelde.e_cook.ui.component.TextInput
 import com.woutervandervelde.e_cook.ui.component.IconButton
+import com.woutervandervelde.e_cook.ui.component.Tag
 import com.woutervandervelde.e_cook.ui.screen.edit.presentation.EditUiEvent
 import com.woutervandervelde.e_cook.ui.screen.edit.presentation.EditUiState
 import com.woutervandervelde.e_cook.ui.theme.Size0
+import com.woutervandervelde.e_cook.ui.theme.Size12
 import com.woutervandervelde.e_cook.ui.theme.Size16
 import com.woutervandervelde.e_cook.ui.theme.Size20
+import com.woutervandervelde.e_cook.ui.theme.Size4
 import com.woutervandervelde.e_cook.ui.theme.Size8
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -83,14 +89,7 @@ fun EditScreen(
             ImageSection(modifier = Modifier.padding(top = Size16))
             NameSection()
             DescriptionSection()
-            NameSection()
-            NameSection()
-            NameSection()
-            NameSection()
-            NameSection()
-            NameSection()
-            NameSection()
-            NameSection()
+            TagsSection()
         }
     }
 }
@@ -158,5 +157,23 @@ fun DescriptionSection() {
             placeholder = stringResource(R.string.edit_section_description_placeholder),
             minLines = 2
         )
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun TagsSection() {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(Size8)
+    ) {
+        SectionTitle(title = stringResource(R.string.edit_section_tags_title))
+        FlowRow {
+            Tag.entries.map {
+                Tag(
+                    name = it.name,
+                    onSelectChange = { selected -> /*TODO*/},
+                    modifier = Modifier.padding(end = Size12, bottom = Size12))
+            }
+        }
     }
 }
