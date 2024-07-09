@@ -7,20 +7,27 @@ import androidx.room.Query
 import androidx.room.TypeConverters
 import com.woutervandervelde.e_cook.data.database.typeconverter.Converters
 import com.woutervandervelde.e_cook.data.entity.RecipeEntity
-import com.woutervandervelde.e_cook.domain.model.Recipe
+import com.woutervandervelde.e_cook.data.entity.RecipeIngredientEntity
+import com.woutervandervelde.e_cook.data.entity.RecipeWithIngredientsEntity
 
 @Dao
 @TypeConverters(Converters::class)
 interface RecipeDao {
     @Query("SELECT * FROM recipe")
-    fun getAll(): List<RecipeEntity>
+    suspend fun getAll(): List<RecipeEntity>
 
     @Query("SELECT * FROM recipe WHERE id IN (:recipeIds)")
-    fun getAllByIds(recipeIds: IntArray): List<RecipeEntity>
+    suspend fun getAllByIds(recipeIds: IntArray): List<RecipeEntity>
+
+    @Query("SELECT * FROM recipe WHERE id = :recipeId")
+    suspend fun getRecipeWithIngredients(recipeId: Int): RecipeWithIngredientsEntity
 
     @Insert
-    fun insert(vararg recipe: RecipeEntity)
+    suspend fun insert(vararg recipe: RecipeEntity)
+
+    @Insert
+    suspend fun inertRecipeIngredient(recipeIngredient: RecipeIngredientEntity)
 
     @Delete
-    fun delete(recipe: RecipeEntity)
+    suspend fun delete(recipe: RecipeEntity)
 }

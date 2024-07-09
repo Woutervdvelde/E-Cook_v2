@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -26,21 +25,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
-import androidx.compose.material3.IconButton as DefaultIconButton
 import com.woutervandervelde.e_cook.domain.model.Recipe
 import com.woutervandervelde.e_cook.domain.model.Tag
 import com.woutervandervelde.e_cook.ui.R
-import com.woutervandervelde.e_cook.ui.component.TextInput
 import com.woutervandervelde.e_cook.ui.component.IconButton
+import com.woutervandervelde.e_cook.ui.component.IngredientItem
 import com.woutervandervelde.e_cook.ui.component.Tag
+import com.woutervandervelde.e_cook.ui.component.TextInput
 import com.woutervandervelde.e_cook.ui.screen.edit.presentation.EditUiEvent
 import com.woutervandervelde.e_cook.ui.screen.edit.presentation.EditUiState
 import com.woutervandervelde.e_cook.ui.theme.Size0
 import com.woutervandervelde.e_cook.ui.theme.Size12
 import com.woutervandervelde.e_cook.ui.theme.Size16
 import com.woutervandervelde.e_cook.ui.theme.Size20
-import com.woutervandervelde.e_cook.ui.theme.Size4
 import com.woutervandervelde.e_cook.ui.theme.Size8
+import androidx.compose.material3.IconButton as DefaultIconButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -90,6 +89,7 @@ fun EditScreen(
             NameSection()
             DescriptionSection()
             TagsSection()
+            IngredientsSection()
         }
     }
 }
@@ -119,7 +119,7 @@ fun ImageSection(modifier: Modifier = Modifier) {
 
         Column(
             verticalArrangement = Arrangement.spacedBy(Size8),
-            modifier = Modifier.weight(1f)
+            modifier = modifier.weight(1f)
         ) {
             SectionTitle(title = stringResource(R.string.edit_section_image_title))
             IconButton(
@@ -174,6 +174,18 @@ fun TagsSection() {
                     onSelectChange = { selected -> /*TODO*/},
                     modifier = Modifier.padding(end = Size12, bottom = Size12))
             }
+        }
+    }
+}
+
+@Composable
+fun IngredientsSection() {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(Size8)
+    ) {
+        SectionTitle(title = stringResource(R.string.edit_section_ingredients_title))
+        Column {
+            IngredientItem()
         }
     }
 }
