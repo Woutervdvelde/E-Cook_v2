@@ -12,7 +12,7 @@ import com.woutervandervelde.e_cook.domain.model.Tag
 @Entity(tableName = "recipe")
 @TypeConverters(Converters::class)
 data class RecipeEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = true) val recipeId: Long,
     val name: String,
     val description: String?,
     val tags: List<Tag>?,
@@ -38,7 +38,7 @@ data class RecipeEntity(
     )
 
     fun toModel() = Recipe(
-        id, name, description, tags, notes, image, source
+        name, description, tags, notes, image, source
     )
 
     companion object {

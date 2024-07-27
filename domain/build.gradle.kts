@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
     implementation(libs.android.hilt)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.kotlinx.serialization.json)

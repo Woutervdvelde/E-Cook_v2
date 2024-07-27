@@ -13,6 +13,9 @@ interface IngredientDao {
     @Query("SELECT * FROM ingredient")
     suspend fun getAllIngredients(): List<IngredientEntity>
 
+    @Query("SELECT * FROM ingredient WHERE ingredientId = :id")
+    suspend fun getIngredientById(id: Long): IngredientEntity
+
     @Insert
-    suspend fun insertIngredient(ingredient: IngredientEntity)
+    suspend fun insert(ingredient: IngredientEntity): Long
 }

@@ -20,7 +20,7 @@ internal fun NavGraphBuilder.booksNavigation(navController: NavController) {
     }
 
     composable<BooksRoute>(
-        transition = NavigationTransition.FADE(transitionDuration = NavigationDuration.NORMAL),
+        transition = NavigationTransition.FADE(transitionDuration = NavigationDuration.FAST),
     ) {
         BooksScreen(navEvent)
     }

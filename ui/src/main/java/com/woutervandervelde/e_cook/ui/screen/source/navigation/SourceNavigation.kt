@@ -19,7 +19,7 @@ fun NavGraphBuilder.sourceNavigation(navController: NavController) {
     }
 
     composable<SourceRoute>(
-        transition = NavigationTransition.FADE(transitionDuration = NavigationDuration.NORMAL),
+        transition = NavigationTransition.FADE(transitionDuration = NavigationDuration.FAST),
     ) {
         SourceScreen(navEvent)
     }

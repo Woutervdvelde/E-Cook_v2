@@ -19,7 +19,7 @@ internal fun NavGraphBuilder.searchNavigation(navController: NavController) {
     }
 
     composable<SearchRoute>(
-        transition = NavigationTransition.FADE(transitionDuration = NavigationDuration.NORMAL),
+        transition = NavigationTransition.FADE(transitionDuration = NavigationDuration.FAST),
     ) {
         SearchScreen(navEvent)
     }

@@ -26,7 +26,7 @@ internal fun NavGraphBuilder.homeNavigation(navController: NavController) {
     }
 
     composable<HomeRoute>(
-        transition = NavigationTransition.FADE(NavigationDuration.NORMAL),
+        transition = NavigationTransition.FADE(NavigationDuration.FAST),
     ) {
         val viewModel: HomeViewModel = hiltViewModel<HomeViewModel, HomeViewModel.Factory>(
             creationCallback = { factory -> factory.create(navEvent) }

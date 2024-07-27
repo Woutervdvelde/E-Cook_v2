@@ -1,9 +1,11 @@
 package com.woutervandervelde.e_cook.data.di
 
 import android.content.Context
+import com.woutervandervelde.e_cook.data.dao.IngredientDao
 import com.woutervandervelde.e_cook.data.database.Database
 import com.woutervandervelde.e_cook.data.dao.RecipeDao
 import com.woutervandervelde.e_cook.data.repository.RecipeRepositoryImpl
+import com.woutervandervelde.e_cook.domain.repository.RecipeRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,6 +28,11 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideRecipeRepository(recipeDao: RecipeDao): com.woutervandervelde.e_cook.domain.repository.RecipeRepository =
-        RecipeRepositoryImpl(recipeDao)
+    fun provideIngredientDao(database: Database) : IngredientDao =
+        database.ingredientDao()
+
+    @Provides
+    @Singleton
+    fun provideRecipeRepository(recipeDao: RecipeDao, ingredientDao: IngredientDao): RecipeRepository =
+        RecipeRepositoryImpl(recipeDao, ingredientDao)
 }
