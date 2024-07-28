@@ -9,14 +9,12 @@ import javax.inject.Inject
 class IngredientRepositoryImpl @Inject constructor(
     private val ingredientDao: IngredientDao
 ): IngredientRepository {
-    override suspend fun getIngredientById(id: Long): Ingredient? =
-        ingredientDao.getIngredientById(id)?.toModel()
-
     override suspend fun getIngredientByName(name: String): Ingredient? =
         ingredientDao.getIngredientByName(name)?.toModel()
 
-    override suspend fun insertIngredient(ingredient: Ingredient): Long =
+    override suspend fun insertIngredient(ingredient: Ingredient) {
         ingredientDao.insert(IngredientEntity.fromModel(ingredient))
+    }
 
     override suspend fun deleteIngredient(ingredient: Ingredient) {
         ingredientDao.delete(IngredientEntity.fromModel(ingredient))

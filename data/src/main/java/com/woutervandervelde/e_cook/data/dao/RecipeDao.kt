@@ -17,8 +17,14 @@ interface RecipeDao {
     @Query("SELECT * FROM recipe")
     suspend fun getAll(): List<RecipeEntity>
 
+    @Query("SELECT * FROM recipe WHERE recipeId = :id")
+    suspend fun getById(id: Long): RecipeEntity
+
     @Query("SELECT * FROM recipe WHERE recipeId IN (:recipeIds)")
     suspend fun getAllByIds(recipeIds: IntArray): List<RecipeEntity?>
+
+    @Query("SELECT * FROM recipe_ingredient WHERE recipeId = :id")
+    suspend fun getAllIngredientsForRecipe(id: Long): List<RecipeIngredientEntity>
 
     @Insert
     suspend fun insert(recipe: RecipeEntity): Long

@@ -12,14 +12,14 @@ import com.woutervandervelde.e_cook.domain.model.RecipeIngredient
     tableName = "recipe_ingredient",
     foreignKeys = [
         ForeignKey(entity = RecipeEntity::class, parentColumns = ["recipeId"], childColumns = ["recipeId"], onDelete = ForeignKey.CASCADE),
-        ForeignKey(entity = IngredientEntity::class, parentColumns = ["ingredientId"], childColumns = ["ingredientId"], onDelete = ForeignKey.CASCADE)
+        ForeignKey(entity = IngredientEntity::class, parentColumns = ["name"], childColumns = ["ingredient"], onDelete = ForeignKey.CASCADE)
     ],
-    indices = [Index(value = ["recipeId"]), Index(value = ["ingredientId"])]
+    indices = [Index(value = ["recipeId"]), Index(value = ["ingredient"])]
 )
 data class RecipeIngredientEntity(
     @PrimaryKey(autoGenerate = true) val id: Long,
     val recipeId: Long,
-    val ingredientId: Long,
+    val ingredient: String,
     val measurementUnit: MeasurementUnit,
     val quantity: Double
 ) {
@@ -28,7 +28,7 @@ data class RecipeIngredientEntity(
             RecipeIngredientEntity(
                 0,
                 recipe.id,
-                recipeIngredient.ingredient.id,
+                recipeIngredient.ingredient.name,
                 recipeIngredient.unit,
                 recipeIngredient.quantity
             )

@@ -35,8 +35,8 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideRecipeRepository(recipeDao: RecipeDao): RecipeRepository =
-        RecipeRepositoryImpl(recipeDao)
+    fun provideRecipeRepository(recipeDao: RecipeDao, ingredientDao: IngredientDao): RecipeRepository =
+        RecipeRepositoryImpl(recipeDao, ingredientDao)
 
     @Provides
     @Singleton

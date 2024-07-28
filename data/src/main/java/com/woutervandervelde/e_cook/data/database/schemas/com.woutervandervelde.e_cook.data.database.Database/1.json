@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b0abb22ffa6de3db41c1959361db97ab",
+    "identityHash": "60f108834defa220132d91d3537779f6",
     "entities": [
       {
         "tableName": "recipe",
@@ -63,14 +63,8 @@
       },
       {
         "tableName": "ingredient",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ingredientId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, PRIMARY KEY(`name`))",
         "fields": [
-          {
-            "fieldPath": "ingredientId",
-            "columnName": "ingredientId",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "name",
             "columnName": "name",
@@ -79,9 +73,9 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": true,
+          "autoGenerate": false,
           "columnNames": [
-            "ingredientId"
+            "name"
           ]
         },
         "indices": [],
@@ -89,7 +83,7 @@
       },
       {
         "tableName": "recipe_ingredient",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `recipeId` INTEGER NOT NULL, `ingredientId` INTEGER NOT NULL, `measurementUnit` TEXT NOT NULL, `quantity` REAL NOT NULL, FOREIGN KEY(`recipeId`) REFERENCES `recipe`(`recipeId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`ingredientId`) REFERENCES `ingredient`(`ingredientId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `recipeId` INTEGER NOT NULL, `ingredient` TEXT NOT NULL, `measurementUnit` TEXT NOT NULL, `quantity` REAL NOT NULL, FOREIGN KEY(`recipeId`) REFERENCES `recipe`(`recipeId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`ingredient`) REFERENCES `ingredient`(`name`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -104,9 +98,9 @@
             "notNull": true
           },
           {
-            "fieldPath": "ingredientId",
-            "columnName": "ingredientId",
-            "affinity": "INTEGER",
+            "fieldPath": "ingredient",
+            "columnName": "ingredient",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -139,13 +133,13 @@
             "createSql": "CREATE INDEX IF NOT EXISTS `index_recipe_ingredient_recipeId` ON `${TABLE_NAME}` (`recipeId`)"
           },
           {
-            "name": "index_recipe_ingredient_ingredientId",
+            "name": "index_recipe_ingredient_ingredient",
             "unique": false,
             "columnNames": [
-              "ingredientId"
+              "ingredient"
             ],
             "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_recipe_ingredient_ingredientId` ON `${TABLE_NAME}` (`ingredientId`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_recipe_ingredient_ingredient` ON `${TABLE_NAME}` (`ingredient`)"
           }
         ],
         "foreignKeys": [
@@ -165,10 +159,10 @@
             "onDelete": "CASCADE",
             "onUpdate": "NO ACTION",
             "columns": [
-              "ingredientId"
+              "ingredient"
             ],
             "referencedColumns": [
-              "ingredientId"
+              "name"
             ]
           }
         ]
@@ -177,7 +171,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b0abb22ffa6de3db41c1959361db97ab')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '60f108834defa220132d91d3537779f6')"
     ]
   }
 }

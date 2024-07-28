@@ -6,13 +6,12 @@ import com.woutervandervelde.e_cook.domain.model.Ingredient
 
 @Entity(tableName = "ingredient")
 data class IngredientEntity(
-    @PrimaryKey(autoGenerate = true) val ingredientId: Long,
-    val name: String
+    @PrimaryKey val name: String
 ) {
-    fun toModel() = Ingredient(ingredientId, name)
+    fun toModel() = Ingredient(name)
 
     companion object {
         fun fromModel(ingredient: Ingredient) =
-            IngredientEntity(ingredient.id, ingredient.name)
+            IngredientEntity(ingredient.name)
     }
 }

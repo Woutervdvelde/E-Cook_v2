@@ -39,7 +39,7 @@ fun HomeScreen(
     Column {
         Header(
             onNewRecipe = { uiEvent(HomeUiEvent.OnAddRecipeClick) },
-            onRandomRecipe = {}
+            onRandomRecipe = { uiEvent(HomeUiEvent.OnRandomRecipeClick) }
         )
     }
 }
