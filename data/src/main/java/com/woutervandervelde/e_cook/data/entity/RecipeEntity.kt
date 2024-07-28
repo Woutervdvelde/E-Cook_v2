@@ -38,7 +38,7 @@ data class RecipeEntity(
     )
 
     fun toModel() = Recipe(
-        name, description, tags, notes, image, source
+        recipeId, name, description, tags, notes, image, source
     )
 
     companion object {

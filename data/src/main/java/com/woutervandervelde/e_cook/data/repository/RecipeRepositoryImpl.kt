@@ -3,14 +3,14 @@ package com.woutervandervelde.e_cook.data.repository
 import com.woutervandervelde.e_cook.data.dao.IngredientDao
 import com.woutervandervelde.e_cook.data.dao.RecipeDao
 import com.woutervandervelde.e_cook.data.entity.RecipeEntity
+import com.woutervandervelde.e_cook.data.entity.RecipeIngredientEntity
 import com.woutervandervelde.e_cook.domain.model.Recipe
 import com.woutervandervelde.e_cook.domain.model.RecipeIngredient
 import com.woutervandervelde.e_cook.domain.repository.RecipeRepository
 import javax.inject.Inject
 
 class RecipeRepositoryImpl @Inject constructor(
-    private val recipeDao: RecipeDao,
-    private val ingredientDao: IngredientDao
+    private val recipeDao: RecipeDao
 ) : RecipeRepository {
     override suspend fun getAllRecipe(): List<Recipe> =
         recipeDao.getAll().map { it.toModel() }
@@ -22,16 +22,26 @@ class RecipeRepositoryImpl @Inject constructor(
         recipe: Recipe,
         recipeIngredient: RecipeIngredient
     ) {
-        //TODO("Not yet implemented")
+        recipeDao.insertRecipeIngredient(
+            RecipeIngredientEntity.fromModel(recipe, recipeIngredient)
+        )
     }
 
     override suspend fun insertRecipeIngredients(
         recipe: Recipe,
-        recipeIngredient: List<RecipeIngredient>
+        recipeIngredients: List<RecipeIngredient>
     ) {
-        //TODO("Not yet implemented")
+        recipeDao.insertRecipeIngredients(recipeIngredients.map {
+            RecipeIngredientEntity.fromModel(
+                recipe, it
+            )
+        })
     }
 
     override suspend fun deleteRecipe(recipe: Recipe) =
         recipeDao.delete(RecipeEntity.fromModel(recipe))
+
+    override suspend fun deleteRecipeIngredient(recipe: Recipe, recipeIngredient: RecipeIngredient) {
+        recipeDao.deleteRecipeIngredient(RecipeIngredientEntity.fromModel(recipe, recipeIngredient))
+    }
 }

@@ -1,6 +1,7 @@
 package com.woutervandervelde.e_cook.data.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.TypeConverters
@@ -14,8 +15,14 @@ interface IngredientDao {
     suspend fun getAllIngredients(): List<IngredientEntity>
 
     @Query("SELECT * FROM ingredient WHERE ingredientId = :id")
-    suspend fun getIngredientById(id: Long): IngredientEntity
+    suspend fun getIngredientById(id: Long): IngredientEntity?
+
+    @Query("SELECT * FROM ingredient WHERE name = :name")
+    suspend fun getIngredientByName(name: String): IngredientEntity?
 
     @Insert
     suspend fun insert(ingredient: IngredientEntity): Long
+
+    @Delete
+    suspend fun delete(ingredient: IngredientEntity)
 }

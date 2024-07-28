@@ -5,6 +5,8 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.woutervandervelde.e_cook.domain.model.MeasurementUnit
+import com.woutervandervelde.e_cook.domain.model.Recipe
+import com.woutervandervelde.e_cook.domain.model.RecipeIngredient
 
 @Entity(
     tableName = "recipe_ingredient",
@@ -19,5 +21,16 @@ data class RecipeIngredientEntity(
     val recipeId: Long,
     val ingredientId: Long,
     val measurementUnit: MeasurementUnit,
-    val amount: Double
-)
+    val quantity: Double
+) {
+    companion object {
+        fun fromModel(recipe: Recipe, recipeIngredient: RecipeIngredient) =
+            RecipeIngredientEntity(
+                0,
+                recipe.id,
+                recipeIngredient.ingredient.id,
+                recipeIngredient.unit,
+                recipeIngredient.quantity
+            )
+    }
+}
