@@ -171,6 +171,8 @@ fun DescriptionSection() {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun TagsSection() {
+    var selectedTags: MutableList<Tag> = mutableListOf()
+
     Column(
         verticalArrangement = Arrangement.spacedBy(Size8)
     ) {
@@ -179,7 +181,10 @@ fun TagsSection() {
             Tag.entries.map {
                 Tag(
                     name = it.name,
-                    onSelectChange = { selected -> /*TODO*/ },
+                    onSelectChange = { selected ->
+                        if (selected) selectedTags.add(it)
+                        else selectedTags.remove(it)
+                    },
                     modifier = Modifier.padding(end = Size12, bottom = Size12)
                 )
             }
@@ -209,8 +214,8 @@ fun IngredientsSection(ingredients: List<Ingredient>) {
             onDismissRequest = {
                 showIngredientModal = false
             },
-            onIngredientSelected = { ingredient, new ->
-
+            onIngredientSelected = { ingredient, new, unit, quantity ->
+                showIngredientModal = false
             },
             ingredients = ingredients
         )

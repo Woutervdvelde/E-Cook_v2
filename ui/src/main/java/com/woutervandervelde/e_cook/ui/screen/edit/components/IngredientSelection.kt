@@ -22,6 +22,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -47,9 +48,11 @@ import com.woutervandervelde.e_cook.ui.theme.Size8
 fun IngredientsSelectionModal(
     onDismissRequest: () -> Unit,
     ingredients: List<Ingredient>,
-    onIngredientSelected: (name: String, new: Boolean) -> Unit
+    onIngredientSelected: (name: String, new: Boolean, unit: MeasurementUnit, quantity: Double) -> Unit
 ) {
     var selectIngredientState by remember { mutableStateOf(true) }
+    var ingredient = ""
+    var newIngredient = true
 
     Dialog(onDismissRequest = onDismissRequest) {
         Card(
@@ -68,6 +71,8 @@ fun IngredientsSelectionModal(
                     ingredients = ingredients,
                     onIngredientSelected = { name, new ->
                         selectIngredientState = false
+                        ingredient = name
+                        newIngredient = new
                     })
             }
             AnimatedVisibility(
@@ -77,7 +82,9 @@ fun IngredientsSelectionModal(
                     initialOffset = { IntOffset(it.width * 2, it.height) }),
                 modifier = Modifier.fillMaxSize()
             ) {
-                QuantitySelection()
+                QuantitySelection(onSubmit = { unit, quantity ->
+                    onIngredientSelected(ingredient, newIngredient, unit, quantity)
+                })
             }
         }
     }
@@ -144,8 +151,9 @@ private fun IngredientSelection(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun QuantitySelection() {
+private fun QuantitySelection(onSubmit: (unit: MeasurementUnit, quantity: Double) -> Unit) {
     var selectedUnit by remember { mutableStateOf(MeasurementUnit.MILLILITER) }
+    var quantity by remember { mutableDoubleStateOf(0.0) }
 
     Column(
         modifier = Modifier.padding(Size16),
@@ -154,7 +162,7 @@ private fun QuantitySelection() {
         Input(
             placeholder = "0.0",
             onValueChange = {
-
+                quantity = it.text.toDouble()
             },
             keyboardType = KeyboardType.Decimal
         )
@@ -177,11 +185,13 @@ private fun QuantitySelection() {
             }
         }
 
-        IconButton(text = "Add to recipe", icon = painterResource(R.drawable.add), onClick = {
-            Log.e(
-                "TAG",
-                "QuantitySelection: $selectedUnit",
-
-            ) }, modifier = Modifier.weight(.25f))
+        IconButton(
+            text = "Add to recipe",
+            icon = painterResource(R.drawable.add),
+            onClick = {
+                onSubmit(selectedUnit, quantity)
+            },
+            modifier = Modifier.weight(.25f)
+        )
     }
 }
