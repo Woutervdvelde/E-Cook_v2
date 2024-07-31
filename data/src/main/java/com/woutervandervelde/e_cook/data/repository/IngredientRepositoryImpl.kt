@@ -9,6 +9,9 @@ import javax.inject.Inject
 class IngredientRepositoryImpl @Inject constructor(
     private val ingredientDao: IngredientDao
 ): IngredientRepository {
+    override suspend fun getAllIngredients(): List<Ingredient> =
+        ingredientDao.getAllIngredients().map { it.toModel() }
+
     override suspend fun getIngredientByName(name: String): Ingredient? =
         ingredientDao.getIngredientByName(name)?.toModel()
 

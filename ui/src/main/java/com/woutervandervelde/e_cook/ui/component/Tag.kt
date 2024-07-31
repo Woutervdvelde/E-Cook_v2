@@ -30,7 +30,8 @@ fun Tag(
     name: String,
     modifier: Modifier = Modifier,
     selected: Boolean = false,
-    onSelectChange: (selected: Boolean) -> Unit
+    onSelectChange: (selected: Boolean) -> Unit,
+    toggleable: Boolean = true
 ) {
     var select by remember {
         mutableStateOf(selected)
@@ -53,8 +54,8 @@ fun Tag(
             color = backgroundColor,
             shape = CircleShape,
             onClick = {
-                onSelectChange(select)
-                select = !select
+                onSelectChange(!select)
+                if (toggleable) select = !select
             },
             modifier = modifier
         ) {

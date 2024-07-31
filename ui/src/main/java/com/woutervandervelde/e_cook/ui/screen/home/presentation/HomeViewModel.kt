@@ -34,7 +34,7 @@ class HomeViewModel @AssistedInject constructor(
         when (event) {
             HomeUiEvent.OnAddRecipeClick -> navEvent(HomeNavEvent.ToNewRecipe)
             HomeUiEvent.OnRandomRecipeClick -> {
-                
+
             }
         }
     }

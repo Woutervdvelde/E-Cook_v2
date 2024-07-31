@@ -1,17 +1,22 @@
 package com.woutervandervelde.e_cook.ui.screen.edit
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -19,12 +24,19 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
+import com.woutervandervelde.e_cook.domain.ext.capitalizeWords
+import com.woutervandervelde.e_cook.domain.model.Ingredient
 import com.woutervandervelde.e_cook.domain.model.Recipe
 import com.woutervandervelde.e_cook.domain.model.Tag
 import com.woutervandervelde.e_cook.ui.R
@@ -32,12 +44,16 @@ import com.woutervandervelde.e_cook.ui.component.IconButton
 import com.woutervandervelde.e_cook.ui.component.IngredientItem
 import com.woutervandervelde.e_cook.ui.component.Tag
 import com.woutervandervelde.e_cook.ui.component.TextInput
+import com.woutervandervelde.e_cook.ui.screen.edit.components.IngredientsSelectionModal
 import com.woutervandervelde.e_cook.ui.screen.edit.presentation.EditUiEvent
 import com.woutervandervelde.e_cook.ui.screen.edit.presentation.EditUiState
 import com.woutervandervelde.e_cook.ui.theme.Size0
+import com.woutervandervelde.e_cook.ui.theme.Size1
 import com.woutervandervelde.e_cook.ui.theme.Size12
 import com.woutervandervelde.e_cook.ui.theme.Size16
 import com.woutervandervelde.e_cook.ui.theme.Size20
+import com.woutervandervelde.e_cook.ui.theme.Size200
+import com.woutervandervelde.e_cook.ui.theme.Size4
 import com.woutervandervelde.e_cook.ui.theme.Size8
 import androidx.compose.material3.IconButton as DefaultIconButton
 
@@ -89,7 +105,7 @@ fun EditScreen(
             NameSection()
             DescriptionSection()
             TagsSection()
-            IngredientsSection()
+            IngredientsSection(uiState.allIngredients)
         }
     }
 }
@@ -142,7 +158,8 @@ fun NameSection() {
         SectionTitle(title = stringResource(R.string.edit_section_name_title))
         TextInput(
             placeholder = stringResource(R.string.edit_section_name_placeholder),
-            singleLine = true
+            singleLine = true,
+            onValueChange = {}
         )
     }
 }
@@ -155,7 +172,8 @@ fun DescriptionSection() {
         SectionTitle(title = stringResource(R.string.edit_section_description_title))
         TextInput(
             placeholder = stringResource(R.string.edit_section_description_placeholder),
-            minLines = 2
+            minLines = 2,
+            onValueChange = {}
         )
     }
 }
@@ -171,21 +189,42 @@ fun TagsSection() {
             Tag.entries.map {
                 Tag(
                     name = it.name,
-                    onSelectChange = { selected -> /*TODO*/},
-                    modifier = Modifier.padding(end = Size12, bottom = Size12))
+                    onSelectChange = { selected -> /*TODO*/ },
+                    modifier = Modifier.padding(end = Size12, bottom = Size12)
+                )
             }
         }
     }
 }
 
 @Composable
-fun IngredientsSection() {
+fun IngredientsSection(ingredients: List<Ingredient>) {
+    var showIngredientModal by remember { mutableStateOf(false) }
+
     Column(
         verticalArrangement = Arrangement.spacedBy(Size8)
     ) {
         SectionTitle(title = stringResource(R.string.edit_section_ingredients_title))
         Column {
             IngredientItem()
+            IconButton(
+                text = stringResource(R.string.edit_section_ingredients_button_add),
+                icon = painterResource(R.drawable.add),
+                onClick = { showIngredientModal = true })
         }
     }
+
+    if (showIngredientModal) {
+        IngredientsSelectionModal(
+            onDismissRequest = {
+                showIngredientModal = false
+            },
+            onIngredientSelected = { ingredient, new ->
+
+            },
+            ingredients = ingredients
+        )
+    }
 }
+
+

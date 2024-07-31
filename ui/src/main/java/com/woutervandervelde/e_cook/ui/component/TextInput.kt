@@ -19,9 +19,11 @@ import com.woutervandervelde.e_cook.ui.theme.Size10
 
 @Composable
 fun TextInput(
+    modifier: Modifier = Modifier,
     placeholder: String = "",
     singleLine: Boolean = false,
     minLines: Int = 1,
+    onValueChange: (text: TextFieldValue) -> Unit
 ) {
     var textState by remember { mutableStateOf(TextFieldValue("")) }
 
@@ -29,8 +31,9 @@ fun TextInput(
         value = textState,
         onValueChange = {
             textState = it
+            onValueChange(it)
         },
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(Size10)),
         placeholder = {
