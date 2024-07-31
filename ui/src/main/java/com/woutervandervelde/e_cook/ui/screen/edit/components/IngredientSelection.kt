@@ -1,29 +1,20 @@
 package com.woutervandervelde.e_cook.ui.screen.edit.components
 
 import android.util.Log
-import android.widget.Space
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideIn
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -35,22 +26,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.window.Dialog
 import com.woutervandervelde.e_cook.domain.ext.capitalizeWords
 import com.woutervandervelde.e_cook.domain.model.Ingredient
 import com.woutervandervelde.e_cook.domain.model.MeasurementUnit
-import com.woutervandervelde.e_cook.domain.model.Tag
 import com.woutervandervelde.e_cook.ui.R
 import com.woutervandervelde.e_cook.ui.component.IconButton
 import com.woutervandervelde.e_cook.ui.component.Tag
-import com.woutervandervelde.e_cook.ui.component.TextInput
-import com.woutervandervelde.e_cook.ui.theme.Size12
+import com.woutervandervelde.e_cook.ui.component.Input
 import com.woutervandervelde.e_cook.ui.theme.Size16
-import com.woutervandervelde.e_cook.ui.theme.Size200
 import com.woutervandervelde.e_cook.ui.theme.Size360
 import com.woutervandervelde.e_cook.ui.theme.Size4
 import com.woutervandervelde.e_cook.ui.theme.Size8
@@ -119,7 +107,7 @@ private fun IngredientSelection(
     Column(
         modifier = Modifier.padding(Size16)
     ) {
-        TextInput(
+        Input(
             placeholder = stringResource(R.string.edit_section_ingredients_filter_or_add),
             onValueChange = { inputValue ->
                 val inputText = inputValue.text.trim().lowercase()
@@ -163,11 +151,12 @@ private fun QuantitySelection() {
         modifier = Modifier.padding(Size16),
         verticalArrangement = Arrangement.spacedBy(Size16)
     ) {
-        TextInput(
+        Input(
             placeholder = "0.0",
             onValueChange = {
 
-            }
+            },
+            keyboardType = KeyboardType.Decimal
         )
 
         Column(
@@ -182,7 +171,7 @@ private fun QuantitySelection() {
                         selected = it == selectedUnit,
                         onSelectChange = { selected -> if (selected) selectedUnit = it },
                         modifier = Modifier.padding(end = Size8, bottom = Size8),
-                        toggleable = false
+                        controlled = true
                     )
                 }
             }
