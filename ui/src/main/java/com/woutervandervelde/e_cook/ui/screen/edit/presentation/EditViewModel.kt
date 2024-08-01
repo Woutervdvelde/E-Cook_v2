@@ -1,5 +1,6 @@
 package com.woutervandervelde.e_cook.ui.screen.edit.presentation
 
+import com.woutervandervelde.e_cook.domain.model.Ingredient
 import com.woutervandervelde.e_cook.domain.repository.IngredientRepository
 import com.woutervandervelde.e_cook.ui.screen.edit.navigation.EditNavEvent
 import com.woutervandervelde.e_cook.ui.viewmodel.BaseViewModel
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel(assistedFactory = EditViewModel.Factory::class)
 class EditViewModel @AssistedInject constructor(
-    ingredientRepository: IngredientRepository,
+    private val ingredientRepository: IngredientRepository,
     @Assisted private val navEvent: (EditNavEvent) -> Unit,
 ) : BaseViewModel<EditUiState, EditUiEvent>() {
 
@@ -31,6 +32,11 @@ class EditViewModel @AssistedInject constructor(
     override fun onUiEvent(event: EditUiEvent) {
         when (event) {
             is EditUiEvent.OnBack -> navEvent(EditNavEvent.Back)
+            is EditUiEvent.OnCreateIngredient -> {
+                CoroutineScope(Dispatchers.IO).launch {
+                    ingredientRepository.insertIngredient(Ingredient(event.name))
+                }
+            }
         }
     }
 

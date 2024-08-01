@@ -23,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -30,7 +31,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
 import com.woutervandervelde.e_cook.domain.model.Ingredient
+import com.woutervandervelde.e_cook.domain.model.MeasurementUnit
 import com.woutervandervelde.e_cook.domain.model.Recipe
+import com.woutervandervelde.e_cook.domain.model.RecipeIngredient
 import com.woutervandervelde.e_cook.domain.model.Tag
 import com.woutervandervelde.e_cook.ui.R
 import com.woutervandervelde.e_cook.ui.component.IconButton
@@ -54,7 +57,8 @@ fun EditScreen(
     uiState: EditUiState,
     uiEvent: (EditUiEvent) -> Unit
 ) {
-    val recipe: Recipe = uiState.recipe
+    val recipe: Recipe = uiState.recipe.recipe
+    val ingredients: MutableList<RecipeIngredient> = uiState.recipe.ingredients.toMutableList()
 
     Scaffold(
         modifier = Modifier
@@ -95,7 +99,12 @@ fun EditScreen(
             NameSection()
             DescriptionSection()
             TagsSection()
-            IngredientsSection(uiState.allIngredients)
+            IngredientsSection(
+                allIngredients = uiState.allIngredients,
+                onNewIngredient = { name, new, unit, quantity ->
+                    if (new) uiEvent(EditUiEvent.OnCreateIngredient(name))
+                }
+            )
         }
     }
 }
@@ -193,7 +202,10 @@ fun TagsSection() {
 }
 
 @Composable
-fun IngredientsSection(ingredients: List<Ingredient>) {
+fun IngredientsSection(
+    allIngredients: List<Ingredient>,
+    onNewIngredient: (name: String, new: Boolean, unit: MeasurementUnit, quantity: Double) -> Unit
+) {
     var showIngredientModal by remember { mutableStateOf(false) }
 
     Column(
@@ -216,8 +228,9 @@ fun IngredientsSection(ingredients: List<Ingredient>) {
             },
             onIngredientSelected = { ingredient, new, unit, quantity ->
                 showIngredientModal = false
+                onNewIngredient(ingredient, new, unit, quantity)
             },
-            ingredients = ingredients
+            ingredients = allIngredients
         )
     }
 }

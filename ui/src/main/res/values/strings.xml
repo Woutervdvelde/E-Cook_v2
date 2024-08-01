@@ -21,6 +21,7 @@
     <string name="edit_section_ingredients_button_add">Add ingredient</string>
     <string name="edit_section_ingredients_filter_or_add">filter or add new</string>
     <string name="edit_section_ingredients_add_ingredient">+ add ingredient</string>
+    <string name="edit_section_ingredients_add_to_recipe">Add to recipe</string>
     <string name="edit_section_steps_title">Steps</string>
 
     <string name="edit_button_upload">Upload</string>

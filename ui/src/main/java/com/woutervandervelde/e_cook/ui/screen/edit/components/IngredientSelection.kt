@@ -186,7 +186,7 @@ private fun QuantitySelection(onSubmit: (unit: MeasurementUnit, quantity: Double
         }
 
         IconButton(
-            text = "Add to recipe",
+            text = stringResource(R.string.edit_section_ingredients_add_to_recipe),
             icon = painterResource(R.drawable.add),
             onClick = {
                 onSubmit(selectedUnit, quantity)
