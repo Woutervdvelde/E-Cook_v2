@@ -1,5 +1,6 @@
 package com.woutervandervelde.e_cook.data.repository
 
+import android.util.Log
 import com.woutervandervelde.e_cook.data.dao.IngredientDao
 import com.woutervandervelde.e_cook.data.dao.RecipeDao
 import com.woutervandervelde.e_cook.data.entity.RecipeEntity
@@ -17,7 +18,7 @@ class RecipeRepositoryImpl @Inject constructor(
     override suspend fun getAllRecipe(): List<Recipe> =
         recipeDao.getAll().map { it.toModel() }
 
-    override suspend fun getRecipeById(id: Long): Recipe? =
+    override suspend fun getRecipeById(id: Long): Recipe =
         recipeDao.getById(id).toModel()
 
     override suspend fun getRecipeIngredientsById(id: Long): List<RecipeIngredient> =
@@ -30,11 +31,11 @@ class RecipeRepositoryImpl @Inject constructor(
             )
         }
 
-    override suspend fun getFullRecipeById(id: Long): RecipeWithIngredients? {
+    override suspend fun getFullRecipeById(id: Long): RecipeWithIngredients {
         val recipe = getRecipeById(id)
         val ingredients = getRecipeIngredientsById(id)
 
-        return if (recipe == null) null else RecipeWithIngredients(recipe, ingredients)
+        return RecipeWithIngredients(recipe, ingredients)
     }
 
     override suspend fun insertRecipe(recipe: Recipe) =
@@ -44,6 +45,7 @@ class RecipeRepositoryImpl @Inject constructor(
         recipe: Recipe,
         recipeIngredient: RecipeIngredient
     ) {
+        Log.e("TAG", RecipeIngredientEntity.fromModel(recipe, recipeIngredient).toString())
         recipeDao.insertRecipeIngredient(
             RecipeIngredientEntity.fromModel(recipe, recipeIngredient)
         )

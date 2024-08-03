@@ -58,7 +58,6 @@ fun EditScreen(
     uiEvent: (EditUiEvent) -> Unit
 ) {
     val recipe: Recipe = uiState.recipe.recipe
-    val ingredients: MutableList<RecipeIngredient> = uiState.recipe.ingredients.toMutableList()
 
     Scaffold(
         modifier = Modifier
@@ -100,9 +99,12 @@ fun EditScreen(
             DescriptionSection()
             TagsSection()
             IngredientsSection(
+                ingredients = uiState.recipeIngredients,
                 allIngredients = uiState.allIngredients,
-                onNewIngredient = { name, new, unit, quantity ->
-                    if (new) uiEvent(EditUiEvent.OnCreateIngredient(name))
+                onNewIngredient = { ingredient, new, unit, quantity ->
+                    if (new) uiEvent(EditUiEvent.OnCreateIngredient(ingredient))
+                    val recipeIngredient = RecipeIngredient(ingredient, unit, quantity)
+                    uiEvent(EditUiEvent.OnAddIngredientToRecipe(recipe, recipeIngredient))
                 }
             )
         }
@@ -203,8 +205,9 @@ fun TagsSection() {
 
 @Composable
 fun IngredientsSection(
+    ingredients: List<RecipeIngredient>,
     allIngredients: List<Ingredient>,
-    onNewIngredient: (name: String, new: Boolean, unit: MeasurementUnit, quantity: Double) -> Unit
+    onNewIngredient: (ingredient: Ingredient, new: Boolean, unit: MeasurementUnit, quantity: Double) -> Unit
 ) {
     var showIngredientModal by remember { mutableStateOf(false) }
 
@@ -213,7 +216,7 @@ fun IngredientsSection(
     ) {
         SectionTitle(title = stringResource(R.string.edit_section_ingredients_title))
         Column {
-            IngredientItem()
+            ingredients.map { IngredientItem(it) }
             IconButton(
                 text = stringResource(R.string.edit_section_ingredients_button_add),
                 icon = painterResource(R.drawable.add),

@@ -5,7 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import com.woutervandervelde.e_cook.ui.navigation.NavigationDirection
+import androidx.navigation.toRoute
 import com.woutervandervelde.e_cook.ui.navigation.NavigationTransition
 import com.woutervandervelde.e_cook.ui.navigation.composable
 import com.woutervandervelde.e_cook.ui.screen.edit.EditScreen
@@ -14,7 +14,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class EditRoute(
-    val id: String? = null
+    val id: Long = -1
 )
 
 internal fun NavGraphBuilder.editNavigation(navController: NavController) {
@@ -28,9 +28,11 @@ internal fun NavGraphBuilder.editNavigation(navController: NavController) {
 
     composable<EditRoute>(
         transition = NavigationTransition.FADE(),
-    ) {
+    ) {backStackEntry ->
+        val edit: EditRoute = backStackEntry.toRoute()
+
         val viewModel: EditViewModel = hiltViewModel<EditViewModel, EditViewModel.Factory>(
-            creationCallback = { factory -> factory.create(navEvent) }
+            creationCallback = { factory -> factory.create(navEvent, edit.id) }
         )
         val uiState by viewModel.uiState.collectAsState()
         val uiEvent = viewModel::onUiEvent

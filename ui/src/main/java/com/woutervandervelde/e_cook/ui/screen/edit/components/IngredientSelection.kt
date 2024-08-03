@@ -48,10 +48,10 @@ import com.woutervandervelde.e_cook.ui.theme.Size8
 fun IngredientsSelectionModal(
     onDismissRequest: () -> Unit,
     ingredients: List<Ingredient>,
-    onIngredientSelected: (name: String, new: Boolean, unit: MeasurementUnit, quantity: Double) -> Unit
+    onIngredientSelected: (ingredient: Ingredient, new: Boolean, unit: MeasurementUnit, quantity: Double) -> Unit
 ) {
     var selectIngredientState by remember { mutableStateOf(true) }
-    var ingredient = ""
+    var ingredient = Ingredient.Emtpy()
     var newIngredient = true
 
     Dialog(onDismissRequest = onDismissRequest) {
@@ -69,9 +69,9 @@ fun IngredientsSelectionModal(
             ) {
                 IngredientSelection(
                     ingredients = ingredients,
-                    onIngredientSelected = { name, new ->
+                    onIngredientSelected = { ing, new ->
                         selectIngredientState = false
-                        ingredient = name
+                        ingredient = ing
                         newIngredient = new
                     })
             }
@@ -105,7 +105,7 @@ private fun IngredientRow(name: String, onClick: () -> Unit) {
 @Composable
 private fun IngredientSelection(
     ingredients: List<Ingredient>,
-    onIngredientSelected: (name: String, new: Boolean) -> Unit
+    onIngredientSelected: (ingredient: Ingredient, new: Boolean) -> Unit
 ) {
     val filteredIngredients = remember { mutableStateOf(ingredients) }
     val currentText = remember { mutableStateOf("") }
@@ -135,7 +135,7 @@ private fun IngredientSelection(
                     name = "${stringResource(R.string.edit_section_ingredients_add_ingredient)} \"${currentText.value.capitalizeWords()}\"",
                     onClick = {
                         onIngredientSelected(
-                            currentText.value.capitalizeWords(),
+                            Ingredient(currentText.value.capitalizeWords()),
                             true
                         )
                     })
@@ -143,7 +143,7 @@ private fun IngredientSelection(
             filteredIngredients.value.map { ingredient ->
                 IngredientRow(
                     name = ingredient.name,
-                    onClick = { onIngredientSelected(ingredient.name, false) })
+                    onClick = { onIngredientSelected(ingredient, false) })
             }
         }
     }
