@@ -14,8 +14,8 @@ import com.woutervandervelde.e_cook.domain.model.Tag
 data class RecipeEntity(
     @PrimaryKey(autoGenerate = true) val recipeId: Long,
     val name: String,
-    val description: String?,
-    val tags: List<Tag>?,
+    val description: String,
+    val tags: List<Tag>,
     val notes: String?,
     val image: String?,
     @ColumnInfo(defaultValue = "0") val source: Source,
@@ -23,8 +23,8 @@ data class RecipeEntity(
 ) {
     constructor(
         name: String,
-        description: String?,
-        tags: List<Tag>?,
+        description: String,
+        tags: List<Tag>,
         notes: String?,
         image: String?,
         source: Source,

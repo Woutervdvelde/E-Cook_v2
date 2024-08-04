@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b8bdb082c4c36d1fb421f308b25b7151",
+    "identityHash": "d5276b6dfb417494372280a10750d50f",
     "entities": [
       {
         "tableName": "recipe",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recipeId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `tags` TEXT, `notes` TEXT, `image` TEXT, `source` TEXT NOT NULL DEFAULT '0', `steps` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recipeId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT NOT NULL, `tags` TEXT NOT NULL, `notes` TEXT, `image` TEXT, `source` TEXT NOT NULL DEFAULT '0', `steps` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "recipeId",
@@ -24,13 +24,13 @@
             "fieldPath": "description",
             "columnName": "description",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "tags",
             "columnName": "tags",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "notes",
@@ -177,7 +177,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b8bdb082c4c36d1fb421f308b25b7151')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd5276b6dfb417494372280a10750d50f')"
     ]
   }
 }

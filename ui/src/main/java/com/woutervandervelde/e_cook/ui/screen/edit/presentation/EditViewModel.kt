@@ -36,6 +36,8 @@ class EditViewModel @AssistedInject constructor(
                 it.copy(
                     recipe = recipe,
                     allIngredients = ingredientRepository.getAllIngredients(),
+                    recipeName = recipe.recipe.name,
+                    recipeDescription = recipe.recipe.description,
                     recipeTags = recipe.recipe.tags,
                     recipeIngredients = recipe.ingredients,
                     recipeSteps = recipe.recipe.steps
@@ -47,6 +49,12 @@ class EditViewModel @AssistedInject constructor(
     override fun onUiEvent(event: EditUiEvent) {
         when (event) {
             EditUiEvent.OnBack, EditUiEvent.OnDiscardRecipe -> navEvent(EditNavEvent.Back)
+
+            is EditUiEvent.OnUpdateRecipeName ->
+                _uiState.update { it.copy(recipeName = event.name) }
+
+            is EditUiEvent.OnUpdateRecipeDescription ->
+                _uiState.update { it.copy(recipeDescription = event.description) }
 
             is EditUiEvent.OnUpdateRecipeTags ->
                 _uiState.update { it.copy(recipeTags = event.tags) }

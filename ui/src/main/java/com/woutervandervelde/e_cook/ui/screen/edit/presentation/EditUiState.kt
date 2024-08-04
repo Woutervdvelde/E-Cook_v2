@@ -9,6 +9,8 @@ import com.woutervandervelde.e_cook.ui.viewmodel.BaseUiState
 data class EditUiState(
     val recipe: RecipeWithIngredients = RecipeWithIngredients.Empty(),
     val allIngredients: List<Ingredient> = listOf(),
+    val recipeName: String = "",
+    val recipeDescription: String = "",
     val recipeTags: List<Tag> = listOf(),
     val recipeIngredients: List<RecipeIngredient> = listOf(),
     val recipeSteps: List<String> = listOf()

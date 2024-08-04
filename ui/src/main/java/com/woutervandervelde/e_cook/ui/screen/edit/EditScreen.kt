@@ -118,8 +118,18 @@ fun EditScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             ImageSection(modifier = Modifier.padding(top = Size16))
-            NameSection()
-            DescriptionSection()
+            NameSection(
+                name = uiState.recipeName,
+                onUpdateName = { name ->
+                    uiEvent(EditUiEvent.OnUpdateRecipeName(name))
+                }
+            )
+            DescriptionSection(
+                description = uiState.recipeDescription,
+                onUpdateDescription = { description ->
+                    uiEvent(EditUiEvent.OnUpdateRecipeDescription(description))
+                }
+            )
             TagsSection(
                 tags = uiState.recipeTags,
                 onUpdateTags = { tags ->
@@ -214,29 +224,31 @@ fun ImageSection(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun NameSection() {
+fun NameSection(name: String, onUpdateName: (name: String) -> Unit) {
     Column(
         verticalArrangement = Arrangement.spacedBy(Size8)
     ) {
         SectionTitle(title = stringResource(R.string.edit_section_name_title))
         Input(
+            initialValue = name,
             placeholder = stringResource(R.string.edit_section_name_placeholder),
             singleLine = true,
-            onValueChange = {}
+            onValueChange = { onUpdateName(it.text) }
         )
     }
 }
 
 @Composable
-fun DescriptionSection() {
+fun DescriptionSection(description: String, onUpdateDescription: (description: String) -> Unit) {
     Column(
         verticalArrangement = Arrangement.spacedBy(Size8)
     ) {
         SectionTitle(title = stringResource(R.string.edit_section_description_title))
         Input(
+            initialValue = description,
             placeholder = stringResource(R.string.edit_section_description_placeholder),
             minLines = 2,
-            onValueChange = {}
+            onValueChange = { onUpdateDescription(it.text) }
         )
     }
 }

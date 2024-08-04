@@ -22,13 +22,14 @@ import com.woutervandervelde.e_cook.ui.theme.Size10
 @Composable
 fun Input(
     modifier: Modifier = Modifier,
+    initialValue: String = "",
     placeholder: String = "",
     singleLine: Boolean = false,
     minLines: Int = 1,
     onValueChange: (text: TextFieldValue) -> Unit,
     keyboardType: KeyboardType = KeyboardType.Unspecified
 ) {
-    var textState by remember { mutableStateOf(TextFieldValue("")) }
+    var textState by remember { mutableStateOf(TextFieldValue(initialValue)) }
 
     OutlinedTextField(
         value = textState,

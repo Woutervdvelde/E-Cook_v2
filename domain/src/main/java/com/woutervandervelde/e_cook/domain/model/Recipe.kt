@@ -3,7 +3,7 @@ package com.woutervandervelde.e_cook.domain.model
 data class Recipe(
     val id: Long,
     val name: String,
-    val description: String?,
+    val description: String,
     val tags: List<Tag>,
     val notes: String?,
     val image: String?,
@@ -14,7 +14,7 @@ data class Recipe(
         fun Empty(): Recipe = Recipe(
             id = 0,
             name = "",
-            description = null,
+            description = "",
             tags = listOf(),
             notes = null,
             image = null,
