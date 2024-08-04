@@ -128,7 +128,7 @@ private fun IngredientSelection(
                 }
             })
         Column(
-            modifier = Modifier.verticalScroll(rememberScrollState())
+            modifier = Modifier.verticalScroll(rememberScrollState()).padding(top = Size8)
         ) {
             if (shouldShowAddIngredient.value) {
                 IngredientRow(

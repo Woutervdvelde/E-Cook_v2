@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.width
@@ -49,8 +50,12 @@ import com.woutervandervelde.e_cook.ui.screen.edit.presentation.EditUiEvent
 import com.woutervandervelde.e_cook.ui.screen.edit.presentation.EditUiState
 import com.woutervandervelde.e_cook.ui.theme.Size0
 import com.woutervandervelde.e_cook.ui.theme.Size12
+import com.woutervandervelde.e_cook.ui.theme.Size128
 import com.woutervandervelde.e_cook.ui.theme.Size16
 import com.woutervandervelde.e_cook.ui.theme.Size20
+import com.woutervandervelde.e_cook.ui.theme.Size56
+import com.woutervandervelde.e_cook.ui.theme.Size64
+import com.woutervandervelde.e_cook.ui.theme.Size72
 import com.woutervandervelde.e_cook.ui.theme.Size8
 import androidx.compose.material3.IconButton as DefaultIconButton
 
@@ -117,6 +122,7 @@ fun EditScreen(
                     uiEvent(EditUiEvent.OnAddIngredientToRecipe(recipe, recipeIngredient))
                 }
             )
+            Spacer(modifier = Modifier.height(Size72))
         }
     }
 }
