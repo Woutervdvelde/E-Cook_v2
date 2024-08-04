@@ -13,22 +13,16 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
-import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -40,14 +34,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import com.woutervandervelde.e_cook.domain.model.Ingredient
@@ -59,33 +51,25 @@ import com.woutervandervelde.e_cook.ui.R
 import com.woutervandervelde.e_cook.ui.component.ButtonType
 import com.woutervandervelde.e_cook.ui.component.IconButton
 import com.woutervandervelde.e_cook.ui.component.IngredientItem
-import com.woutervandervelde.e_cook.ui.component.Tag
 import com.woutervandervelde.e_cook.ui.component.Input
 import com.woutervandervelde.e_cook.ui.component.PagerIndicator
 import com.woutervandervelde.e_cook.ui.component.RecipeStepCard
+import com.woutervandervelde.e_cook.ui.component.Tag
 import com.woutervandervelde.e_cook.ui.screen.edit.components.IngredientsSelectionModal
 import com.woutervandervelde.e_cook.ui.screen.edit.presentation.EditUiEvent
 import com.woutervandervelde.e_cook.ui.screen.edit.presentation.EditUiState
 import com.woutervandervelde.e_cook.ui.theme.Size0
 import com.woutervandervelde.e_cook.ui.theme.Size12
-import com.woutervandervelde.e_cook.ui.theme.Size128
 import com.woutervandervelde.e_cook.ui.theme.Size16
-import com.woutervandervelde.e_cook.ui.theme.Size2
 import com.woutervandervelde.e_cook.ui.theme.Size20
 import com.woutervandervelde.e_cook.ui.theme.Size200
-import com.woutervandervelde.e_cook.ui.theme.Size360
 import com.woutervandervelde.e_cook.ui.theme.Size4
-import com.woutervandervelde.e_cook.ui.theme.Size56
-import com.woutervandervelde.e_cook.ui.theme.Size6
-import com.woutervandervelde.e_cook.ui.theme.Size64
 import com.woutervandervelde.e_cook.ui.theme.Size72
 import com.woutervandervelde.e_cook.ui.theme.Size8
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 import androidx.compose.material3.IconButton as DefaultIconButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 fun EditScreen(
     uiState: EditUiState,
     uiEvent: (EditUiEvent) -> Unit
@@ -118,7 +102,7 @@ fun EditScreen(
         bottomBar = {
             EditControls(
                 onSave = { uiEvent(EditUiEvent.OnSaveRecipe) },
-                onDiscard = { uiEvent(EditUiEvent.OnSaveRecipe) }
+                onDiscard = { uiEvent(EditUiEvent.OnDiscardRecipe) }
             )
         }
     ) { contentPadding ->
@@ -150,6 +134,9 @@ fun EditScreen(
                 steps = uiState.recipeSteps,
                 onAddStep = { step ->
                     uiEvent(EditUiEvent.OnAddStepToRecipe(step))
+                },
+                onDeleteStep = { index ->
+                    uiEvent(EditUiEvent.OnDeleteStepFromRecipe(index))
                 }
             )
             Spacer(modifier = Modifier.height(Size72))
@@ -310,7 +297,11 @@ fun IngredientsSection(
 }
 
 @Composable
-fun StepsSection(steps: List<String>, onAddStep: (step: String) -> Unit) {
+fun StepsSection(
+    steps: List<String>,
+    onAddStep: (step: String) -> Unit,
+    onDeleteStep: (index: Int) -> Unit
+) {
     Column {
         SectionTitle(title = stringResource(R.string.edit_section_steps_title))
         Spacer(modifier = Modifier.height(Size8))
@@ -320,7 +311,10 @@ fun StepsSection(steps: List<String>, onAddStep: (step: String) -> Unit) {
         val pagerState = rememberPagerState(pageCount = { count })
 
         HorizontalPager(state = pagerState, pageSpacing = Size8) {
-            if (it < count - 1) RecipeStepCard(step = steps[it], number = it + 1, {})
+            if (it < count - 1) RecipeStepCard(
+                step = steps[it],
+                number = it + 1,
+                onDelete = { onDeleteStep(it) })
             else {
                 Box(
                     modifier = Modifier
@@ -340,7 +334,7 @@ fun StepsSection(steps: List<String>, onAddStep: (step: String) -> Unit) {
                     ) {
                         Icon(painter = painterResource(R.drawable.add), contentDescription = null)
                         Spacer(modifier = Modifier.width(Size8))
-                        Text(text = "Add step")
+                        Text(text = stringResource(R.string.edit_section_steps_add))
                     }
                 }
             }
@@ -354,11 +348,11 @@ fun StepsSection(steps: List<String>, onAddStep: (step: String) -> Unit) {
                     Input(
                         onValueChange = { step = it.text },
                         minLines = 3,
-                        placeholder = "Step description..."
+                        placeholder = stringResource(R.string.edit_section_steps_add_placeholder)
                     )
                     Spacer(modifier = Modifier.height(Size16))
                     IconButton(
-                        text = "Add step",
+                        text = stringResource(R.string.edit_section_steps_add),
                         icon = painterResource(R.drawable.add),
                         onClick = {
                             onAddStep(step)
@@ -369,4 +363,3 @@ fun StepsSection(steps: List<String>, onAddStep: (step: String) -> Unit) {
         }
     }
 }
-

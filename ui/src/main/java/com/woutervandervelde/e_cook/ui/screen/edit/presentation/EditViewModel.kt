@@ -54,7 +54,17 @@ class EditViewModel @AssistedInject constructor(
                 uiState.value.recipeIngredients.add(event.recipeIngredient)
 
             is EditUiEvent.OnAddStepToRecipe -> {
-                uiState.value.recipeSteps.add(event.step)
+                val updatedSteps = uiState.value.recipeSteps.toMutableList()
+                updatedSteps.add(event.step)
+                _uiState.update { it.copy(recipeSteps = updatedSteps) }
+            }
+
+            is EditUiEvent.OnDeleteStepFromRecipe -> {
+                val updatedSteps = uiState.value.recipeSteps.toMutableList()
+                if (event.index in updatedSteps.indices) {
+                    updatedSteps.removeAt(event.index)
+                    _uiState.update { it.copy(recipeSteps = updatedSteps) }
+                }
             }
 
             is EditUiEvent.OnSaveRecipe -> {

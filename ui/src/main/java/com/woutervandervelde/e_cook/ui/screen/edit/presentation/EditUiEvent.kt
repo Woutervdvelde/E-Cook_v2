@@ -17,6 +17,10 @@ interface EditUiEvent : BaseUiEvent {
         val step: String
     ) : EditUiEvent
 
+    data class OnDeleteStepFromRecipe(
+        val index: Int
+    ) : EditUiEvent
+
     data object OnSaveRecipe : EditUiEvent
     data object OnDiscardRecipe : EditUiEvent
 }
