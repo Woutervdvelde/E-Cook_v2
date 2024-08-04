@@ -28,13 +28,17 @@ class EditViewModel @AssistedInject constructor(
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
-            val recipe = if (recipeId == -1L) RecipeWithIngredients.Empty() else recipeRepository.getFullRecipeById(recipeId)
+            val recipe =
+                if (recipeId == -1L) RecipeWithIngredients.Empty() else recipeRepository.getFullRecipeById(
+                    recipeId
+                )
             _uiState.update {
                 it.copy(
                     recipe = recipe,
                     allIngredients = ingredientRepository.getAllIngredients(),
-                    recipeIngredients = recipe.ingredients.toMutableList(),
-                    recipeSteps = recipe.recipe.steps.toMutableList()
+                    recipeTags = recipe.recipe.tags,
+                    recipeIngredients = recipe.ingredients,
+                    recipeSteps = recipe.recipe.steps
                 )
             }
         }
@@ -44,14 +48,20 @@ class EditViewModel @AssistedInject constructor(
         when (event) {
             EditUiEvent.OnBack, EditUiEvent.OnDiscardRecipe -> navEvent(EditNavEvent.Back)
 
+            is EditUiEvent.OnUpdateRecipeTags ->
+                _uiState.update { it.copy(recipeTags = event.tags) }
+
             is EditUiEvent.OnCreateIngredient -> {
                 CoroutineScope(Dispatchers.IO).launch {
                     ingredientRepository.insertIngredient(event.ingredient)
                 }
             }
 
-            is EditUiEvent.OnAddIngredientToRecipe ->
-                uiState.value.recipeIngredients.add(event.recipeIngredient)
+            is EditUiEvent.OnAddIngredientToRecipe -> {
+                val updatedIngredients = uiState.value.recipeIngredients.toMutableList()
+                updatedIngredients.add(event.recipeIngredient)
+                _uiState.update { it.copy(recipeIngredients = updatedIngredients) }
+            }
 
             is EditUiEvent.OnAddStepToRecipe -> {
                 val updatedSteps = uiState.value.recipeSteps.toMutableList()
