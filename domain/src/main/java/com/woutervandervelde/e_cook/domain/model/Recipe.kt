@@ -8,6 +8,7 @@ data class Recipe(
     val notes: String?,
     val image: String?,
     val source: Source,
+    val steps: List<String>
 ) {
     companion object {
         fun Empty(): Recipe = Recipe(
@@ -17,7 +18,8 @@ data class Recipe(
             tags = null,
             notes = null,
             image = null,
-            source = Source.Manual
+            source = Source.Manual,
+            steps = listOf()
         )
     }
 }

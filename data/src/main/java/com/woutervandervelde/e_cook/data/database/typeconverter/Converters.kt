@@ -22,4 +22,10 @@ class Converters {
 
     @TypeConverter
     fun toMeasurementUnit(value: String): MeasurementUnit = MeasurementUnit.valueOf(value)
+
+    @TypeConverter
+    fun fromSteps(value: List<String>) = value.joinToString { "|||" }
+
+    @TypeConverter
+    fun toSteps(value: String): List<String> = value.split("|||")
 }

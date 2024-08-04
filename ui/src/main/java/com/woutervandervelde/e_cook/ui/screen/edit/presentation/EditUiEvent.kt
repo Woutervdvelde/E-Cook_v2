@@ -13,6 +13,10 @@ interface EditUiEvent : BaseUiEvent {
         val recipeIngredient: RecipeIngredient
     ) : EditUiEvent
 
+    data class OnAddStepToRecipe(
+        val step: String
+    ) : EditUiEvent
+
     data object OnSaveRecipe : EditUiEvent
     data object OnDiscardRecipe : EditUiEvent
 }

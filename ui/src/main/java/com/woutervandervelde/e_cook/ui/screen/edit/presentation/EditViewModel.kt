@@ -33,7 +33,8 @@ class EditViewModel @AssistedInject constructor(
                 it.copy(
                     recipe = recipe,
                     allIngredients = ingredientRepository.getAllIngredients(),
-                    recipeIngredients = recipe.ingredients.toMutableList()
+                    recipeIngredients = recipe.ingredients.toMutableList(),
+                    recipeSteps = recipe.recipe.steps.toMutableList()
                 )
             }
         }
@@ -49,10 +50,15 @@ class EditViewModel @AssistedInject constructor(
                 }
             }
 
-            is EditUiEvent.OnAddIngredientToRecipe -> {
-                CoroutineScope(Dispatchers.IO).launch {
-                    uiState.value.recipeIngredients.add(event.recipeIngredient)
-                }
+            is EditUiEvent.OnAddIngredientToRecipe ->
+                uiState.value.recipeIngredients.add(event.recipeIngredient)
+
+            is EditUiEvent.OnAddStepToRecipe -> {
+                uiState.value.recipeSteps.add(event.step)
+            }
+
+            is EditUiEvent.OnSaveRecipe -> {
+                //TODO
             }
         }
     }
