@@ -41,7 +41,7 @@ class EditViewModel @AssistedInject constructor(
 
     override fun onUiEvent(event: EditUiEvent) {
         when (event) {
-            is EditUiEvent.OnBack -> navEvent(EditNavEvent.Back)
+            EditUiEvent.OnBack, EditUiEvent.OnDiscardRecipe -> navEvent(EditNavEvent.Back)
 
             is EditUiEvent.OnCreateIngredient -> {
                 CoroutineScope(Dispatchers.IO).launch {

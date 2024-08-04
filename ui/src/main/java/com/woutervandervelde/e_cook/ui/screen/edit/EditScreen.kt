@@ -6,9 +6,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -36,6 +39,7 @@ import com.woutervandervelde.e_cook.domain.model.Recipe
 import com.woutervandervelde.e_cook.domain.model.RecipeIngredient
 import com.woutervandervelde.e_cook.domain.model.Tag
 import com.woutervandervelde.e_cook.ui.R
+import com.woutervandervelde.e_cook.ui.component.ButtonType
 import com.woutervandervelde.e_cook.ui.component.IconButton
 import com.woutervandervelde.e_cook.ui.component.IngredientItem
 import com.woutervandervelde.e_cook.ui.component.Tag
@@ -81,6 +85,12 @@ fun EditScreen(
                     }
                 }
             )
+        },
+        bottomBar = {
+            EditControls(
+                onSave = { uiEvent(EditUiEvent.OnSaveRecipe) },
+                onDiscard = { uiEvent(EditUiEvent.OnSaveRecipe) }
+            )
         }
     ) { contentPadding ->
         Column(
@@ -108,6 +118,30 @@ fun EditScreen(
                 }
             )
         }
+    }
+}
+
+@Composable
+fun EditControls(onSave: () -> Unit, onDiscard: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .safeDrawingPadding()
+            .padding(horizontal = Size16)
+    ) {
+        IconButton(
+            text = stringResource(R.string.button_save),
+            icon = painterResource(R.drawable.save),
+            onClick = onSave,
+            modifier = Modifier.weight(1f)
+        )
+        Spacer(modifier = Modifier.width(Size8))
+        IconButton(
+            text = stringResource(R.string.button_discard),
+            icon = painterResource(R.drawable.close),
+            onClick = onDiscard,
+            modifier = Modifier.weight(1f),
+            buttonType = ButtonType.SECONDARY
+        )
     }
 }
 
