@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.navDeepLink
 import com.woutervandervelde.e_cook.ui.navigation.NavigationDuration
 import com.woutervandervelde.e_cook.ui.navigation.NavigationTransition
 import com.woutervandervelde.e_cook.ui.navigation.composable

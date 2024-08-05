@@ -1,5 +1,6 @@
 package com.woutervandervelde.e_cook
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
