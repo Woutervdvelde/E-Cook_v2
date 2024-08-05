@@ -49,7 +49,7 @@ fun HomeScreen(
             Card(
                 onClick = { uiEvent(HomeUiEvent.OnEditRecipe(recipe.id))}
             ) {
-                Text(text = recipe.name)
+                Text(text = recipe.name, modifier = Modifier.padding(Size32))
                 recipe.tags.forEach {
                     Tag(name = it.name)
                 }

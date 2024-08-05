@@ -10,13 +10,18 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
@@ -37,10 +42,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.Dialog
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import coil.compose.AsyncImage
 import com.woutervandervelde.e_cook.domain.model.Ingredient
 import com.woutervandervelde.e_cook.domain.model.MeasurementUnit
@@ -160,24 +170,35 @@ fun EditScreen(
 @Composable
 fun EditControls(onSave: () -> Unit, onDiscard: () -> Unit) {
     Row(
-        modifier = Modifier
-            .safeDrawingPadding()
-            .padding(horizontal = Size16)
+        modifier = Modifier.background(
+            brush = Brush.verticalGradient(
+                colors = listOf(
+                    Color(0f, 0f, 0f, 0f),
+                    MaterialTheme.colorScheme.background
+                )
+            )
+        )
     ) {
-        IconButton(
-            text = stringResource(R.string.button_save),
-            icon = painterResource(R.drawable.save),
-            onClick = onSave,
-            modifier = Modifier.weight(1f)
-        )
-        Spacer(modifier = Modifier.width(Size8))
-        IconButton(
-            text = stringResource(R.string.button_discard),
-            icon = painterResource(R.drawable.close),
-            onClick = onDiscard,
-            modifier = Modifier.weight(1f),
-            buttonType = ButtonType.SECONDARY
-        )
+        Row(
+            modifier = Modifier
+                .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom))
+                .padding(top = Size16, start = Size16, end = Size16)
+        ) {
+            IconButton(
+                text = stringResource(R.string.button_save),
+                icon = painterResource(R.drawable.save),
+                onClick = onSave,
+                modifier = Modifier.weight(1f)
+            )
+            Spacer(modifier = Modifier.width(Size8))
+            IconButton(
+                text = stringResource(R.string.button_discard),
+                icon = painterResource(R.drawable.close),
+                onClick = onDiscard,
+                modifier = Modifier.weight(1f),
+                buttonType = ButtonType.SECONDARY
+            )
+        }
     }
 }
 
