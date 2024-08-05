@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -22,19 +23,16 @@ import com.woutervandervelde.e_cook.ui.theme.Size10
 @Composable
 fun Input(
     modifier: Modifier = Modifier,
-    initialValue: String = "",
+    value: String = "",
     placeholder: String = "",
     singleLine: Boolean = false,
     minLines: Int = 1,
-    onValueChange: (text: TextFieldValue) -> Unit,
+    onValueChange: (text: String) -> Unit,
     keyboardType: KeyboardType = KeyboardType.Unspecified
 ) {
-    var textState by remember { mutableStateOf(TextFieldValue(initialValue)) }
-
     OutlinedTextField(
-        value = textState,
+        value = value,
         onValueChange = {
-            textState = it
             onValueChange(it)
         },
         modifier = modifier
@@ -47,7 +45,12 @@ fun Input(
             unfocusedBorderColor = Color.Transparent,
             unfocusedTextColor = MaterialTheme.colorScheme.secondary,
             focusedBorderColor = MaterialTheme.colorScheme.tertiary,
-            focusedTextColor = MaterialTheme.colorScheme.onPrimary
+            focusedTextColor = MaterialTheme.colorScheme.onPrimary,
+            cursorColor = MaterialTheme.colorScheme.tertiary,
+            selectionColors = TextSelectionColors(
+                handleColor = MaterialTheme.colorScheme.tertiary,
+                backgroundColor = MaterialTheme.colorScheme.tertiary
+            )
         ),
         shape = RoundedCornerShape(Size10),
         singleLine = singleLine,

@@ -117,7 +117,7 @@ private fun IngredientSelection(
         Input(
             placeholder = stringResource(R.string.edit_section_ingredients_filter_or_add),
             onValueChange = { inputValue ->
-                val inputText = inputValue.text.trim().lowercase()
+                val inputText = inputValue.trim().lowercase()
                 currentText.value = inputText
 
                 shouldShowAddIngredient.value = inputText.isNotBlank() &&
@@ -162,7 +162,7 @@ private fun QuantitySelection(onSubmit: (unit: MeasurementUnit, quantity: Double
         Input(
             placeholder = "0.0",
             onValueChange = {
-                quantity = it.text.toDouble()
+                quantity = it.toDouble()
             },
             keyboardType = KeyboardType.Decimal
         )

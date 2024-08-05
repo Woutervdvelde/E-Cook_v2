@@ -19,9 +19,8 @@ object HomeRoute
 internal fun NavGraphBuilder.homeNavigation(navController: NavController) {
     val navEvent: (HomeNavEvent) -> Unit = { event ->
         when (event) {
-            HomeNavEvent.ToNewRecipe -> {
-                navController.navigate(EditRoute())
-            }
+            HomeNavEvent.ToNewRecipe -> navController.navigate(EditRoute())
+            is HomeNavEvent.ToEditRecipe -> navController.navigate(EditRoute(event.id))
         }
     }
 

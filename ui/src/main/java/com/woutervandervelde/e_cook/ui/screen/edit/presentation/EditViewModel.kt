@@ -5,6 +5,7 @@ import com.woutervandervelde.e_cook.domain.model.Ingredient
 import com.woutervandervelde.e_cook.domain.model.Recipe
 import com.woutervandervelde.e_cook.domain.model.RecipeIngredient
 import com.woutervandervelde.e_cook.domain.model.RecipeWithIngredients
+import com.woutervandervelde.e_cook.domain.model.Source
 import com.woutervandervelde.e_cook.domain.repository.IngredientRepository
 import com.woutervandervelde.e_cook.domain.repository.RecipeRepository
 import com.woutervandervelde.e_cook.ui.screen.edit.navigation.EditNavEvent
@@ -29,12 +30,11 @@ class EditViewModel @AssistedInject constructor(
     init {
         CoroutineScope(Dispatchers.IO).launch {
             val recipe =
-                if (recipeId == -1L) RecipeWithIngredients.Empty() else recipeRepository.getFullRecipeById(
-                    recipeId
-                )
+                if (recipeId == -1L) RecipeWithIngredients.Empty()
+                else recipeRepository.getFullRecipeById(recipeId)
+            Log.e("TAG", "recipe: $recipe")
             _uiState.update {
                 it.copy(
-                    recipe = recipe,
                     allIngredients = ingredientRepository.getAllIngredients(),
                     recipeName = recipe.recipe.name,
                     recipeDescription = recipe.recipe.description,
@@ -86,7 +86,24 @@ class EditViewModel @AssistedInject constructor(
             }
 
             is EditUiEvent.OnSaveRecipe -> {
-                //TODO
+                val recipe = Recipe(
+                    id = if (recipeId == -1L) 0 else recipeId,
+                    name = uiState.value.recipeName,
+                    description = uiState.value.recipeDescription,
+                    tags = uiState.value.recipeTags,
+                    source = Source.Manual,
+                    steps = uiState.value.recipeSteps
+                )
+                CoroutineScope(Dispatchers.IO).launch {
+                    if (recipeId == -1L) {
+                        recipe.id = recipeRepository.insertRecipe(recipe)
+                        recipeRepository.insertRecipeIngredients(recipe, uiState.value.recipeIngredients)
+                    } else {
+                        recipeRepository.updateRecipe(recipe)
+                    }
+                }
+
+                navEvent(EditNavEvent.Back)
             }
         }
     }

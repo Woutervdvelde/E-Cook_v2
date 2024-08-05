@@ -36,10 +36,12 @@ class HomeViewModel @AssistedInject constructor(
             HomeUiEvent.OnRandomRecipeClick -> {
 
             }
+
+            is HomeUiEvent.OnEditRecipe -> navEvent(HomeNavEvent.ToEditRecipe(event.id))
         }
     }
 
-    fun loadRecipes() {
+    private fun loadRecipes() {
         CoroutineScope(Dispatchers.IO).launch {
             _uiState.update {
                 it.copy(

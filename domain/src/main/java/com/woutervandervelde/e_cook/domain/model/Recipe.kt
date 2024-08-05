@@ -1,12 +1,12 @@
 package com.woutervandervelde.e_cook.domain.model
 
 data class Recipe(
-    val id: Long,
+    var id: Long,
     val name: String,
     val description: String,
     val tags: List<Tag>,
-    val notes: String?,
-    val image: String?,
+    val notes: String? = null,
+    val image: String? = null,
     val source: Source,
     val steps: List<String>
 ) {

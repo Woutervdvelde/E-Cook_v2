@@ -7,7 +7,6 @@ import com.woutervandervelde.e_cook.domain.model.Tag
 import com.woutervandervelde.e_cook.ui.viewmodel.BaseUiState
 
 data class EditUiState(
-    val recipe: RecipeWithIngredients = RecipeWithIngredients.Empty(),
     val allIngredients: List<Ingredient> = listOf(),
     val recipeName: String = "",
     val recipeDescription: String = "",

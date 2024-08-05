@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.woutervandervelde.e_cook.ui.R
 import com.woutervandervelde.e_cook.ui.component.IconButton
+import com.woutervandervelde.e_cook.ui.component.Tag
 import com.woutervandervelde.e_cook.ui.screen.home.presentation.HomeUiEvent
 import com.woutervandervelde.e_cook.ui.screen.home.presentation.HomeUiState
 import com.woutervandervelde.e_cook.ui.theme.Size128
@@ -41,6 +43,18 @@ fun HomeScreen(
             onNewRecipe = { uiEvent(HomeUiEvent.OnAddRecipeClick) },
             onRandomRecipe = { uiEvent(HomeUiEvent.OnRandomRecipeClick) }
         )
+
+        //Temp
+        uiState.recipes.forEach { recipe ->
+            Card(
+                onClick = { uiEvent(HomeUiEvent.OnEditRecipe(recipe.id))}
+            ) {
+                Text(text = recipe.name)
+                recipe.tags.forEach {
+                    Tag(name = it.name)
+                }
+            }
+        }
     }
 }
 

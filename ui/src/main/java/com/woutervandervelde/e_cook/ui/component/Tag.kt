@@ -30,7 +30,7 @@ fun Tag(
     name: String,
     modifier: Modifier = Modifier,
     selected: Boolean = false,
-    onSelectChange: (selected: Boolean) -> Unit,
+    onSelectChange: (selected: Boolean) -> Unit = { },
     controlled: Boolean = false
 ) {
     var select by remember {

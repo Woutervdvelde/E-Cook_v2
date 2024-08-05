@@ -74,8 +74,6 @@ fun EditScreen(
     uiState: EditUiState,
     uiEvent: (EditUiEvent) -> Unit
 ) {
-    val recipe: Recipe = uiState.recipe.recipe
-
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
@@ -142,7 +140,7 @@ fun EditScreen(
                 onNewIngredient = { ingredient, new, unit, quantity ->
                     if (new) uiEvent(EditUiEvent.OnCreateIngredient(ingredient))
                     val recipeIngredient = RecipeIngredient(ingredient, unit, quantity)
-                    uiEvent(EditUiEvent.OnAddIngredientToRecipe(recipe, recipeIngredient))
+                    uiEvent(EditUiEvent.OnAddIngredientToRecipe(recipeIngredient))
                 }
             )
             StepsSection(
@@ -230,10 +228,10 @@ fun NameSection(name: String, onUpdateName: (name: String) -> Unit) {
     ) {
         SectionTitle(title = stringResource(R.string.edit_section_name_title))
         Input(
-            initialValue = name,
+            value = name,
             placeholder = stringResource(R.string.edit_section_name_placeholder),
             singleLine = true,
-            onValueChange = { onUpdateName(it.text) }
+            onValueChange = { onUpdateName(it) }
         )
     }
 }
@@ -245,10 +243,10 @@ fun DescriptionSection(description: String, onUpdateDescription: (description: S
     ) {
         SectionTitle(title = stringResource(R.string.edit_section_description_title))
         Input(
-            initialValue = description,
+            value = description,
             placeholder = stringResource(R.string.edit_section_description_placeholder),
             minLines = 2,
-            onValueChange = { onUpdateDescription(it.text) }
+            onValueChange = { onUpdateDescription(it) }
         )
     }
 }
@@ -364,7 +362,8 @@ fun StepsSection(
                 var step = ""
                 Card {
                     Input(
-                        onValueChange = { step = it.text },
+                        value = step,
+                        onValueChange = { step = it },
                         minLines = 3,
                         placeholder = stringResource(R.string.edit_section_steps_add_placeholder)
                     )
