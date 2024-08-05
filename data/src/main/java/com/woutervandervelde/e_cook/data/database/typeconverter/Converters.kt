@@ -33,8 +33,14 @@ class Converters {
     fun toMeasurementUnit(value: String): MeasurementUnit = MeasurementUnit.valueOf(value)
 
     @TypeConverter
-    fun fromSteps(value: List<String>) = value.joinToString("|||")
+    fun fromSteps(value: List<String>): String {
+        return if (value.isEmpty()) ""
+        else value.joinToString("|||")
+    }
 
     @TypeConverter
-    fun toSteps(value: String): List<String> = value.split("|||")
+    fun toSteps(value: String): List<String> {
+        return if (value.isBlank()) listOf()
+        else value.split("|||")
+    }
 }
