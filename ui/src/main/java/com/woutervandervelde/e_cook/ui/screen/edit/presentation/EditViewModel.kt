@@ -28,9 +28,11 @@ class EditViewModel @AssistedInject constructor(
     @Assisted private val recipeId: Long
 ) : BaseViewModel<EditUiState, EditUiEvent>() {
 
+    private lateinit var recipe: RecipeWithIngredients
+
     init {
         CoroutineScope(Dispatchers.IO).launch {
-            val recipe =
+            recipe =
                 if (recipeId == -1L) RecipeWithIngredients.Empty()
                 else recipeRepository.getFullRecipeById(recipeId)
 
@@ -99,13 +101,25 @@ class EditViewModel @AssistedInject constructor(
                     source = Source.Manual,
                     steps = uiState.value.recipeSteps
                 )
+
+                val originalIngredients = this.recipe.ingredients
+                val currentIngredients = uiState.value.recipeIngredients
+                val addedIngredients = currentIngredients.filter { it !in originalIngredients }
+                val deletedIngredients = originalIngredients.filter { it !in currentIngredients }
+
                 CoroutineScope(Dispatchers.IO).launch {
                     if (recipeId == -1L) {
                         recipe.id = recipeRepository.insertRecipe(recipe)
-                        recipeRepository.insertRecipeIngredients(recipe, uiState.value.recipeIngredients)
+                        recipeRepository.insertRecipeIngredients(
+                            recipe,
+                            uiState.value.recipeIngredients
+                        )
                     } else {
                         recipeRepository.updateRecipe(recipe)
                     }
+
+                    deletedIngredients.forEach { recipeRepository.deleteRecipeIngredient(recipe, it) }
+                    recipeRepository.insertRecipeIngredients(recipe, addedIngredients)
                 }
 
                 navEvent(EditNavEvent.Back)

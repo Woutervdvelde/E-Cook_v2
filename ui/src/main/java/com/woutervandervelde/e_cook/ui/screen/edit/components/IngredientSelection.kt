@@ -153,16 +153,17 @@ private fun IngredientSelection(
 @Composable
 private fun QuantitySelection(onSubmit: (unit: MeasurementUnit, quantity: Double) -> Unit) {
     var selectedUnit by remember { mutableStateOf(MeasurementUnit.MILLILITER) }
-    var quantity by remember { mutableDoubleStateOf(0.0) }
+    var quantity by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier.padding(Size16),
         verticalArrangement = Arrangement.spacedBy(Size16)
     ) {
         Input(
+            value = quantity,
             placeholder = "0.0",
             onValueChange = {
-                quantity = it.toDouble()
+                quantity = it
             },
             keyboardType = KeyboardType.Decimal
         )
@@ -188,7 +189,7 @@ private fun QuantitySelection(onSubmit: (unit: MeasurementUnit, quantity: Double
             text = stringResource(R.string.edit_section_ingredients_add_to_recipe),
             icon = painterResource(R.drawable.add),
             onClick = {
-                onSubmit(selectedUnit, quantity)
+                onSubmit(selectedUnit, if (quantity.isBlank()) 0.0 else quantity.toDouble())
             },
             modifier = Modifier.weight(.25f)
         )
