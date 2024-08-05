@@ -1,6 +1,7 @@
 package com.woutervandervelde.e_cook.ui.screen.source.navigation
 
 import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
@@ -40,11 +41,15 @@ fun NavGraphBuilder.sourceNavigation(navController: NavController) {
                 }
             )
         )
-    ) {backStackEntry ->
-        val sourceRoute = backStackEntry.toRoute<SourceRoute>()
-        Spacer(modifier = Modifier.height(Size32))
-        Text(text = "reelId: ${sourceRoute.reelId}")
-        Spacer(modifier = Modifier.height(Size32))
+    ) {backstackEntry ->
+        val sourceRoute = backstackEntry.toRoute<SourceRoute>()
+
+        var data: String?
+        val intent = (backstackEntry.arguments?.get(NavController.KEY_DEEP_LINK_INTENT) as? Intent)
+        if (intent?.action == Intent.ACTION_SEND) {
+            data = intent.getStringExtra(Intent.EXTRA_TEXT)
+        }
+
         SourceScreen(navEvent)
     }
 }

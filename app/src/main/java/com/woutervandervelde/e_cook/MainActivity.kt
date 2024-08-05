@@ -27,12 +27,8 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    EcookTheme {
-        AppNavigation()
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
     }
 }
