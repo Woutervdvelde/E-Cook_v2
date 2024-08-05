@@ -179,7 +179,6 @@ private fun QuantitySelection(onSubmit: (unit: MeasurementUnit, quantity: Double
                         selected = it == selectedUnit,
                         onSelectChange = { selected -> if (selected) selectedUnit = it },
                         modifier = Modifier.padding(end = Size8, bottom = Size8),
-                        controlled = true
                     )
                 }
             }

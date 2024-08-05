@@ -10,7 +10,7 @@ interface EditUiEvent : BaseUiEvent {
     data object OnBack : EditUiEvent
     data class OnUpdateRecipeName(val name: String) : EditUiEvent
     data class OnUpdateRecipeDescription(val description: String) : EditUiEvent
-    data class OnUpdateRecipeTags(val tags: List<Tag>) : EditUiEvent
+    data class OnUpdateRecipeTags(val tag: Tag, val selected: Boolean) : EditUiEvent
     data class OnCreateIngredient(val ingredient: Ingredient) : EditUiEvent
     data class OnAddIngredientToRecipe(
         val recipeIngredient: RecipeIngredient

@@ -18,6 +18,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.selects.select
 
 @HiltViewModel(assistedFactory = EditViewModel.Factory::class)
 class EditViewModel @AssistedInject constructor(
@@ -32,7 +33,7 @@ class EditViewModel @AssistedInject constructor(
             val recipe =
                 if (recipeId == -1L) RecipeWithIngredients.Empty()
                 else recipeRepository.getFullRecipeById(recipeId)
-            Log.e("TAG", "recipe: $recipe")
+
             _uiState.update {
                 it.copy(
                     allIngredients = ingredientRepository.getAllIngredients(),
@@ -56,8 +57,12 @@ class EditViewModel @AssistedInject constructor(
             is EditUiEvent.OnUpdateRecipeDescription ->
                 _uiState.update { it.copy(recipeDescription = event.description) }
 
-            is EditUiEvent.OnUpdateRecipeTags ->
-                _uiState.update { it.copy(recipeTags = event.tags) }
+            is EditUiEvent.OnUpdateRecipeTags -> {
+                val updatedTags = uiState.value.recipeTags.toMutableList()
+                if (event.selected) updatedTags.add(event.tag)
+                else updatedTags.remove(event.tag)
+                _uiState.update { it.copy(recipeTags = updatedTags) }
+            }
 
             is EditUiEvent.OnCreateIngredient -> {
                 CoroutineScope(Dispatchers.IO).launch {

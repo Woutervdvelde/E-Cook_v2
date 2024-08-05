@@ -140,8 +140,8 @@ fun EditScreen(
             )
             TagsSection(
                 tags = uiState.recipeTags,
-                onUpdateTags = { tags ->
-                    uiEvent(EditUiEvent.OnUpdateRecipeTags(tags = tags))
+                onUpdateTags = { tag, selected ->
+                    uiEvent(EditUiEvent.OnUpdateRecipeTags(tag, selected))
                 }
             )
             IngredientsSection(
@@ -274,9 +274,7 @@ fun DescriptionSection(description: String, onUpdateDescription: (description: S
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun TagsSection(tags: List<Tag>, onUpdateTags: (tag: List<Tag>) -> Unit) {
-    val selectedTags: MutableList<Tag> = tags.toMutableList()
-
+fun TagsSection(tags: List<Tag>, onUpdateTags: (tag: Tag, selected: Boolean) -> Unit) {
     Column(
         verticalArrangement = Arrangement.spacedBy(Size8)
     ) {
@@ -285,10 +283,9 @@ fun TagsSection(tags: List<Tag>, onUpdateTags: (tag: List<Tag>) -> Unit) {
             Tag.entries.map {
                 Tag(
                     name = it.name,
+                    selected = tags.contains(it),
                     onSelectChange = { selected ->
-                        if (selected) selectedTags.add(it)
-                        else selectedTags.remove(it)
-                        onUpdateTags(selectedTags)
+                        onUpdateTags(it, selected)
                     },
                     modifier = Modifier.padding(end = Size12, bottom = Size12)
                 )

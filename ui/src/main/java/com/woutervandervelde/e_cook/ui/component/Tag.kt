@@ -31,23 +31,16 @@ fun Tag(
     modifier: Modifier = Modifier,
     selected: Boolean = false,
     onSelectChange: (selected: Boolean) -> Unit = { },
-    controlled: Boolean = false
 ) {
-    var select by remember {
-        mutableStateOf(selected)
-    }
-
     val backgroundColor by animateColorAsState(
-        if (controlled) {
-            if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary.copy(alpha = .25f)
-        } else if (select) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary.copy(alpha = .25f),
+        if (selected) MaterialTheme.colorScheme.primary
+        else MaterialTheme.colorScheme.secondary.copy(alpha = .25f),
         label = "backgroundColor",
     )
 
     val foregroundColor by animateColorAsState(
-        if (controlled) {
-            if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onBackground
-        } else if (select) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onBackground,
+        if (selected) MaterialTheme.colorScheme.onPrimary
+        else MaterialTheme.colorScheme.onBackground,
         label = "foregroundColor",
     )
 
@@ -58,8 +51,7 @@ fun Tag(
             color = backgroundColor,
             shape = CircleShape,
             onClick = {
-                onSelectChange(!select)
-                select = !select
+                onSelectChange(!selected)
             },
             modifier = modifier
         ) {
