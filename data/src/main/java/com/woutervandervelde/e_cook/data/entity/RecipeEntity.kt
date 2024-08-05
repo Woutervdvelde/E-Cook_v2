@@ -21,25 +21,6 @@ data class RecipeEntity(
     @ColumnInfo(defaultValue = "0") val source: Source,
     val steps: List<String>
 ) {
-    constructor(
-        name: String,
-        description: String,
-        tags: List<Tag>,
-        notes: String?,
-        image: String?,
-        source: Source,
-        steps: List<String>
-    ) : this(
-        0,
-        name,
-        description,
-        tags,
-        notes,
-        image,
-        source,
-        steps
-    )
-
     fun toModel() = Recipe(
         recipeId, name, description, tags, notes, image, source, steps
     )
@@ -47,6 +28,7 @@ data class RecipeEntity(
     companion object {
         fun fromModel(item: Recipe) =
             RecipeEntity(
+                item.id,
                 item.name,
                 item.description,
                 item.tags,
