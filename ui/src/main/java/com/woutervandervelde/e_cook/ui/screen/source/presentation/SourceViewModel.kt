@@ -26,14 +26,14 @@ class SourceViewModel @AssistedInject constructor(
     init {
         if (sharedContent?.isNotBlank() == true) {
             if (sharedContent.contains(INSTAGRAM_PREFIX)) {
-                _uiState.update { it.copy(temp = "loading...") }
+                _uiState.update { it.copy(loadingSource = true) }
                 viewModelScope.launch {
                     val result = instagramRepository.getVideoInfo(sharedContent)
-                    result.onSuccess {
-                        Log.e("TAG onSuccess", it.toString())
+                    result.onSuccess {videoInfo ->
+                        _uiState.update { it.copy(instagramVideoInfo = videoInfo, loadingSource = false) }
                     }
                     result.onFailure {
-                        Log.e("TAG onFailure", it.toString())
+                        _uiState.update { it.copy(loadingSource = false, loadedSourceError = true) }
                     }
                 }
             }
