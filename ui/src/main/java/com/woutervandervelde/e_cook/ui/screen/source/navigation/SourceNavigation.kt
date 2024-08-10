@@ -38,9 +38,8 @@ fun NavGraphBuilder.sourceNavigation(navController: NavController) {
         transition = NavigationTransition.FADE(transitionDuration = NavigationDuration.FAST),
         deepLinks = listOf(
             navDeepLink<SourceRoute>(
-                basePath = "https://www.instagram.com/reel",
+                basePath = "share",
                 deepLinkBuilder = {
-                    uriPattern = "/{reelId}"
                     action = Intent.ACTION_SEND
                 }
             )
