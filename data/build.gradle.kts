@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
@@ -21,6 +23,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        val properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
+
+        buildConfigField("String", "INSTAGRAM_API_URL", properties.getProperty("INSTAGRAM_API_URL"))
     }
 
     buildTypes {
@@ -31,6 +38,9 @@ android {
                 "proguard-rules.pro"
             )
         }
+    }
+    buildFeatures {
+        buildConfig = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -56,6 +66,9 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
     ksp(libs.android.hilt.compiler)
+
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
