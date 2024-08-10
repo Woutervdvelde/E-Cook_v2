@@ -30,4 +30,7 @@
 
     <string name="edit_button_upload">Upload</string>
     <string name="edit_button_url">URL</string>
+    
+    <string name="source_convert_reel_button">Convert reel to recipe</string>
+    <string name="source_loaded_error">There was an error parsing the data you provided</string>
 </resources>

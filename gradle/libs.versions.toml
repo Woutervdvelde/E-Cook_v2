@@ -20,6 +20,7 @@ room = "2.6.1"
 hilt = "2.51.1"
 hiltNavigation = "1.2.0"
 coil = "2.6.0"
+retrofit = "2.11.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -48,12 +49,13 @@ android-hilt = { group = "com.google.dagger", name = "hilt-android", version.ref
 android-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 android-hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigation" }
 
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoup" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-converter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

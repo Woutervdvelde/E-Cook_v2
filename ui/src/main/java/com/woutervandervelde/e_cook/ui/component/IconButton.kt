@@ -1,16 +1,11 @@
 package com.woutervandervelde.e_cook.ui.component
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -18,8 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
-import com.woutervandervelde.e_cook.ui.theme.Size10
-import com.woutervandervelde.e_cook.ui.theme.Size32
 import com.woutervandervelde.e_cook.ui.theme.Size8
 
 @Composable
@@ -35,16 +28,10 @@ internal fun IconButton(
         ButtonType.SECONDARY -> MaterialTheme.colorScheme.onSecondary
     }
 
-    val backgroundColor = when (buttonType) {
-        ButtonType.PRIMARY -> MaterialTheme.colorScheme.primary
-        ButtonType.SECONDARY -> MaterialTheme.colorScheme.secondary
-    }
-
     Button(
         onClick = onClick,
-        shape = RoundedCornerShape(Size10),
-        colors = ButtonDefaults.buttonColors(containerColor = backgroundColor),
-        modifier = modifier
+        modifier = modifier,
+        buttonType = buttonType
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -65,8 +52,4 @@ internal fun IconButton(
             )
         }
     }
-}
-
-enum class ButtonType {
-    PRIMARY, SECONDARY
 }
