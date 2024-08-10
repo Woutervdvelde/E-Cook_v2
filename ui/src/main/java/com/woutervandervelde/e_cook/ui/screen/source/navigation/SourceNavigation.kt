@@ -45,8 +45,6 @@ fun NavGraphBuilder.sourceNavigation(navController: NavController) {
             )
         )
     ) { backstackEntry ->
-        val sourceRoute = backstackEntry.toRoute<SourceRoute>()
-
         var data: String? = null
         val intent = (backstackEntry.arguments?.get(NavController.KEY_DEEP_LINK_INTENT) as? Intent)
         if (intent?.action == Intent.ACTION_SEND) {
