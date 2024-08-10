@@ -13,18 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.loader.content.Loader
 import coil.compose.AsyncImage
 import com.woutervandervelde.e_cook.domain.model.InstagramVideoInfo
 import com.woutervandervelde.e_cook.ui.R
 import com.woutervandervelde.e_cook.ui.component.Button
-import com.woutervandervelde.e_cook.ui.screen.home.presentation.HomeUiEvent
-import com.woutervandervelde.e_cook.ui.screen.home.presentation.HomeUiState
-import com.woutervandervelde.e_cook.ui.screen.source.navigation.SourceNavEvent
 import com.woutervandervelde.e_cook.ui.screen.source.presentation.SourceUiEvent
 import com.woutervandervelde.e_cook.ui.screen.source.presentation.SourceUiState
 import com.woutervandervelde.e_cook.ui.theme.Size16
-import com.woutervandervelde.e_cook.ui.theme.Size36
 import com.woutervandervelde.e_cook.ui.theme.Size360
 
 @Composable

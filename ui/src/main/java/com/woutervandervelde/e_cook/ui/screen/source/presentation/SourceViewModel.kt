@@ -1,8 +1,6 @@
 package com.woutervandervelde.e_cook.ui.screen.source.presentation
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.woutervandervelde.e_cook.domain.model.InstagramVideoInfo
 import com.woutervandervelde.e_cook.domain.repository.InstagramRepository
 import com.woutervandervelde.e_cook.ui.screen.source.navigation.SourceNavEvent
 import com.woutervandervelde.e_cook.ui.viewmodel.BaseViewModel
@@ -10,11 +8,8 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @HiltViewModel(assistedFactory = SourceViewModel.Factory::class)
 class SourceViewModel @AssistedInject constructor(
