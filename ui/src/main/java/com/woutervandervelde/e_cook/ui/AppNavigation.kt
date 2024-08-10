@@ -1,6 +1,7 @@
 package com.woutervandervelde.e_cook.ui
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.safeDrawingPadding
@@ -10,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.core.net.toUri
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -30,10 +32,15 @@ sealed class Screen<T>(
     @StringRes val nameResourceId: Int,
     @DrawableRes val iconResourceId: Int
 ) {
+    val routeName: String = route!!::class.simpleName ?: ""
+
     data object Home : Screen<HomeRoute>(HomeRoute, R.string.navigation_home, R.drawable.cottage)
     data object Books : Screen<BooksRoute>(BooksRoute, R.string.navigation_books, R.drawable.book)
-    data object Search : Screen<SearchRoute>(SearchRoute, R.string.navigation_search, R.drawable.search)
-    data object Source : Screen<SourceRoute>(SourceRoute, R.string.navigation_source, R.drawable.bakery_dining)
+    data object Search :
+        Screen<SearchRoute>(SearchRoute, R.string.navigation_search, R.drawable.search)
+
+    data object Source :
+        Screen<SourceRoute>(SourceRoute(), R.string.navigation_source, R.drawable.bakery_dining)
 }
 
 val screenItems = listOf(
@@ -49,8 +56,8 @@ fun AppNavigation() {
     val navController = rememberNavController()
     val currentScreen by navController.currentBackStackEntryAsState()
 
-    fun checkIfSelected(screen: Screen<out Any>) =
-        currentScreen?.destination?.route?.substringAfterLast(".") ==
+    fun checkIfSelected(screen: Screen<out Any>): Boolean =
+        currentScreen?.destination?.route?.substringAfterLast(".")?.substringBefore("?") ==
                 screen.route.javaClass.simpleName.toString()
 
     Scaffold(

@@ -1,5 +1,6 @@
 package com.woutervandervelde.e_cook
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -26,12 +27,8 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    EcookTheme {
-        AppNavigation()
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
     }
 }
