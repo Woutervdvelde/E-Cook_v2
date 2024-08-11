@@ -78,6 +78,9 @@ class SourceViewModel @AssistedInject constructor(
                     }
                 }
             }
+
+            is SourceUiEvent.OnNavigateToRecipeClick ->
+                navEvent(SourceNavEvent.ToRecipe(event.recipeId))
         }
     }
 

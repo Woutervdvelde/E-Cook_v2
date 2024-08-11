@@ -22,6 +22,7 @@ import com.woutervandervelde.e_cook.ui.screen.books.navigation.booksNavigation
 import com.woutervandervelde.e_cook.ui.screen.edit.navigation.editNavigation
 import com.woutervandervelde.e_cook.ui.screen.home.navigation.HomeRoute
 import com.woutervandervelde.e_cook.ui.screen.home.navigation.homeNavigation
+import com.woutervandervelde.e_cook.ui.screen.recipe.navigation.recipeNavigation
 import com.woutervandervelde.e_cook.ui.screen.search.navigation.SearchRoute
 import com.woutervandervelde.e_cook.ui.screen.search.navigation.searchNavigation
 import com.woutervandervelde.e_cook.ui.screen.source.navigation.SourceRoute
@@ -96,6 +97,7 @@ fun AppNavigation() {
             searchNavigation(navController)
             sourceNavigation(navController)
             editNavigation(navController)
+            recipeNavigation(navController)
         }
     }
 }

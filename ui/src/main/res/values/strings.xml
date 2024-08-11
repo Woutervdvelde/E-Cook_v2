@@ -36,4 +36,6 @@
     <string name="source_converting_title">Converting the reel to a new recipe</string>
     <string name="source_converting_powered_by">Powered by</string>
     <string name="source_converting_gemini">Gemini</string>
+    <string name="source_converting_finished">Your recipe is ready!</string>
+    <string name="source_go_to_recipe">Open recipe</string>
 </resources>

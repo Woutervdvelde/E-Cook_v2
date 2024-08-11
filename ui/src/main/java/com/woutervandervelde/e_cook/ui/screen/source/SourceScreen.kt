@@ -1,6 +1,5 @@
 package com.woutervandervelde.e_cook.ui.screen.source
 
-import android.widget.Space
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,7 +29,7 @@ import com.woutervandervelde.e_cook.ui.screen.source.presentation.SourceUiState
 import com.woutervandervelde.e_cook.ui.theme.Size16
 import com.woutervandervelde.e_cook.ui.theme.Size360
 import com.woutervandervelde.e_cook.ui.theme.Size4
-import com.woutervandervelde.e_cook.ui.theme.Size8
+import com.woutervandervelde.e_cook.ui.theme.Text40
 
 @Composable
 fun SourceScreen(
@@ -58,9 +57,12 @@ fun SourceScreen(
                     )
 
                 SourceState.PROCESSING -> ProcessingInstagramRecipe()
-                SourceState.FINISHED -> {
-                    Text(text = "done")
-                }
+                SourceState.FINISHED ->
+                    if (uiState.processedVideoRecipeId != -1L) ProcessedRecipe(onNavigateClick = {
+                        uiEvent(
+                            SourceUiEvent.OnNavigateToRecipeClick(uiState.processedVideoRecipeId)
+                        )
+                    }) else Text(text = stringResource(R.string.source_loaded_error))
 
                 SourceState.ERROR -> Text(text = stringResource(R.string.source_loaded_error))
 
@@ -138,6 +140,20 @@ fun ProcessingInstagramRecipe() {
                 )
             }
         }
+    }
+}
+
+@Composable
+fun ProcessedRecipe(onNavigateClick: () -> Unit) {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Text(text = "\uD83C\uDF89", style = TextStyle(fontSize = Text40))
+        Text(text = stringResource(R.string.source_converting_finished))
+        Spacer(modifier = Modifier.height(Size16))
+        Button(onClick = onNavigateClick, text = stringResource(R.string.source_go_to_recipe))
     }
 }
 

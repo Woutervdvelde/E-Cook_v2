@@ -18,8 +18,8 @@ class RecipeRepositoryImpl @Inject constructor(
     override suspend fun getAllRecipe(): List<Recipe> =
         recipeDao.getAll().map { it.toModel() }
 
-    override suspend fun getRecipeById(id: Long): Recipe =
-        recipeDao.getById(id).toModel()
+    override suspend fun getRecipeById(id: Long): Recipe? =
+        recipeDao.getById(id)?.toModel()
 
     override suspend fun getRecipeIngredientsById(id: Long): List<RecipeIngredient> =
         recipeDao.getAllIngredientsForRecipe(id).map {
@@ -31,11 +31,11 @@ class RecipeRepositoryImpl @Inject constructor(
             )
         }
 
-    override suspend fun getFullRecipeById(id: Long): RecipeWithIngredients {
+    override suspend fun getFullRecipeById(id: Long): RecipeWithIngredients? {
         val recipe = getRecipeById(id)
         val ingredients = getRecipeIngredientsById(id)
 
-        return RecipeWithIngredients(recipe, ingredients)
+        return if (recipe != null) RecipeWithIngredients(recipe, ingredients) else null
     }
 
     override suspend fun insertRecipe(recipe: Recipe) =

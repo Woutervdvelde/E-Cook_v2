@@ -32,9 +32,7 @@ class EditViewModel @AssistedInject constructor(
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
-            recipe =
-                if (recipeId == -1L) RecipeWithIngredients.Empty()
-                else recipeRepository.getFullRecipeById(recipeId)
+            recipe = recipeRepository.getFullRecipeById(recipeId) ?: RecipeWithIngredients.Empty()
 
             _uiState.update {
                 it.copy(
@@ -118,7 +116,12 @@ class EditViewModel @AssistedInject constructor(
                         recipeRepository.updateRecipe(recipe)
                     }
 
-                    deletedIngredients.forEach { recipeRepository.deleteRecipeIngredient(recipe, it) }
+                    deletedIngredients.forEach {
+                        recipeRepository.deleteRecipeIngredient(
+                            recipe,
+                            it
+                        )
+                    }
                     recipeRepository.insertRecipeIngredients(recipe, addedIngredients)
                 }
 

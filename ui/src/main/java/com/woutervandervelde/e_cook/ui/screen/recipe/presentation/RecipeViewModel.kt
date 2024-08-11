@@ -1,5 +1,6 @@
 package com.woutervandervelde.e_cook.ui.screen.recipe.presentation
 
+import android.util.Log
 import com.woutervandervelde.e_cook.domain.repository.IngredientRepository
 import com.woutervandervelde.e_cook.domain.repository.RecipeRepository
 import com.woutervandervelde.e_cook.ui.screen.recipe.navigation.RecipeNavEvent
@@ -22,6 +23,7 @@ class RecipeViewModel @AssistedInject constructor(
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
+            Log.e("TAG", "getting recipe by id: $recipeId")
             val recipe = recipeRepository.getRecipeById(recipeId)
             if (recipe != null) {
                 _uiState.update { it.copy(recipe = recipe) }
