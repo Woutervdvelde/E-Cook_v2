@@ -6,12 +6,15 @@ import com.woutervandervelde.e_cook.data.database.Database
 import com.woutervandervelde.e_cook.data.dao.RecipeDao
 import com.woutervandervelde.e_cook.data.network.InstagramApiService
 import com.woutervandervelde.e_cook.data.network.RetrofitClient
+import com.woutervandervelde.e_cook.data.network.VideoDownloadService
 import com.woutervandervelde.e_cook.data.repository.IngredientRepositoryImpl
 import com.woutervandervelde.e_cook.data.repository.InstagramRepositoryImpl
 import com.woutervandervelde.e_cook.data.repository.RecipeRepositoryImpl
+import com.woutervandervelde.e_cook.data.repository.VideoRepositoryImpl
 import com.woutervandervelde.e_cook.domain.repository.IngredientRepository
 import com.woutervandervelde.e_cook.domain.repository.InstagramRepository
 import com.woutervandervelde.e_cook.domain.repository.RecipeRepository
+import com.woutervandervelde.e_cook.domain.repository.VideoRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -59,4 +62,14 @@ object DataModule {
     @Singleton
     fun provideInstagramRepository(apiService: InstagramApiService): InstagramRepository =
         InstagramRepositoryImpl(apiService)
+
+    @Provides
+    @Singleton
+    fun provideVideoDownloadService(): VideoDownloadService =
+        RetrofitClient.getClient().create(VideoDownloadService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideVideoRepository(videoDownloadService: VideoDownloadService, @ApplicationContext context: Context): VideoRepository =
+        VideoRepositoryImpl(videoDownloadService, context)
 }

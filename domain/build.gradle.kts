@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
@@ -16,6 +18,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        val properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
+
+        buildConfigField("String", "GEMINI_API_KEY", properties.getProperty("GEMINI_API_KEY"))
     }
 
     buildTypes {
@@ -26,6 +33,10 @@ android {
                 "proguard-rules.pro"
             )
         }
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     compileOptions {
@@ -53,6 +64,8 @@ dependencies {
     ksp(libs.android.hilt.compiler)
 
     implementation(libs.retrofit.converter)
+    implementation(libs.generativeai)
+    implementation(libs.ffmpeg)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
