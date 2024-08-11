@@ -56,6 +56,10 @@ class SourceViewModel @AssistedInject constructor(
                     file?.let {
                         val images = ExtractVideoFramesUseCase.invoke(file, context)
                         Log.e("TAG", "images: ${images.count()}")
+
+                        val geminiResponse = GeminiVideoInfoUseCase.invoke(event.videoInfo, images)
+                        Log.e("TAG", "response: ${geminiResponse}")
+
                     }
                 }
             }
