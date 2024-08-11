@@ -33,4 +33,7 @@
     
     <string name="source_convert_reel_button">Convert reel to recipe</string>
     <string name="source_loaded_error">There was an error parsing the data you provided</string>
+    <string name="source_converting_title">Converting the reel to a new recipe</string>
+    <string name="source_converting_powered_by">Powered by</string>
+    <string name="source_converting_gemini">Gemini</string>
 </resources>
