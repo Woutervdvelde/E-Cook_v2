@@ -12,6 +12,8 @@ import com.woutervandervelde.e_cook.domain.repository.IngredientRepository
 import com.woutervandervelde.e_cook.domain.repository.RecipeRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.MissingFieldException
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
@@ -32,25 +34,35 @@ class ConvertJsonToRecipeIngredientsUseCase @Inject constructor(
         val ingredients: List<IngredientJson>
     )
 
-    suspend fun invoke(json: String) = withContext(Dispatchers.IO) {
-        val recipeJson = Json.decodeFromString<RecipeJson>(json)
-        val recipe = Recipe(
-            0,
-            recipeJson.name,
-            recipeJson.description,
-            recipeJson.tags.map { Tag.valueOf(it) },
-            source = Source.Instagram,
-            steps = recipeJson.steps
-        )
-        recipe.id = recipeRepository.insertRecipe(recipe)
-
-        val recipeIngredients: List<RecipeIngredient> = recipeJson.ingredients.map {
-            val ingredient = Ingredient(it.name.capitalizeWords())
-            ingredientRepository.insertIngredient(ingredient)
-            RecipeIngredient(
-                ingredient, MeasurementUnit.valueOf(it.unit), it.quantity
+    @OptIn(ExperimentalSerializationApi::class)
+    suspend fun invoke(json: String): Boolean = withContext(Dispatchers.IO) {
+        try {
+            val recipeJson = Json.decodeFromString<RecipeJson>(json)
+            val recipe = Recipe(
+                0,
+                recipeJson.name,
+                recipeJson.description,
+                recipeJson.tags.map { Tag.valueOf(it) },
+                source = Source.Instagram,
+                steps = recipeJson.steps
             )
+            recipe.id = recipeRepository.insertRecipe(recipe)
+
+            val recipeIngredients: List<RecipeIngredient> = recipeJson.ingredients.map {
+                val ingredient = Ingredient(it.name.capitalizeWords())
+                ingredientRepository.insertIngredient(ingredient)
+                RecipeIngredient(
+                    ingredient, MeasurementUnit.valueOf(it.unit), it.quantity
+                )
+            }
+            recipeRepository.insertRecipeIngredients(recipe, recipeIngredients)
+            return@withContext true
+        } catch (e: MissingFieldException) {
+            //Gemini response doesn't contain all required fields
+            return@withContext false
+        } catch (e: Exception) {
+            //General problem, oh oh
+            return@withContext false
         }
-        recipeRepository.insertRecipeIngredients(recipe, recipeIngredients)
     }
 }

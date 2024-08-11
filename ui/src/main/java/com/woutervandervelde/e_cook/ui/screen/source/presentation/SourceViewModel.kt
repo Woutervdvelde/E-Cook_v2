@@ -34,12 +34,17 @@ class SourceViewModel @AssistedInject constructor(
     init {
         if (sharedContent?.isNotBlank() == true) {
             if (sharedContent.contains(INSTAGRAM_PREFIX)) {
-                val url = "https://instagram.com/p/${sharedContent.substringAfter("reel/")}"
+                val url = "https://instagram.com/reel/${sharedContent.substringAfter("/reel/")}"
                 _uiState.update { it.copy(loadingSource = true) }
                 viewModelScope.launch {
                     val result = instagramRepository.getVideoInfo(url)
-                    result.onSuccess {videoInfo ->
-                        _uiState.update { it.copy(instagramVideoInfo = videoInfo, loadingSource = false) }
+                    result.onSuccess { videoInfo ->
+                        _uiState.update {
+                            it.copy(
+                                instagramVideoInfo = videoInfo,
+                                loadingSource = false
+                            )
+                        }
                     }
                     result.onFailure {
                         _uiState.update { it.copy(loadingSource = false, loadedSourceError = true) }
@@ -58,7 +63,8 @@ class SourceViewModel @AssistedInject constructor(
 
                     file?.let {
                         val images = ExtractVideoFramesUseCase.invoke(file, context)
-                        val geminiResponse = GetGeminiVideoInfoUseCase.invoke(event.videoInfo, images)
+                        val geminiResponse =
+                            GetGeminiVideoInfoUseCase.invoke(event.videoInfo, images)
                         convertJsonToRecipeIngredientsUseCase.invoke(geminiResponse)
                     }
                 }
