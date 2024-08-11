@@ -6,6 +6,8 @@ import com.google.ai.client.generativeai.type.Schema
 import com.google.ai.client.generativeai.type.content
 import com.google.ai.client.generativeai.type.generationConfig
 import com.woutervandervelde.e_cook.domain.BuildConfig
+import com.woutervandervelde.e_cook.domain.model.MeasurementUnit
+import com.woutervandervelde.e_cook.domain.model.Tag
 import org.json.JSONObject
 
 object GenerativeModel {
@@ -93,7 +95,7 @@ object GenerativeModel {
                         )
                     )
                 },
-                systemInstruction = content { text("Convert the data from the video and the user input into a recipe. For the ingredient measurment unit use one of the following: MILLILITER,CENTILITER,DECILITER,LITER,TEASPOON,TABLESPOON,FLUID_OUNCE,CUP,PINT,QUART,GALLON,MILLIGRAM,GRAM,KILOGRAM,OUNCE,POUND,MILLIMETER,CENTIMETER,METER,INCH,FOOT,UNIT,PIECE,SLICE,PINCH,DASH,DROP,HANDFUL,BUNCH,STALK. A tag should describe the catogory of the recipe. For the tag(s) use one or multiple of the following: Breakfast, Brunch, Lunch, Dinner, Appetizers, Sides, Drinks, Dessert, Soup, Snacks, Sweet, Savory") }
+                systemInstruction = content { text("Convert the data from the video and the user input into a recipe. For the ingredient measurment unit use one of the following: ${MeasurementUnit::class.java.enumConstants?.map { it.name }}. A tag should describe the catogory of the recipe. For the tag(s) use one or multiple of the following: ${Tag::class.java.enumConstants?.map { it.name }}") }
             )
 
         return model!!
