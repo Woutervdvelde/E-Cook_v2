@@ -65,6 +65,7 @@ dependencies {
 
     implementation(libs.retrofit.converter)
     implementation(libs.generativeai)
+    implementation(libs.ffmpeg)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

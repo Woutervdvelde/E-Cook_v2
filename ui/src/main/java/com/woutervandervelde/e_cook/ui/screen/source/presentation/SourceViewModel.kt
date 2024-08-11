@@ -1,10 +1,13 @@
 package com.woutervandervelde.e_cook.ui.screen.source.presentation
 
+import android.content.Context
 import android.util.Log
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewModelScope
 import com.woutervandervelde.e_cook.domain.ai.GenerativeModel
 import com.woutervandervelde.e_cook.domain.repository.InstagramRepository
 import com.woutervandervelde.e_cook.domain.repository.VideoRepository
+import com.woutervandervelde.e_cook.domain.usecase.ExtractVideoFramesUseCase
 import com.woutervandervelde.e_cook.domain.usecase.GeminiVideoInfoUseCase
 import com.woutervandervelde.e_cook.ui.screen.source.navigation.SourceNavEvent
 import com.woutervandervelde.e_cook.ui.viewmodel.BaseViewModel
@@ -12,6 +15,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -21,6 +25,7 @@ class SourceViewModel @AssistedInject constructor(
     @Assisted private val sharedContent: String?,
     private val instagramRepository: InstagramRepository,
     private val videoRepository: VideoRepository,
+    @ApplicationContext private val context: Context
 ) : BaseViewModel<SourceUiState, SourceUiEvent>() {
 
     init {
@@ -47,6 +52,11 @@ class SourceViewModel @AssistedInject constructor(
 //                    GeminiVideoInfoUseCase.invoke(event.videoInfo)
                     val file = videoRepository.getVideoFromUrl(event.videoInfo.videoUrl)
                     Log.e("TAG", "file: $file")
+
+                    file?.let {
+                        val images = ExtractVideoFramesUseCase.invoke(file, context)
+                        Log.e("TAG", "images: ${images.count()}")
+                    }
                 }
             }
         }
