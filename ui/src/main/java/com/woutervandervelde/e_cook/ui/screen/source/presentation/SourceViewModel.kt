@@ -16,6 +16,8 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
@@ -58,7 +60,7 @@ class SourceViewModel @AssistedInject constructor(
         when (event) {
             is SourceUiEvent.OnInstagramConvertClick -> {
                 _uiState.update { it.copy(sourceState = SourceState.PROCESSING) }
-                viewModelScope.launch {
+                CoroutineScope(Dispatchers.IO).launch {
                     val file = videoRepository.getVideoFromUrl(event.videoInfo.videoUrl)
                     if (file != null) {
                         val images = ExtractVideoFramesUseCase.invoke(file, context)
