@@ -1,13 +1,11 @@
 package com.woutervandervelde.e_cook.domain.usecase
 
 import android.graphics.Bitmap
-import android.util.Log
-import com.google.ai.client.generativeai.type.GenerateContentResponse
 import com.google.ai.client.generativeai.type.content
 import com.woutervandervelde.e_cook.domain.ai.GenerativeModel
 import com.woutervandervelde.e_cook.domain.model.InstagramVideoInfo
 
-object GeminiVideoInfoUseCase {
+object GetGeminiVideoInfoUseCase {
     suspend fun invoke(videoInfo: InstagramVideoInfo, frames: List<Bitmap>): String {
         val model = GenerativeModel.getModel()
         val response = model.generateContent(

@@ -2,13 +2,12 @@ package com.woutervandervelde.e_cook.ui.screen.source.presentation
 
 import android.content.Context
 import android.util.Log
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewModelScope
-import com.woutervandervelde.e_cook.domain.ai.GenerativeModel
 import com.woutervandervelde.e_cook.domain.repository.InstagramRepository
 import com.woutervandervelde.e_cook.domain.repository.VideoRepository
+import com.woutervandervelde.e_cook.domain.usecase.ConvertJsonToRecipeIngredientsUseCase
 import com.woutervandervelde.e_cook.domain.usecase.ExtractVideoFramesUseCase
-import com.woutervandervelde.e_cook.domain.usecase.GeminiVideoInfoUseCase
+import com.woutervandervelde.e_cook.domain.usecase.GetGeminiVideoInfoUseCase
 import com.woutervandervelde.e_cook.ui.screen.source.navigation.SourceNavEvent
 import com.woutervandervelde.e_cook.ui.viewmodel.BaseViewModel
 import dagger.assisted.Assisted
@@ -18,6 +17,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 
 @HiltViewModel(assistedFactory = SourceViewModel.Factory::class)
 class SourceViewModel @AssistedInject constructor(
@@ -25,15 +26,17 @@ class SourceViewModel @AssistedInject constructor(
     @Assisted private val sharedContent: String?,
     private val instagramRepository: InstagramRepository,
     private val videoRepository: VideoRepository,
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val convertJsonToRecipeIngredientsUseCase: ConvertJsonToRecipeIngredientsUseCase,
 ) : BaseViewModel<SourceUiState, SourceUiEvent>() {
 
     init {
         if (sharedContent?.isNotBlank() == true) {
             if (sharedContent.contains(INSTAGRAM_PREFIX)) {
+                val url = "https://instagram.com/p/${sharedContent.substringAfter("reel/")}"
                 _uiState.update { it.copy(loadingSource = true) }
                 viewModelScope.launch {
-                    val result = instagramRepository.getVideoInfo(sharedContent)
+                    val result = instagramRepository.getVideoInfo(url)
                     result.onSuccess {videoInfo ->
                         _uiState.update { it.copy(instagramVideoInfo = videoInfo, loadingSource = false) }
                     }
@@ -49,17 +52,13 @@ class SourceViewModel @AssistedInject constructor(
         when (event) {
             is SourceUiEvent.OnInstagramConvertClick -> {
                 viewModelScope.launch {
-//                    GeminiVideoInfoUseCase.invoke(event.videoInfo)
                     val file = videoRepository.getVideoFromUrl(event.videoInfo.videoUrl)
                     Log.e("TAG", "file: $file")
 
                     file?.let {
                         val images = ExtractVideoFramesUseCase.invoke(file, context)
-                        Log.e("TAG", "images: ${images.count()}")
-
-                        val geminiResponse = GeminiVideoInfoUseCase.invoke(event.videoInfo, images)
-                        Log.e("TAG", "response: ${geminiResponse}")
-
+                        val geminiResponse = GetGeminiVideoInfoUseCase.invoke(event.videoInfo, images)
+                        convertJsonToRecipeIngredientsUseCase.invoke(geminiResponse)
                     }
                 }
             }
@@ -77,6 +76,6 @@ class SourceViewModel @AssistedInject constructor(
     }
 
     companion object {
-        val INSTAGRAM_PREFIX = Regex("instagram.com/reel/|instagram.com/p/")
+        val INSTAGRAM_PREFIX = Regex("instagram.com/(.*/)?reel/")
     }
 }
