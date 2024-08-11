@@ -1,7 +1,9 @@
 package com.woutervandervelde.e_cook.ui.screen.source.presentation
 
 import androidx.lifecycle.viewModelScope
+import com.woutervandervelde.e_cook.domain.ai.GenerativeModel
 import com.woutervandervelde.e_cook.domain.repository.InstagramRepository
+import com.woutervandervelde.e_cook.domain.usecase.GeminiVideoInfoUseCase
 import com.woutervandervelde.e_cook.ui.screen.source.navigation.SourceNavEvent
 import com.woutervandervelde.e_cook.ui.viewmodel.BaseViewModel
 import dagger.assisted.Assisted
@@ -15,7 +17,7 @@ import kotlinx.coroutines.launch
 class SourceViewModel @AssistedInject constructor(
     @Assisted private val navEvent: (SourceNavEvent) -> Unit,
     @Assisted private val sharedContent: String?,
-    private val instagramRepository: InstagramRepository
+    private val instagramRepository: InstagramRepository,
 ) : BaseViewModel<SourceUiState, SourceUiEvent>() {
 
     init {
@@ -36,7 +38,13 @@ class SourceViewModel @AssistedInject constructor(
     }
 
     override fun onUiEvent(event: SourceUiEvent) {
-//        TODO("Not yet implemented")
+        when (event) {
+            is SourceUiEvent.OnInstagramConvertClick -> {
+                viewModelScope.launch {
+                    GeminiVideoInfoUseCase.invoke(event.videoInfo)
+                }
+            }
+        }
     }
 
     override fun defaultUiState(): SourceUiState = SourceUiState()

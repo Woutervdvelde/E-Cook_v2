@@ -42,7 +42,7 @@ fun SourceScreen(
                 loadError = uiState.loadedSourceError,
                 videoInfo = uiState.instagramVideoInfo,
                 onConvertClick = {
-
+                    uiEvent(SourceUiEvent.OnInstagramConvertClick(uiState.instagramVideoInfo!!))
                 }
             )
         }
