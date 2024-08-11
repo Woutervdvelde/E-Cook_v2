@@ -1,6 +1,5 @@
 package com.woutervandervelde.e_cook.ui.screen.edit
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,7 +18,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.pager.HorizontalPager
@@ -45,16 +43,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.Dialog
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import coil.compose.AsyncImage
 import com.woutervandervelde.e_cook.domain.model.Ingredient
 import com.woutervandervelde.e_cook.domain.model.MeasurementUnit
-import com.woutervandervelde.e_cook.domain.model.Recipe
 import com.woutervandervelde.e_cook.domain.model.RecipeIngredient
 import com.woutervandervelde.e_cook.domain.model.Tag
 import com.woutervandervelde.e_cook.ui.R
@@ -125,7 +119,10 @@ fun EditScreen(
                 )
                 .verticalScroll(rememberScrollState())
         ) {
-            ImageSection(modifier = Modifier.padding(top = Size16))
+            ImageSection(
+                image = uiState.recipeImage,
+                modifier = Modifier.padding(top = Size16)
+            )
             NameSection(
                 name = uiState.recipeName,
                 onUpdateName = { name ->
@@ -211,12 +208,12 @@ fun SectionTitle(title: String) {
 }
 
 @Composable
-fun ImageSection(modifier: Modifier = Modifier) {
+fun ImageSection(modifier: Modifier = Modifier, image: String) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(Size8)
     ) {
         AsyncImage(
-            model = "https://images.unsplash.com/photo-1519915028121-7d3463d20b13?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            model = image,
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = modifier
