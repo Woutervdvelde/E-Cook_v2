@@ -17,6 +17,7 @@ import com.woutervandervelde.e_cook.ui.navigation.NavigationDuration
 import com.woutervandervelde.e_cook.ui.navigation.NavigationTransition
 import com.woutervandervelde.e_cook.ui.navigation.composable
 import com.woutervandervelde.e_cook.ui.screen.home.navigation.HomeRoute
+import com.woutervandervelde.e_cook.ui.screen.recipe.navigation.RecipeRoute
 import com.woutervandervelde.e_cook.ui.screen.source.SourceScreen
 import com.woutervandervelde.e_cook.ui.screen.source.presentation.SourceViewModel
 import com.woutervandervelde.e_cook.ui.theme.Size32
@@ -30,6 +31,9 @@ data class SourceRoute(
 fun NavGraphBuilder.sourceNavigation(navController: NavController) {
     val navEvent: (SourceNavEvent) -> Unit = { event ->
         when (event) {
+            is SourceNavEvent.ToRecipe ->
+                navController.navigate(RecipeRoute(event.recipeId))
+
             else -> Unit
         }
     }

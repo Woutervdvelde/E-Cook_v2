@@ -16,6 +16,8 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
@@ -35,19 +37,19 @@ class SourceViewModel @AssistedInject constructor(
         if (sharedContent?.isNotBlank() == true) {
             if (sharedContent.contains(INSTAGRAM_PREFIX)) {
                 val url = "https://instagram.com/reel/${sharedContent.substringAfter("/reel/")}"
-                _uiState.update { it.copy(loadingSource = true) }
+                _uiState.update { it.copy(sourceState = SourceState.LOADING) }
                 viewModelScope.launch {
                     val result = instagramRepository.getVideoInfo(url)
                     result.onSuccess { videoInfo ->
                         _uiState.update {
                             it.copy(
                                 instagramVideoInfo = videoInfo,
-                                loadingSource = false
+                                sourceState = SourceState.CONFIRM
                             )
                         }
                     }
                     result.onFailure {
-                        _uiState.update { it.copy(loadingSource = false, loadedSourceError = true) }
+                        _uiState.update { it.copy(sourceState = SourceState.ERROR) }
                     }
                 }
             }
@@ -57,18 +59,28 @@ class SourceViewModel @AssistedInject constructor(
     override fun onUiEvent(event: SourceUiEvent) {
         when (event) {
             is SourceUiEvent.OnInstagramConvertClick -> {
-                viewModelScope.launch {
+                _uiState.update { it.copy(sourceState = SourceState.PROCESSING) }
+                CoroutineScope(Dispatchers.IO).launch {
                     val file = videoRepository.getVideoFromUrl(event.videoInfo.videoUrl)
-                    Log.e("TAG", "file: $file")
-
-                    file?.let {
+                    if (file != null) {
                         val images = ExtractVideoFramesUseCase.invoke(file, context)
                         val geminiResponse =
                             GetGeminiVideoInfoUseCase.invoke(event.videoInfo, images)
-                        convertJsonToRecipeIngredientsUseCase.invoke(geminiResponse)
+                        val recipeId = convertJsonToRecipeIngredientsUseCase.invoke(geminiResponse)
+                        _uiState.update {
+                            it.copy(
+                                sourceState = SourceState.FINISHED,
+                                processedVideoRecipeId = recipeId
+                            )
+                        }
+                    } else {
+                        _uiState.update { it.copy(sourceState = SourceState.ERROR) }
                     }
                 }
             }
+
+            is SourceUiEvent.OnNavigateToRecipeClick ->
+                navEvent(SourceNavEvent.ToRecipe(event.recipeId))
         }
     }
 

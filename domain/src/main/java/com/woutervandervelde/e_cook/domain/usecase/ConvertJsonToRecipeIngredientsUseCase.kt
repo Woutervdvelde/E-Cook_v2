@@ -35,7 +35,7 @@ class ConvertJsonToRecipeIngredientsUseCase @Inject constructor(
     )
 
     @OptIn(ExperimentalSerializationApi::class)
-    suspend fun invoke(json: String): Boolean = withContext(Dispatchers.IO) {
+    suspend fun invoke(json: String): Long = withContext(Dispatchers.IO) {
         try {
             val recipeJson = Json.decodeFromString<RecipeJson>(json)
             val recipe = Recipe(
@@ -56,13 +56,13 @@ class ConvertJsonToRecipeIngredientsUseCase @Inject constructor(
                 )
             }
             recipeRepository.insertRecipeIngredients(recipe, recipeIngredients)
-            return@withContext true
+            return@withContext recipe.id
         } catch (e: MissingFieldException) {
             //Gemini response doesn't contain all required fields
-            return@withContext false
+            return@withContext -1L
         } catch (e: Exception) {
             //General problem, oh oh
-            return@withContext false
+            return@withContext -1L
         }
     }
 }

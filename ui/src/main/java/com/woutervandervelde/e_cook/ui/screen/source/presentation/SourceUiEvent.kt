@@ -5,4 +5,5 @@ import com.woutervandervelde.e_cook.ui.viewmodel.BaseUiEvent
 
 interface SourceUiEvent : BaseUiEvent {
     data class OnInstagramConvertClick(val videoInfo: InstagramVideoInfo) : SourceUiEvent
+    data class OnNavigateToRecipeClick(val recipeId: Long) : SourceUiEvent
 }
