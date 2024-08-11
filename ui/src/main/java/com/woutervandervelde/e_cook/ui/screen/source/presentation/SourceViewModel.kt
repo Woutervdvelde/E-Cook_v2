@@ -66,7 +66,7 @@ class SourceViewModel @AssistedInject constructor(
                         val images = ExtractVideoFramesUseCase.invoke(file, context)
                         val geminiResponse =
                             GetGeminiVideoInfoUseCase.invoke(event.videoInfo, images)
-                        val recipeId = convertJsonToRecipeIngredientsUseCase.invoke(geminiResponse)
+                        val recipeId = convertJsonToRecipeIngredientsUseCase.invoke(geminiResponse, event.videoInfo)
                         _uiState.update {
                             it.copy(
                                 sourceState = SourceState.FINISHED,

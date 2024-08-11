@@ -39,6 +39,7 @@ class EditViewModel @AssistedInject constructor(
                     allIngredients = ingredientRepository.getAllIngredients(),
                     recipeName = recipe.recipe.name,
                     recipeDescription = recipe.recipe.description,
+                    recipeImage = recipe.recipe.image ?: "https://placehold.co/300x400",
                     recipeTags = recipe.recipe.tags,
                     recipeIngredients = recipe.ingredients,
                     recipeSteps = recipe.recipe.steps

@@ -3,6 +3,7 @@ package com.woutervandervelde.e_cook.domain.usecase
 import android.util.Log
 import com.woutervandervelde.e_cook.domain.ext.capitalizeWords
 import com.woutervandervelde.e_cook.domain.model.Ingredient
+import com.woutervandervelde.e_cook.domain.model.InstagramVideoInfo
 import com.woutervandervelde.e_cook.domain.model.MeasurementUnit
 import com.woutervandervelde.e_cook.domain.model.Recipe
 import com.woutervandervelde.e_cook.domain.model.RecipeIngredient
@@ -35,14 +36,15 @@ class ConvertJsonToRecipeIngredientsUseCase @Inject constructor(
     )
 
     @OptIn(ExperimentalSerializationApi::class)
-    suspend fun invoke(json: String): Long = withContext(Dispatchers.IO) {
+    suspend fun invoke(json: String, videoInfo: InstagramVideoInfo): Long = withContext(Dispatchers.IO) {
         try {
             val recipeJson = Json.decodeFromString<RecipeJson>(json)
             val recipe = Recipe(
-                0,
-                recipeJson.name,
-                recipeJson.description,
-                recipeJson.tags.map { Tag.valueOf(it) },
+                id = 0,
+                name = recipeJson.name,
+                description = recipeJson.description,
+                tags = recipeJson.tags.map { Tag.valueOf(it) },
+                image = videoInfo.thumbnail,
                 source = Source.Instagram,
                 steps = recipeJson.steps
             )

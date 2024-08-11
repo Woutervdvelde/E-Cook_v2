@@ -11,6 +11,7 @@ data class EditUiState(
     val recipeName: String = "",
     val recipeDescription: String = "",
     val recipeTags: List<Tag> = listOf(),
+    val recipeImage: String = "",
     val recipeIngredients: List<RecipeIngredient> = listOf(),
     val recipeSteps: List<String> = listOf()
 ) : BaseUiState()
