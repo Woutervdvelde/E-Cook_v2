@@ -1,8 +1,10 @@
 package com.woutervandervelde.e_cook.ui.screen.source.presentation
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.woutervandervelde.e_cook.domain.ai.GenerativeModel
 import com.woutervandervelde.e_cook.domain.repository.InstagramRepository
+import com.woutervandervelde.e_cook.domain.repository.VideoRepository
 import com.woutervandervelde.e_cook.domain.usecase.GeminiVideoInfoUseCase
 import com.woutervandervelde.e_cook.ui.screen.source.navigation.SourceNavEvent
 import com.woutervandervelde.e_cook.ui.viewmodel.BaseViewModel
@@ -18,6 +20,7 @@ class SourceViewModel @AssistedInject constructor(
     @Assisted private val navEvent: (SourceNavEvent) -> Unit,
     @Assisted private val sharedContent: String?,
     private val instagramRepository: InstagramRepository,
+    private val videoRepository: VideoRepository,
 ) : BaseViewModel<SourceUiState, SourceUiEvent>() {
 
     init {
@@ -41,7 +44,9 @@ class SourceViewModel @AssistedInject constructor(
         when (event) {
             is SourceUiEvent.OnInstagramConvertClick -> {
                 viewModelScope.launch {
-                    GeminiVideoInfoUseCase.invoke(event.videoInfo)
+//                    GeminiVideoInfoUseCase.invoke(event.videoInfo)
+                    val file = videoRepository.getVideoFromUrl(event.videoInfo.videoUrl)
+                    Log.e("TAG", "file: $file")
                 }
             }
         }
