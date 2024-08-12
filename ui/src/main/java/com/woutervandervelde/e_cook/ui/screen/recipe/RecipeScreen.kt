@@ -2,6 +2,8 @@ package com.woutervandervelde.e_cook.ui.screen.recipe
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +18,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.IconButton as M3IconButton
@@ -29,15 +33,21 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
+import com.woutervandervelde.e_cook.domain.model.RecipeIngredient
 import com.woutervandervelde.e_cook.domain.model.Source
 import com.woutervandervelde.e_cook.ui.R
+import com.woutervandervelde.e_cook.ui.component.IngredientItem
+import com.woutervandervelde.e_cook.ui.screen.edit.SectionTitle
 import com.woutervandervelde.e_cook.ui.screen.recipe.presentation.RecipeUiEvent
 import com.woutervandervelde.e_cook.ui.screen.recipe.presentation.RecipeUiState
+import com.woutervandervelde.e_cook.ui.theme.Size1
 import com.woutervandervelde.e_cook.ui.theme.Size10
 import com.woutervandervelde.e_cook.ui.theme.Size12
 import com.woutervandervelde.e_cook.ui.theme.Size128
 import com.woutervandervelde.e_cook.ui.theme.Size16
+import com.woutervandervelde.e_cook.ui.theme.Size2
 import com.woutervandervelde.e_cook.ui.theme.Size20
 import com.woutervandervelde.e_cook.ui.theme.Size24
 import com.woutervandervelde.e_cook.ui.theme.Size32
@@ -60,7 +70,9 @@ fun RecipeScreen(
             )
         }
     ) {
-        Column {
+        Column(
+            Modifier.verticalScroll(rememberScrollState())
+        ) {
             RecipeHeader(uiState.recipe.recipe.image ?: "", uiState.recipe.recipe.name)
             Column(
                 verticalArrangement = Arrangement.spacedBy(Size16),
@@ -71,7 +83,7 @@ fun RecipeScreen(
 
                 RecipeTags(recipe.source)
                 RecipeDescription(recipe.description)
-                RecipeIngredients()
+                RecipeIngredients(uiState.recipe.ingredients)
                 RecipeSteps()
             }
         }
@@ -183,7 +195,10 @@ fun RecipeTags(source: Source) {
                 .height(Size20)
         )
         Spacer(modifier = Modifier.width(Size4))
-        Text(text = source.name, style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.secondary))
+        Text(
+            text = source.name,
+            style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.secondary)
+        )
     }
 }
 
@@ -193,8 +208,24 @@ fun RecipeDescription(description: String) {
 }
 
 @Composable
-fun RecipeIngredients() {
-
+fun RecipeIngredients(ingredients: List<RecipeIngredient>) {
+    Column {
+        SectionTitle(title = stringResource(R.string.edit_section_ingredients_title))
+        Spacer(modifier = Modifier.height(Size8))
+        Column(
+            verticalArrangement = Arrangement.spacedBy(Size4)
+        ) {
+            ingredients.forEach {
+                IngredientItem(recipeIngredient = it)
+                Spacer(
+                    modifier = Modifier
+                        .height(Size1)
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.secondary)
+                )
+            }
+        }
+    }
 }
 
 @Composable
