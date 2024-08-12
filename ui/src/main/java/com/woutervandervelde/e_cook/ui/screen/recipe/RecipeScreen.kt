@@ -30,13 +30,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import coil.compose.AsyncImage
+import com.woutervandervelde.e_cook.domain.model.Source
 import com.woutervandervelde.e_cook.ui.R
 import com.woutervandervelde.e_cook.ui.screen.recipe.presentation.RecipeUiEvent
 import com.woutervandervelde.e_cook.ui.screen.recipe.presentation.RecipeUiState
 import com.woutervandervelde.e_cook.ui.theme.Size10
+import com.woutervandervelde.e_cook.ui.theme.Size12
 import com.woutervandervelde.e_cook.ui.theme.Size128
 import com.woutervandervelde.e_cook.ui.theme.Size16
+import com.woutervandervelde.e_cook.ui.theme.Size20
+import com.woutervandervelde.e_cook.ui.theme.Size24
 import com.woutervandervelde.e_cook.ui.theme.Size32
+import com.woutervandervelde.e_cook.ui.theme.Size4
 import com.woutervandervelde.e_cook.ui.theme.Size48
 import com.woutervandervelde.e_cook.ui.theme.Size8
 
@@ -56,7 +61,19 @@ fun RecipeScreen(
         }
     ) {
         Column {
-            RecipeHeader(uiState.recipe.image ?: "", uiState.recipe.name)
+            RecipeHeader(uiState.recipe.recipe.image ?: "", uiState.recipe.recipe.name)
+            Column(
+                verticalArrangement = Arrangement.spacedBy(Size16),
+                modifier = Modifier
+                    .padding(horizontal = Size16)
+            ) {
+                val recipe = uiState.recipe.recipe
+
+                RecipeTags(recipe.source)
+                RecipeDescription(recipe.description)
+                RecipeIngredients()
+                RecipeSteps()
+            }
         }
     }
 }
@@ -143,4 +160,44 @@ fun RecipeTopBar(onBack: () -> Unit, onBookmark: () -> Unit, onEdit: () -> Unit)
             }
         }
     }
+}
+
+@Composable
+fun RecipeTags(source: Source) {
+    //TODO, this also needs to add a timestamp to the recipe and how many servings it has
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        val sourceIcon = painterResource(
+            when (source) {
+                Source.Manual -> R.drawable.add // TODO add manual icon
+                Source.Instagram -> R.drawable.instagram
+                else -> R.drawable.link
+            }
+        )
+        Icon(
+            sourceIcon,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.tertiary,
+            modifier = Modifier
+                .height(Size20)
+        )
+        Spacer(modifier = Modifier.width(Size4))
+        Text(text = source.name, style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.secondary))
+    }
+}
+
+@Composable
+fun RecipeDescription(description: String) {
+    Text(text = description)
+}
+
+@Composable
+fun RecipeIngredients() {
+
+}
+
+@Composable
+fun RecipeSteps() {
+
 }

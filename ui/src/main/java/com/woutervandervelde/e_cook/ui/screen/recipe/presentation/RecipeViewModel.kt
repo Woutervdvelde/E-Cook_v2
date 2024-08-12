@@ -27,7 +27,7 @@ class RecipeViewModel @AssistedInject constructor(
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
-            val recipe = recipeRepository.getRecipeById(recipeId)
+            val recipe = recipeRepository.getFullRecipeById(recipeId)
             if (recipe != null) {
                 _uiState.update { it.copy(recipe = recipe) }
             } else {
