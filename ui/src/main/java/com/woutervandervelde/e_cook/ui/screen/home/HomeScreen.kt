@@ -47,7 +47,7 @@ fun HomeScreen(
         //Temp
         uiState.recipes.forEach { recipe ->
             Card(
-                onClick = { uiEvent(HomeUiEvent.OnEditRecipe(recipe.id))}
+                onClick = { uiEvent(HomeUiEvent.OnRecipeClick(recipe.id))}
             ) {
                 Text(text = recipe.name, modifier = Modifier.padding(Size32))
                 recipe.tags.forEach {

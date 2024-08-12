@@ -37,7 +37,7 @@ class HomeViewModel @AssistedInject constructor(
 
             }
 
-            is HomeUiEvent.OnEditRecipe -> navEvent(HomeNavEvent.ToEditRecipe(event.id))
+            is HomeUiEvent.OnRecipeClick -> navEvent(HomeNavEvent.ToRecipe(event.recipeId))
         }
     }
 
