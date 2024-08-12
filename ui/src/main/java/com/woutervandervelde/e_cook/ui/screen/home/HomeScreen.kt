@@ -31,10 +31,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import coil.ImageLoader
 import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
+import coil.decode.ImageDecoderDecoder
+import coil.request.ImageRequest
+import com.woutervandervelde.e_cook.domain.BuildConfig
 import com.woutervandervelde.e_cook.domain.model.Recipe
 import com.woutervandervelde.e_cook.ui.R
 import com.woutervandervelde.e_cook.ui.component.IconButton
@@ -47,6 +54,7 @@ import com.woutervandervelde.e_cook.ui.theme.Size32
 import com.woutervandervelde.e_cook.ui.theme.Size360
 import com.woutervandervelde.e_cook.ui.theme.Size4
 import com.woutervandervelde.e_cook.ui.theme.Size56
+import com.woutervandervelde.e_cook.ui.theme.Size64
 import com.woutervandervelde.e_cook.ui.theme.Size8
 
 @Composable
@@ -62,16 +70,29 @@ fun HomeScreen(
         )
 
         if (uiState.recipes.isEmpty()) {
-            Text(text = stringResource(R.string.home_empty_recipe_explenation))
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = stringResource(R.string.home_empty_recipe_explenation), textAlign = TextAlign.Center)
+                Spacer(modifier = Modifier.height(Size32))
+                val gifEnabledLoader = ImageLoader.Builder(LocalContext.current)
+                    .components { add(ImageDecoderDecoder.Factory()) }.build()
+                AsyncImage(
+                    model = R.raw.ecook_instagram_example,
+                    imageLoader = gifEnabledLoader,
+                    contentDescription = null
+                )
+            }
         }
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
+            contentPadding = PaddingValues(bottom = Size64),
             horizontalArrangement = Arrangement.spacedBy(Size8),
             verticalArrangement = Arrangement.spacedBy(Size8),
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = Size16)
+                .padding(start = Size16)
         ) {
             items(uiState.recipes) {
                 RecipeCard(

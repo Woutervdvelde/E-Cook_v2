@@ -12,7 +12,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 28
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.android.hilt.navigation)
 
     implementation(libs.coil.compose)
+    implementation(libs.coil.gif)
 
     ksp(libs.android.hilt.compiler)
 
