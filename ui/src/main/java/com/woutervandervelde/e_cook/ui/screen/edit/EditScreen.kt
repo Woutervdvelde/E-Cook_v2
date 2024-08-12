@@ -58,6 +58,7 @@ import com.woutervandervelde.e_cook.ui.component.IngredientItem
 import com.woutervandervelde.e_cook.ui.component.Input
 import com.woutervandervelde.e_cook.ui.component.PagerIndicator
 import com.woutervandervelde.e_cook.ui.component.RecipeStepCard
+import com.woutervandervelde.e_cook.ui.component.StepsPager
 import com.woutervandervelde.e_cook.ui.component.Tag
 import com.woutervandervelde.e_cook.ui.screen.edit.components.IngredientsSelectionModal
 import com.woutervandervelde.e_cook.ui.screen.edit.presentation.EditUiEvent
@@ -337,40 +338,13 @@ fun StepsSection(
         SectionTitle(title = stringResource(R.string.edit_section_steps_title))
         Spacer(modifier = Modifier.height(Size8))
 
-        val count = steps.count() + 1
         var showStepModal by remember { mutableStateOf(false) }
-        val pagerState = rememberPagerState(pageCount = { count })
-
-        HorizontalPager(state = pagerState, pageSpacing = Size8) {
-            if (it < count - 1) RecipeStepCard(
-                step = steps[it],
-                number = it + 1,
-                onDelete = { onDeleteStep(it) })
-            else {
-                Box(
-                    modifier = Modifier
-                        .defaultMinSize(minHeight = Size200)
-                        .fillMaxSize()
-                        .background(
-                            MaterialTheme.colorScheme.secondaryContainer, RoundedCornerShape(
-                                Size16
-                            )
-                        )
-                        .clickable { showStepModal = true },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Icon(painter = painterResource(R.drawable.add), contentDescription = null)
-                        Spacer(modifier = Modifier.width(Size8))
-                        Text(text = stringResource(R.string.edit_section_steps_add))
-                    }
-                }
-            }
-        }
-        PagerIndicator(pagerState)
+        StepsPager(
+            steps = steps,
+            editable = true,
+            onDeleteStep = onDeleteStep,
+            onAddStep = { showStepModal = true }
+        )
 
         if (showStepModal) {
             Dialog(onDismissRequest = { showStepModal = false }) {

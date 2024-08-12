@@ -23,7 +23,7 @@ import com.woutervandervelde.e_cook.ui.theme.Size360
 import com.woutervandervelde.e_cook.ui.theme.Size8
 
 @Composable
-fun RecipeStepCard(step: String, number: Int?, onDelete: () -> Unit) {
+fun RecipeStepCard(step: String, number: Int?, onDelete: () -> Unit = {}, editable: Boolean = false) {
     Card(
         modifier = Modifier
             .fillMaxSize()
@@ -42,7 +42,7 @@ fun RecipeStepCard(step: String, number: Int?, onDelete: () -> Unit) {
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
-                if (number != null) {
+                if (number != null && editable) {
                     IconButton(onClick = onDelete) {
                         Icon(
                             painter = painterResource(R.drawable.delete),

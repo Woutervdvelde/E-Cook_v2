@@ -2,8 +2,6 @@ package com.woutervandervelde.e_cook.ui.screen.recipe
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,14 +14,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.IconButton as M3IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,21 +35,20 @@ import com.woutervandervelde.e_cook.domain.model.RecipeIngredient
 import com.woutervandervelde.e_cook.domain.model.Source
 import com.woutervandervelde.e_cook.ui.R
 import com.woutervandervelde.e_cook.ui.component.IngredientItem
+import com.woutervandervelde.e_cook.ui.component.StepsPager
 import com.woutervandervelde.e_cook.ui.screen.edit.SectionTitle
 import com.woutervandervelde.e_cook.ui.screen.recipe.presentation.RecipeUiEvent
 import com.woutervandervelde.e_cook.ui.screen.recipe.presentation.RecipeUiState
 import com.woutervandervelde.e_cook.ui.theme.Size1
 import com.woutervandervelde.e_cook.ui.theme.Size10
-import com.woutervandervelde.e_cook.ui.theme.Size12
 import com.woutervandervelde.e_cook.ui.theme.Size128
 import com.woutervandervelde.e_cook.ui.theme.Size16
-import com.woutervandervelde.e_cook.ui.theme.Size2
 import com.woutervandervelde.e_cook.ui.theme.Size20
-import com.woutervandervelde.e_cook.ui.theme.Size24
 import com.woutervandervelde.e_cook.ui.theme.Size32
+import com.woutervandervelde.e_cook.ui.theme.Size360
 import com.woutervandervelde.e_cook.ui.theme.Size4
-import com.woutervandervelde.e_cook.ui.theme.Size48
 import com.woutervandervelde.e_cook.ui.theme.Size8
+import androidx.compose.material3.IconButton as M3IconButton
 
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -69,7 +64,7 @@ fun RecipeScreen(
                 onEdit = { uiEvent(RecipeUiEvent.OnEditClick) }
             )
         }
-    ) {
+    ) { paddingValues ->
         Column(
             Modifier.verticalScroll(rememberScrollState())
         ) {
@@ -84,8 +79,9 @@ fun RecipeScreen(
                 RecipeTags(recipe.source)
                 RecipeDescription(recipe.description)
                 RecipeIngredients(uiState.recipe.ingredients)
-                RecipeSteps()
+                RecipeSteps(recipe.steps)
             }
+            Spacer(modifier = Modifier.fillMaxWidth().height(Size32))
         }
     }
 }
@@ -229,6 +225,10 @@ fun RecipeIngredients(ingredients: List<RecipeIngredient>) {
 }
 
 @Composable
-fun RecipeSteps() {
-
+fun RecipeSteps(steps: List<String>) {
+    Column {
+        SectionTitle(title = stringResource(R.string.edit_section_steps_title))
+        Spacer(modifier = Modifier.height(Size8))
+        StepsPager(steps = steps)
+    }
 }
