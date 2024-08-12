@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.woutervandervelde.e_cook.domain.model.MeasurementUnit
 import com.woutervandervelde.e_cook.domain.repository.InstagramRepository
 import com.woutervandervelde.e_cook.domain.repository.VideoRepository
+import com.woutervandervelde.e_cook.domain.usecase.ClearCachedVideoAndFrames
 import com.woutervandervelde.e_cook.domain.usecase.ConvertJsonToRecipeIngredientsUseCase
 import com.woutervandervelde.e_cook.domain.usecase.ExtractVideoFramesUseCase
 import com.woutervandervelde.e_cook.domain.usecase.GetGeminiVideoInfoUseCase
@@ -73,6 +74,7 @@ class SourceViewModel @AssistedInject constructor(
                                 processedVideoRecipeId = recipeId
                             )
                         }
+                        ClearCachedVideoAndFrames.invoke(file, context)
                     } else {
                         _uiState.update { it.copy(sourceState = SourceState.ERROR) }
                     }
