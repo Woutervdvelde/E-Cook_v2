@@ -14,5 +14,6 @@ interface RecipeRepository  {
     suspend fun insertRecipeIngredients(recipe: Recipe, recipeIngredients: List<RecipeIngredient>)
     suspend fun updateRecipe(recipe: Recipe)
     suspend fun deleteRecipe(recipe: Recipe)
+    suspend fun deleteFullRecipe(recipe: RecipeWithIngredients)
     suspend fun deleteRecipeIngredient(recipe: Recipe, recipeIngredient: RecipeIngredient)
 }

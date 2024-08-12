@@ -160,6 +160,9 @@ fun EditScreen(
                     uiEvent(EditUiEvent.OnDeleteStepFromRecipe(index))
                 }
             )
+            DeleteSection(
+                onDelete = { uiEvent(EditUiEvent.OnDeleteRecipe) }
+            )
             Spacer(modifier = Modifier.height(Size72))
         }
     }
@@ -369,4 +372,13 @@ fun StepsSection(
             }
         }
     }
+}
+
+@Composable
+fun DeleteSection(onDelete: () -> Unit) {
+    IconButton(
+        text = "Delete recipe",
+        icon = painterResource(R.drawable.delete),
+        onClick = onDelete
+    )
 }
