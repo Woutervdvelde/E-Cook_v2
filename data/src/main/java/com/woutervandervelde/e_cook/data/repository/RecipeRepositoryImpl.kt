@@ -69,6 +69,11 @@ class RecipeRepositoryImpl @Inject constructor(
     override suspend fun deleteRecipe(recipe: Recipe) =
         recipeDao.delete(RecipeEntity.fromModel(recipe))
 
+    override suspend fun deleteFullRecipe(recipe: RecipeWithIngredients) {
+        recipe.ingredients.forEach { deleteRecipeIngredient(recipe.recipe, it) }
+        deleteRecipe(recipe.recipe)
+    }
+
     override suspend fun deleteRecipeIngredient(
         recipe: Recipe,
         recipeIngredient: RecipeIngredient

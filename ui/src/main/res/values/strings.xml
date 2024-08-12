@@ -29,6 +29,7 @@
     <string name="edit_section_steps_title">Steps</string>
     <string name="edit_section_steps_add">Add step</string>
     <string name="edit_section_steps_add_placeholder">Step description...</string>
+    <string name="edit_section_delete_button">Delete recipe</string>
 
     <string name="edit_button_upload">Upload</string>
     <string name="edit_button_url">URL</string>

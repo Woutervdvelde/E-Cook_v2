@@ -91,6 +91,13 @@ class EditViewModel @AssistedInject constructor(
                 }
             }
 
+            is EditUiEvent.OnDeleteRecipe -> {
+                CoroutineScope(Dispatchers.IO).launch {
+                    recipeRepository.deleteFullRecipe(recipe)
+                }
+                navEvent(EditNavEvent.ToHome)
+            }
+
             is EditUiEvent.OnSaveRecipe -> {
                 val recipe = Recipe(
                     id = if (recipeId == -1L) 0 else recipeId,

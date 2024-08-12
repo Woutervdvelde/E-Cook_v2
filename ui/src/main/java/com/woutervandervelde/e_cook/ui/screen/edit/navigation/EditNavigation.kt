@@ -10,6 +10,7 @@ import com.woutervandervelde.e_cook.ui.navigation.NavigationTransition
 import com.woutervandervelde.e_cook.ui.navigation.composable
 import com.woutervandervelde.e_cook.ui.screen.edit.EditScreen
 import com.woutervandervelde.e_cook.ui.screen.edit.presentation.EditViewModel
+import com.woutervandervelde.e_cook.ui.screen.home.navigation.HomeRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -20,9 +21,8 @@ data class EditRoute(
 internal fun NavGraphBuilder.editNavigation(navController: NavController) {
     val navEvent: (EditNavEvent) -> Unit = { event ->
         when (event) {
-            EditNavEvent.Back -> {
-                navController.navigateUp()
-            }
+            EditNavEvent.Back -> navController.navigateUp()
+            EditNavEvent.ToHome -> navController.navigate(HomeRoute)
         }
     }
 

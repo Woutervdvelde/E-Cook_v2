@@ -24,6 +24,7 @@ interface EditUiEvent : BaseUiEvent {
         val index: Int
     ) : EditUiEvent
 
+    data object OnDeleteRecipe : EditUiEvent
     data object OnSaveRecipe : EditUiEvent
     data object OnDiscardRecipe : EditUiEvent
 }
