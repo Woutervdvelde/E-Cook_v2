@@ -115,6 +115,7 @@ private fun IngredientSelection(
         modifier = Modifier.padding(Size16)
     ) {
         Input(
+            value = currentText.value,
             placeholder = stringResource(R.string.edit_section_ingredients_filter_or_add),
             onValueChange = { inputValue ->
                 val inputText = inputValue.trim().lowercase()
