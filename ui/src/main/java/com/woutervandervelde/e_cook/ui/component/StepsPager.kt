@@ -1,6 +1,5 @@
 package com.woutervandervelde.e_cook.ui.component
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,42 +32,40 @@ fun StepsPager(
     onDeleteStep: (step: Int) -> Unit = {},
     onAddStep: () -> Unit = {}
 ) {
-    if (steps.isNotEmpty()) {
-        val count = steps.count() + if (editable) 1 else 0
-        val pagerState = rememberPagerState(pageCount = { count })
+    val count = steps.count() + if (editable) 1 else 0
+    val pagerState = rememberPagerState(pageCount = { count })
 
-        HorizontalPager(state = pagerState, pageSpacing = Size8) { page ->
-            if (editable && page == steps.size) {
-                Box(
-                    modifier = Modifier
-                        .defaultMinSize(minHeight = Size200)
-                        .fillMaxSize()
-                        .background(
-                            MaterialTheme.colorScheme.secondaryContainer, RoundedCornerShape(
-                                Size16
-                            )
+    HorizontalPager(state = pagerState, pageSpacing = Size8) { page ->
+        if (editable && page == steps.size) {
+            Box(
+                modifier = Modifier
+                    .defaultMinSize(minHeight = Size200)
+                    .fillMaxSize()
+                    .background(
+                        MaterialTheme.colorScheme.secondaryContainer, RoundedCornerShape(
+                            Size16
                         )
-                        .clickable { onAddStep() },
-                    contentAlignment = Alignment.Center
+                    )
+                    .clickable { onAddStep() },
+                contentAlignment = Alignment.Center
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalArrangement = Arrangement.Center
                 ) {
-                    Row(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Icon(painter = painterResource(R.drawable.add), contentDescription = null)
-                        Spacer(modifier = Modifier.width(Size8))
-                        Text(text = stringResource(R.string.edit_section_steps_add))
-                    }
+                    Icon(painter = painterResource(R.drawable.add), contentDescription = null)
+                    Spacer(modifier = Modifier.width(Size8))
+                    Text(text = stringResource(R.string.edit_section_steps_add))
                 }
-            } else {
-                RecipeStepCard(
-                    step = steps[page],
-                    number = page + 1,
-                    editable = editable,
-                    onDelete = { onDeleteStep(page) }
-                )
             }
+        } else {
+            RecipeStepCard(
+                step = steps[page],
+                number = page + 1,
+                editable = editable,
+                onDelete = { onDeleteStep(page) }
+            )
         }
-        PagerIndicator(pagerState)
     }
+    PagerIndicator(pagerState)
 }

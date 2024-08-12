@@ -348,11 +348,12 @@ fun StepsSection(
 
         if (showStepModal) {
             Dialog(onDismissRequest = { showStepModal = false }) {
-                var step = ""
+                val step = remember { mutableStateOf("") }
+
                 Card {
                     Input(
-                        value = step,
-                        onValueChange = { step = it },
+                        value = step.value,
+                        onValueChange = { step.value = it },
                         minLines = 3,
                         placeholder = stringResource(R.string.edit_section_steps_add_placeholder)
                     )
@@ -361,7 +362,7 @@ fun StepsSection(
                         text = stringResource(R.string.edit_section_steps_add),
                         icon = painterResource(R.drawable.add),
                         onClick = {
-                            onAddStep(step)
+                            onAddStep(step.value)
                             showStepModal = false
                         })
                 }
