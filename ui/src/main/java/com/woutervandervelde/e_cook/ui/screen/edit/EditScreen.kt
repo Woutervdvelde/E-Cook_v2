@@ -377,7 +377,7 @@ fun StepsSection(
 @Composable
 fun DeleteSection(onDelete: () -> Unit) {
     IconButton(
-        text = "Delete recipe",
+        text = stringResource(R.string.edit_section_delete_button),
         icon = painterResource(R.drawable.delete),
         onClick = onDelete
     )
