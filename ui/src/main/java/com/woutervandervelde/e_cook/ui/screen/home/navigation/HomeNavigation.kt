@@ -12,6 +12,7 @@ import com.woutervandervelde.e_cook.ui.navigation.composable
 import com.woutervandervelde.e_cook.ui.screen.edit.navigation.EditRoute
 import com.woutervandervelde.e_cook.ui.screen.home.HomeScreen
 import com.woutervandervelde.e_cook.ui.screen.home.presentation.HomeViewModel
+import com.woutervandervelde.e_cook.ui.screen.recipe.navigation.RecipeRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -21,7 +22,7 @@ internal fun NavGraphBuilder.homeNavigation(navController: NavController) {
     val navEvent: (HomeNavEvent) -> Unit = { event ->
         when (event) {
             HomeNavEvent.ToNewRecipe -> navController.navigate(EditRoute())
-            is HomeNavEvent.ToEditRecipe -> navController.navigate(EditRoute(event.id))
+            is HomeNavEvent.ToRecipe -> navController.navigate(RecipeRoute(event.recipeId))
         }
     }
 

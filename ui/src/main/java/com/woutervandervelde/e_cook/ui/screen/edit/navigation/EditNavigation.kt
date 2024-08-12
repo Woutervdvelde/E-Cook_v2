@@ -21,7 +21,7 @@ internal fun NavGraphBuilder.editNavigation(navController: NavController) {
     val navEvent: (EditNavEvent) -> Unit = { event ->
         when (event) {
             EditNavEvent.Back -> {
-                navController.popBackStack()
+                navController.navigateUp()
             }
         }
     }

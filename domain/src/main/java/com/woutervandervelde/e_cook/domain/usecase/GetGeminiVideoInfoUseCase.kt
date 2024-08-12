@@ -14,7 +14,6 @@ object GetGeminiVideoInfoUseCase {
                 text(videoInfo.description)
             }
         )
-
         return response.text ?: ""
     }
 }

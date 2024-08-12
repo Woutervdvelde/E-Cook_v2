@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,11 +18,11 @@ fun IngredientItem(recipeIngredient: RecipeIngredient) {
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Text(text = recipeIngredient.ingredient.name)
+        Text(text = recipeIngredient.ingredient.name, style = MaterialTheme.typography.bodyMedium)
         Row {
-            Text(text = recipeIngredient.quantity.toString())
+            Text(text = recipeIngredient.quantity.toString(), style = MaterialTheme.typography.bodyMedium)
             Spacer(modifier = Modifier.width(Size8))
-            Text(text = recipeIngredient.unit.text)
+            Text(text = recipeIngredient.unit.text, style = MaterialTheme.typography.bodyMedium)
         }
     }
 }

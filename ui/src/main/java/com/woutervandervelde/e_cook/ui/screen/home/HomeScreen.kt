@@ -2,25 +2,39 @@ package com.woutervandervelde.e_cook.ui.screen.home
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
+import coil.compose.AsyncImage
+import com.woutervandervelde.e_cook.domain.model.Recipe
 import com.woutervandervelde.e_cook.ui.R
 import com.woutervandervelde.e_cook.ui.component.IconButton
 import com.woutervandervelde.e_cook.ui.component.Tag
@@ -30,7 +44,9 @@ import com.woutervandervelde.e_cook.ui.theme.Size128
 import com.woutervandervelde.e_cook.ui.theme.Size16
 import com.woutervandervelde.e_cook.ui.theme.Size32
 import com.woutervandervelde.e_cook.ui.theme.Size360
+import com.woutervandervelde.e_cook.ui.theme.Size4
 import com.woutervandervelde.e_cook.ui.theme.Size56
+import com.woutervandervelde.e_cook.ui.theme.Size8
 
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -44,15 +60,19 @@ fun HomeScreen(
             onRandomRecipe = { uiEvent(HomeUiEvent.OnRandomRecipeClick) }
         )
 
-        //Temp
-        uiState.recipes.forEach { recipe ->
-            Card(
-                onClick = { uiEvent(HomeUiEvent.OnEditRecipe(recipe.id))}
-            ) {
-                Text(text = recipe.name, modifier = Modifier.padding(Size32))
-                recipe.tags.forEach {
-                    Tag(name = it.name)
-                }
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            horizontalArrangement = Arrangement.spacedBy(Size8),
+            verticalArrangement = Arrangement.spacedBy(Size8),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = Size16)
+        ) {
+            items(uiState.recipes) {
+                RecipeCard(
+                    it,
+                    onClick = { uiEvent(HomeUiEvent.OnRecipeClick(it.id)) }
+                )
             }
         }
     }
@@ -115,6 +135,55 @@ private fun Header(onNewRecipe: () -> Unit, onRandomRecipe: () -> Unit) {
                     modifier = Modifier.weight(1f)
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun RecipeCard(recipe: Recipe, onClick: () -> Unit) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(.75f),
+        onClick = onClick,
+        shape = RoundedCornerShape(Size16),
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            // Background image
+            AsyncImage(
+                model = recipe.image,
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth(),
+                contentScale = ContentScale.Crop
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomStart)
+                    .height(Size128)
+                    .background(
+                        Brush.verticalGradient(
+                            colorStops = arrayOf(
+                                0f to Color.Transparent,
+                                1f to Color.Black.copy(alpha = .75f)
+                            )
+                        )
+                    )
+            )
+
+            Text(
+                text = recipe.name,
+                style = MaterialTheme.typography.bodyLarge.copy(MaterialTheme.colorScheme.primary),
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(Size8),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
         }
     }
 }

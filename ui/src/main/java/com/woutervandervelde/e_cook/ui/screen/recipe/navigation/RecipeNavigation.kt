@@ -8,6 +8,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.toRoute
 import com.woutervandervelde.e_cook.ui.navigation.NavigationTransition
 import com.woutervandervelde.e_cook.ui.navigation.composable
+import com.woutervandervelde.e_cook.ui.screen.edit.navigation.EditRoute
 import com.woutervandervelde.e_cook.ui.screen.recipe.RecipeScreen
 import com.woutervandervelde.e_cook.ui.screen.recipe.presentation.RecipeViewModel
 import kotlinx.serialization.Serializable
@@ -20,7 +21,9 @@ data class RecipeRoute(
 internal fun NavGraphBuilder.recipeNavigation(navController: NavController) {
     val navEvent: (RecipeNavEvent) -> Unit = { event ->
         when (event) {
+            RecipeNavEvent.Back -> navController.navigateUp()
 
+            is RecipeNavEvent.ToRecipeEdit -> navController.navigate(EditRoute(event.recipeId))
         }
     }
 
