@@ -1,5 +1,6 @@
 package com.woutervandervelde.e_cook.ui.theme
 
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -28,6 +29,7 @@ internal val Size128 = 128.dp
 internal val Size200 = 200.dp
 internal val Size360 = 360.dp
 internal val Size420 = 420.dp
+internal val SizeInfinity = Dp.Infinity
 
 internal val Text12 = 12.sp
 internal val Text14 = 14.sp
